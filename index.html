@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BReeZY — Shopping on Instagram should feel like this</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ── */
+:root {
+  /* Breezy (light) */
+  --b-ink:#0A0A0B; --b-paper:#F5F2ED; --b-surface:#FFFFFF; --b-surface2:#F0EDE8;
+  --b-teal:#1ABFA0; --b-teal-d:#0D9C82; --b-teal-f:rgba(26,191,160,0.09); --b-teal-b:rgba(26,191,160,0.22);
+  --b-coral:#E8604A; --b-gold:#D4A84B; --b-gold-f:rgba(212,168,75,0.10);
+  --b-muted:#6B6860; --b-border:rgba(10,10,11,0.08); --b-border-s:rgba(10,10,11,0.15);
+  /* Beezy (dark) */
+  --z-ink:#E8E4DE; --z-paper:#0D0D0E; --z-surface:#161618; --z-surface2:#1C1C1F;
+  --z-teal:#1ABFA0; --z-teal-d:#0D9C82; --z-teal-f:rgba(26,191,160,0.10); --z-teal-b:rgba(26,191,160,0.20);
+  --z-gold:#D4A84B; --z-gold-f:rgba(212,168,75,0.08);
+  --z-muted:#6B6860; --z-border:rgba(232,228,222,0.07); --z-border-s:rgba(232,228,222,0.14);
+}
+
+/* ── MODE VARIABLES ── */
+body { --ink:var(--b-ink); --paper:var(--b-paper); --surface:var(--b-surface); --surface2:var(--b-surface2); --teal:var(--b-teal); --teal-d:var(--b-teal-d); --teal-f:var(--b-teal-f); --teal-b:var(--b-teal-b); --gold:var(--b-gold); --gold-f:var(--b-gold-f); --muted:var(--b-muted); --border:var(--b-border); --border-s:var(--b-border-s); }
+body.beezy { --ink:var(--z-ink); --paper:var(--z-paper); --surface:var(--z-surface); --surface2:var(--z-surface2); --teal:var(--z-teal); --teal-d:var(--z-teal-d); --teal-f:var(--z-teal-f); --teal-b:var(--z-teal-b); --gold:var(--z-gold); --gold-f:var(--z-gold-f); --muted:var(--z-muted); --border:var(--z-border); --border-s:var(--z-border-s); }
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;transition:background 0.5s ease,color 0.5s ease;}
+
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:all 0.5s ease;}
+body:not(.beezy) nav{background:rgba(245,242,237,0.88);}
+body.beezy nav{background:rgba(13,13,14,0.92);}
+
+.nav-left{display:flex;align-items:center;gap:24px;}
+
+/* LOGOS */
+.logo-breezy{font-family:'Caveat',cursive;font-size:28px;font-weight:700;line-height:1;transition:opacity 0.4s,transform 0.4s;}
+.logo-breezy .BR{color:var(--b-ink);}
+.logo-breezy .ee{color:var(--b-teal);}
+.logo-breezy .Z{color:var(--b-coral);}
+.logo-breezy .Y{color:var(--b-ink);}
+
+.logo-beezy{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;line-height:1;letter-spacing:-0.5px;transition:opacity 0.4s,transform 0.4s;display:flex;align-items:baseline;gap:1px;}
+.logo-beezy .BEE{color:var(--z-teal);font-size:22px;}
+.logo-beezy .zy{color:rgba(232,228,222,0.45);font-size:14px;font-weight:600;letter-spacing:0px;}
+
+body:not(.beezy) .logo-beezy{display:none;}
+body.beezy .logo-breezy{display:none;}
+body.beezy .logo-beezy{display:flex;}
+
+/* TOGGLE */
+.mode-toggle{display:flex;align-items:center;background:var(--surface);border:1px solid var(--border-s);border-radius:100px;padding:3px;gap:2px;transition:all 0.4s;}
+.toggle-btn{padding:7px 18px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;border:none;background:transparent;font-family:'Syne',sans-serif;transition:all 0.3s;letter-spacing:0.3px;white-space:nowrap;}
+.toggle-btn.breezy-btn{color:var(--muted);}
+.toggle-btn.beezy-btn{color:var(--muted);}
+body:not(.beezy) .toggle-btn.breezy-btn{background:var(--b-ink);color:var(--b-paper);}
+body.beezy .toggle-btn.beezy-btn{background:var(--z-teal);color:white;}
+
+.toggle-mode-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-left:4px;transition:color 0.4s;}
+
+.nav-right{display:flex;align-items:center;gap:28px;}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none;}
+.nav-links a{font-size:12px;font-weight:500;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--ink);}
+.nav-cta{background:var(--teal)!important;color:white!important;padding:9px 20px;border-radius:100px;font-size:12px!important;font-weight:700!important;transition:background 0.2s!important;}
+.nav-cta:hover{background:var(--teal-d)!important;}
+
+/* FLOAT PILL */
+.float-demo{position:fixed;bottom:32px;right:32px;z-index:200;background:var(--teal);color:white;padding:13px 22px;border-radius:100px;font-size:13px;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(26,191,160,0.30);transition:all 0.25s;opacity:0;animation:floatIn 0.5s ease forwards 1.5s;}
+.float-demo:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(26,191,160,0.42);}
+.fdot{width:7px;height:7px;border-radius:50%;background:white;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.75);}}
+@keyframes floatIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 48px 80px;position:relative;overflow:hidden;}
+.hero-orb1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(26,191,160,0.10) 0%,transparent 70%);top:-200px;right:-150px;pointer-events:none;transition:opacity 0.5s;}
+.hero-orb2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,75,0.07) 0%,transparent 70%);bottom:-50px;left:80px;pointer-events:none;}
+
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal-d);margin-bottom:24px;opacity:0;animation:fadeUp 0.6s ease forwards 0.2s;}
+.hero-eyebrow::before{content:'';width:24px;height:1.5px;background:var(--teal);}
+
+/* Breezy hero content */
+.hero-breezy{transition:opacity 0.4s,transform 0.4s;}
+.hero-beezy{display:none;opacity:0;transition:opacity 0.4s,transform 0.4s;transform:translateY(16px);}
+body.beezy .hero-breezy{display:none;}
+body.beezy .hero-beezy{display:flex;flex-direction:column;opacity:1;transform:translateY(0);}
+
+.hero-headline{font-family:'Instrument Serif',serif;font-size:clamp(48px,6.5vw,88px);line-height:1.0;letter-spacing:-2px;color:var(--ink);max-width:760px;margin-bottom:24px;transition:color 0.5s;}
+.hero-headline em{font-style:italic;color:var(--teal);}
+
+.hero-sub{font-size:16px;font-weight:400;color:var(--muted);max-width:480px;line-height:1.75;margin-bottom:20px;transition:color 0.5s;}
+
+.hero-pain{display:inline-flex;align-items:flex-start;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 16px;max-width:480px;margin-bottom:40px;transition:all 0.5s;}
+.hero-pain-icon{font-size:15px;flex-shrink:0;margin-top:1px;}
+.hero-pain-text{font-size:13px;color:var(--muted);line-height:1.6;}
+.hero-pain-text strong{color:var(--ink);font-weight:600;}
+
+/* Beezy hero specific */
+.beezy-headline{font-family:'Syne',sans-serif;font-size:clamp(44px,6vw,82px);line-height:1.0;letter-spacing:-3px;font-weight:800;color:var(--z-ink);max-width:700px;margin-bottom:20px;}
+.beezy-headline .hl{color:var(--z-teal);}
+.beezy-headline .dim{color:rgba(232,228,222,0.3);}
+.beezy-sub{font-size:16px;font-weight:500;color:rgba(232,228,222,0.55);max-width:460px;line-height:1.7;margin-bottom:16px;}
+.beezy-sub strong{color:var(--z-ink);}
+.beezy-metrics{display:flex;gap:32px;margin-bottom:40px;flex-wrap:wrap;}
+.beezy-metric{display:flex;flex-direction:column;gap:3px;}
+.beezy-metric-val{font-family:'Instrument Serif',serif;font-size:36px;font-style:italic;color:var(--z-teal);line-height:1;}
+.beezy-metric-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,222,0.35);}
+
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:white;padding:15px 30px;border-radius:100px;font-size:14px;font-weight:700;text-decoration:none;transition:all 0.25s;border:1.5px solid var(--teal);box-shadow:0 6px 24px rgba(26,191,160,0.22);}
+.btn-primary:hover{background:var(--teal-d);border-color:var(--teal-d);transform:translateY(-2px);}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink);padding:15px 30px;border-radius:100px;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.25s;border:1.5px solid var(--border-s);}
+.btn-secondary:hover{border-color:var(--ink);transform:translateY(-1px);}
+
+/* ── TICKER ── */
+.ticker{padding:12px 0;overflow:hidden;white-space:nowrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:all 0.5s;}
+body:not(.beezy) .ticker{background:var(--b-ink);}
+body.beezy .ticker{background:var(--z-surface2);}
+.ticker-inner{display:inline-flex;animation:ticker 38s linear infinite;}
+.ticker-item{display:inline-flex;align-items:center;gap:14px;padding:0 36px;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.5s;}
+body:not(.beezy) .ticker-item{color:rgba(245,242,237,0.55);}
+body.beezy .ticker-item{color:rgba(232,228,222,0.35);}
+.tdot{width:4px;height:4px;border-radius:50%;background:var(--teal);flex-shrink:0;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ── SHARED SECTION ── */
+section{padding:96px 48px;transition:background 0.5s;}
+.section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal-d);margin-bottom:18px;}
+.section-label::before{content:'';width:20px;height:1.5px;background:var(--teal);}
+.section-headline{font-family:'Instrument Serif',serif;font-size:clamp(32px,4vw,54px);line-height:1.1;letter-spacing:-1.5px;color:var(--ink);margin-bottom:14px;transition:color 0.5s;}
+.section-headline em{font-style:italic;color:var(--teal);}
+.section-sub{font-size:15px;color:var(--muted);max-width:460px;line-height:1.7;margin-top:10px;transition:color 0.5s;}
+
+/* ── PAIN BRIDGE ── */
+.pain-bridge{padding:72px 48px;text-align:center;transition:background 0.5s;}
+body:not(.beezy) .pain-bridge{background:var(--b-ink);}
+body.beezy .pain-bridge{background:var(--z-surface2);border-top:1px solid var(--z-border);border-bottom:1px solid var(--z-border);}
+.pain-bridge-inner{max-width:660px;margin:0 auto;}
+.pain-eyebrow{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:18px;}
+
+/* Breezy pain */
+.pain-breezy{transition:opacity 0.4s;}
+body.beezy .pain-breezy{display:none;}
+.pain-headline-b{font-family:'Instrument Serif',serif;font-size:clamp(26px,3.5vw,42px);line-height:1.2;letter-spacing:-1px;color:#F5F2ED;margin-bottom:14px;}
+.pain-headline-b em{font-style:italic;color:rgba(245,242,237,0.38);}
+.pain-body-b{font-size:15px;color:rgba(245,242,237,0.5);line-height:1.85;max-width:520px;margin:0 auto;}
+.pain-body-b strong{color:#F5F2ED;}
+
+/* Beezy pain */
+.pain-beezy{display:none;transition:opacity 0.4s;}
+body.beezy .pain-beezy{display:block;}
+.pain-headline-z{font-family:'Syne',sans-serif;font-size:clamp(22px,3vw,36px);line-height:1.2;letter-spacing:-1px;font-weight:700;color:var(--z-ink);margin-bottom:14px;}
+.pain-stats{display:flex;justify-content:center;gap:48px;margin:28px 0;flex-wrap:wrap;}
+.pain-stat{text-align:center;}
+.pain-stat-val{font-family:'Instrument Serif',serif;font-size:48px;font-style:italic;color:var(--z-teal);line-height:1;}
+.pain-stat-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,222,0.35);margin-top:4px;}
+.pain-body-z{font-size:14px;color:rgba(232,228,222,0.45);line-height:1.8;max-width:500px;margin:0 auto;}
+.pain-body-z strong{color:var(--z-ink);}
+
+/* ── OUTCOMES ── */
+.outcomes{border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:background 0.5s;}
+body:not(.beezy) .outcomes{background:var(--b-surface);}
+body.beezy .outcomes{background:var(--z-surface);}
+.outcomes-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-top:56px;}
+.outcome-card{padding:44px 36px;border-right:1px solid var(--border);position:relative;overflow:hidden;transition:background 0.3s;}
+.outcome-card:last-child{border-right:none;}
+.outcome-card:hover{background:var(--teal-f);}
+.outcome-num{font-family:'Instrument Serif',serif;font-size:80px;line-height:1;color:var(--teal);opacity:0.08;position:absolute;top:16px;right:18px;font-style:italic;pointer-events:none;}
+.outcome-icon{width:42px;height:42px;border-radius:11px;background:var(--teal-f);border:1px solid var(--teal-b);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:20px;}
+.outcome-title{font-family:'Instrument Serif',serif;font-size:25px;line-height:1.2;letter-spacing:-0.5px;color:var(--ink);margin-bottom:10px;transition:color 0.5s;}
+
+/* Breezy outcome body */
+.outcome-body-b{font-size:14px;color:var(--muted);line-height:1.75;transition:color 0.5s;}
+body.beezy .outcome-body-b{display:none;}
+
+/* Beezy outcome body */
+.outcome-body-z{display:none;font-size:13px;color:var(--muted);line-height:1.75;}
+body.beezy .outcome-body-z{display:block;}
+
+.outcome-proof{margin-top:16px;padding:11px 13px;background:var(--gold-f);border:1px solid rgba(212,168,75,0.16);border-radius:8px;font-size:12px;font-weight:600;line-height:1.5;}
+body:not(.beezy) .outcome-proof{color:#9A7A30;}
+body.beezy .outcome-proof{color:var(--z-gold);}
+
+/* ── JOURNEY ── */
+.journey{transition:background 0.5s;}
+body:not(.beezy) .journey{background:var(--b-ink);}
+body.beezy .journey{background:var(--z-paper);}
+.journey .section-label{color:var(--teal);}
+.journey .section-label::before{background:var(--teal);}
+body:not(.beezy) .journey .section-headline{color:#F5F2ED;}
+body.beezy .journey .section-headline{color:var(--z-ink);}
+.journey-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:52px;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color 0.5s;}
+.journey-step{padding:30px 22px;border-right:1px solid var(--border);position:relative;transition:background 0.3s;}
+.journey-step:last-child{border-right:none;}
+.journey-step-num{font-family:'Instrument Serif',serif;font-size:12px;font-style:italic;color:var(--teal);margin-bottom:12px;opacity:0.7;}
+.journey-step-icon{font-size:20px;margin-bottom:12px;display:block;}
+.journey-step-title{font-size:13px;font-weight:600;margin-bottom:7px;line-height:1.3;transition:color 0.5s;}
+body:not(.beezy) .journey-step-title{color:#F5F2ED;}
+body.beezy .journey-step-title{color:var(--z-ink);}
+.journey-step-body{font-size:11px;font-weight:400;line-height:1.6;transition:color 0.5s;}
+body:not(.beezy) .journey-step-body{color:rgba(245,242,237,0.38);}
+body.beezy .journey-step-body{color:rgba(232,228,222,0.38);}
+.jarrow{position:absolute;right:-7px;top:50%;transform:translateY(-50%);color:var(--teal);font-size:11px;opacity:0.35;z-index:1;}
+
+/* ── DEMO SPOT ── */
+.demo-spot{padding:80px 48px;text-align:center;border-top:1px solid var(--border);transition:background 0.5s;}
+body:not(.beezy) .demo-spot{background:var(--b-paper);}
+body.beezy .demo-spot{background:var(--z-surface);}
+.demo-inner{max-width:580px;margin:0 auto;}
+.demo-tag{display:inline-block;background:var(--teal-f);border:1px solid var(--teal-b);color:var(--teal-d);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:22px;}
+body.beezy .demo-tag{color:var(--z-teal);}
+.demo-headline{font-family:'Instrument Serif',serif;font-size:clamp(30px,4vw,50px);line-height:1.1;letter-spacing:-1.5px;color:var(--ink);margin-bottom:14px;transition:color 0.5s;}
+.demo-headline em{font-style:italic;color:var(--teal);}
+.demo-sub{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:32px;transition:color 0.5s;}
+.demo-link-box{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);padding:18px 34px;border-radius:14px;text-decoration:none;transition:all 0.25s;font-size:14px;font-weight:700;}
+.demo-link-box:hover{background:var(--teal);transform:translateY(-2px);box-shadow:0 12px 36px rgba(26,191,160,0.22);}
+.demo-url{font-family:'Caveat',cursive;font-size:18px;font-weight:700;color:var(--teal);margin-top:14px;display:block;transition:color 0.5s;}
+body.beezy .demo-url{color:var(--z-teal);}
+.demo-steps{display:flex;justify-content:center;gap:36px;margin-top:28px;}
+.dstep{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.dstep-num{width:26px;height:26px;border-radius:50%;background:var(--teal-f);border:1px solid var(--teal-b);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal);}
+.dstep-text{font-size:11px;color:var(--muted);font-weight:500;}
+
+/* ── CALCULATOR ── */
+.calculator{border-top:1px solid var(--border);transition:background 0.5s;}
+body:not(.beezy) .calculator{background:var(--b-surface2);}
+body.beezy .calculator{background:var(--z-surface2);}
+.calc-tabs{display:flex;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:3px;width:fit-content;margin-bottom:36px;}
+.calc-tab{padding:9px 22px;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;color:var(--muted);border:none;background:none;font-family:'Syne',sans-serif;}
+.calc-tab.active{background:var(--ink);color:var(--paper);}
+body.beezy .calc-tab.active{background:var(--z-teal);color:white;}
+.calc-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start;}
+.calc-inputs{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:34px;transition:all 0.5s;}
+.calc-input-group{margin-bottom:26px;}
+.calc-input-group:last-child{margin-bottom:0;}
+.calc-label{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:9px;display:block;}
+.calc-input-row{display:flex;align-items:center;gap:14px;}
+.calc-range{flex:1;-webkit-appearance:none;height:3px;border-radius:2px;background:var(--border-s);outline:none;cursor:pointer;}
+.calc-range::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--teal);cursor:pointer;box-shadow:0 0 0 4px var(--teal-f);transition:box-shadow 0.2s;}
+.calc-range::-webkit-slider-thumb:hover{box-shadow:0 0 0 8px var(--teal-f);}
+.calc-value{font-family:'Instrument Serif',serif;font-size:24px;font-style:italic;color:var(--teal);min-width:52px;text-align:right;}
+.calc-results{display:flex;flex-direction:column;gap:14px;}
+.calc-result-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 26px;transition:border-color 0.3s,transform 0.3s,background 0.5s;}
+.calc-result-card:hover{border-color:var(--teal-b);transform:translateX(4px);}
+.calc-result-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.calc-result-value{font-family:'Instrument Serif',serif;font-size:36px;font-style:italic;color:var(--ink);line-height:1;margin-bottom:4px;transition:color 0.5s;}
+.calc-result-value span{font-size:15px;color:var(--teal);font-style:normal;font-family:'Syne',sans-serif;}
+.calc-result-note{font-size:12px;color:var(--muted);line-height:1.5;}
+.calc-trial-banner{background:var(--teal-f);border:1.5px solid var(--teal-b);border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:6px;}
+.calc-trial-text{font-size:13px;font-weight:600;color:var(--teal-d);line-height:1.5;}
+body.beezy .calc-trial-text{color:var(--z-teal);}
+.calc-trial-text strong{display:block;font-size:15px;color:var(--ink);}
+.calc-trial-btn{flex-shrink:0;background:var(--teal);color:white;padding:10px 18px;border-radius:100px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;transition:all 0.2s;}
+.calc-trial-btn:hover{background:var(--teal-d);}
+.calc-disclaimer{font-size:11px;color:var(--muted);margin-top:12px;font-style:italic;opacity:0.65;line-height:1.5;}
+
+/* ── COMPOUNDING ── */
+.compounding{border-top:1px solid var(--border);transition:background 0.5s;}
+body:not(.beezy) .compounding{background:var(--b-surface);}
+body.beezy .compounding{background:var(--z-surface);}
+.compound-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:52px;align-items:center;}
+.compound-bar-wrap{display:flex;align-items:flex-end;gap:7px;height:200px;border-bottom:1.5px solid var(--border-s);}
+.compound-bar{flex:1;border-radius:4px 4px 0 0;background:var(--teal);position:relative;transition:height 0.6s ease;}
+.compound-bar:nth-child(1){opacity:0.15;} .compound-bar:nth-child(2){opacity:0.28;} .compound-bar:nth-child(3){opacity:0.44;} .compound-bar:nth-child(4){opacity:0.60;} .compound-bar:nth-child(5){opacity:0.78;} .compound-bar:nth-child(6){opacity:1.0;}
+.cbar-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:600;color:var(--muted);white-space:nowrap;}
+.cbar-val{position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;color:var(--teal-d);white-space:nowrap;}
+.compound-caption{font-size:11px;color:var(--muted);margin-top:28px;text-align:center;font-style:italic;}
+.cpoint{display:flex;align-items:flex-start;gap:13px;padding:16px 0;border-bottom:1px solid var(--border);}
+.cpoint:last-child{border-bottom:none;}
+.cdot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:5px;}
+.ctitle{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px;transition:color 0.5s;}
+.cbody{font-size:13px;color:var(--muted);line-height:1.6;transition:color 0.5s;}
+
+/* ── PRICING ── */
+.pricing{transition:background 0.5s;}
+body:not(.beezy) .pricing{background:var(--b-paper);}
+body.beezy .pricing{background:var(--z-paper);}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px;}
+.pricing-card{border:1.5px solid var(--border);border-radius:20px;padding:34px 30px;position:relative;transition:all 0.3s;background:var(--surface);}
+.pricing-card:hover{border-color:var(--teal-b);transform:translateY(-4px);box-shadow:0 20px 60px rgba(26,191,160,0.07);}
+.pricing-card.featured{background:var(--ink);border-color:var(--ink);}
+body.beezy .pricing-card.featured{background:var(--z-teal);border-color:var(--z-teal);}
+.pricing-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--teal);color:white;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 12px;border-radius:100px;white-space:nowrap;}
+body.beezy .pricing-card.featured .pricing-badge{background:var(--z-paper);color:var(--z-teal);}
+.ptier{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:5px;}
+.pname{font-family:'Instrument Serif',serif;font-size:26px;letter-spacing:-0.5px;margin-bottom:5px;color:var(--ink);transition:color 0.5s;}
+.pricing-card.featured .pname{color:var(--paper);}
+body.beezy .pricing-card.featured .pname{color:var(--z-paper);}
+.pdesc{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.5;}
+.pricing-card.featured .pdesc{color:rgba(245,242,237,0.5);}
+body.beezy .pricing-card.featured .pdesc{color:rgba(13,13,14,0.6);}
+.pprice{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.pricing-card.featured .pprice{border-color:rgba(255,255,255,0.1);}
+body.beezy .pricing-card.featured .pprice{border-color:rgba(13,13,14,0.15);}
+.pamount{font-family:'Instrument Serif',serif;font-size:40px;font-style:italic;color:var(--ink);line-height:1;transition:color 0.5s;}
+.pricing-card.featured .pamount{color:var(--paper);}
+body.beezy .pricing-card.featured .pamount{color:var(--z-paper);}
+.pamount sup{font-size:16px;font-style:normal;font-family:'Syne',sans-serif;vertical-align:super;margin-right:1px;}
+.pperiod{font-size:11px;color:var(--muted);margin-top:3px;}
+.psetup{font-size:11px;font-weight:600;color:var(--teal);margin-top:3px;}
+.pfeatures{list-style:none;margin-bottom:24px;}
+.pfeatures li{display:flex;align-items:flex-start;gap:8px;font-size:11px;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--border);line-height:1.4;}
+.pricing-card.featured .pfeatures li{color:rgba(245,242,237,0.55);border-color:rgba(255,255,255,0.07);}
+body.beezy .pricing-card.featured .pfeatures li{color:rgba(13,13,14,0.6);border-color:rgba(13,13,14,0.12);}
+.pfeatures li::before{content:'✓';color:var(--teal);font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.pcta{display:block;text-align:center;padding:12px 18px;border-radius:100px;font-size:12px;font-weight:700;text-decoration:none;transition:all 0.2s;border:1.5px solid var(--border-s);color:var(--ink);background:transparent;}
+.pcta:hover{background:var(--ink);color:var(--paper);}
+.pricing-card.featured .pcta{background:var(--teal);border-color:var(--teal);color:white;}
+body.beezy .pricing-card.featured .pcta{background:var(--z-paper);border-color:var(--z-paper);color:var(--z-teal);}
+.pricing-card.featured .pcta:hover{background:var(--teal-d);}
+
+/* ── FINAL CTA ── */
+.final-cta{background:linear-gradient(135deg,var(--teal) 0%,var(--teal-d) 100%);padding:80px 48px;text-align:center;position:relative;overflow:hidden;}
+.final-cta::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(255,255,255,0.07);top:-200px;left:-100px;}
+.final-cta::after{content:'';position:absolute;width:300px;height:300px;border-radius:50%;border:1px solid rgba(255,255,255,0.07);bottom:-100px;right:200px;}
+.feyebrow{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:16px;}
+.fheadline{font-family:'Instrument Serif',serif;font-size:clamp(30px,4.5vw,58px);color:white;line-height:1.1;letter-spacing:-1.5px;margin-bottom:12px;}
+.fheadline em{font-style:italic;opacity:0.6;}
+.fsub{font-size:15px;color:rgba(255,255,255,0.65);max-width:420px;margin:0 auto 32px;line-height:1.65;}
+.fbtn{display:inline-flex;align-items:center;gap:9px;background:white;color:var(--teal-d);padding:17px 38px;border-radius:100px;font-size:14px;font-weight:700;text-decoration:none;transition:all 0.25s;position:relative;z-index:1;}
+.fbtn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,0.14);}
+.fnote{margin-top:16px;font-size:11px;color:rgba(255,255,255,0.4);position:relative;z-index:1;line-height:1.7;}
+
+/* ── FOOTER ── */
+footer{padding:52px 48px 34px;transition:background 0.5s;}
+body:not(.beezy) footer{background:var(--b-ink);}
+body.beezy footer{background:var(--z-paper);}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:40px;padding-bottom:40px;}
+body:not(.beezy) .footer-top{border-bottom:1px solid rgba(255,255,255,0.07);}
+body.beezy .footer-top{border-bottom:1px solid var(--z-border);}
+.footer-logo{font-family:'Caveat',cursive;font-size:28px;font-weight:700;margin-bottom:9px;transition:color 0.5s;}
+body:not(.beezy) .footer-logo{color:#F5F2ED;}
+body.beezy .footer-logo{color:var(--z-ink);}
+.footer-logo span{color:var(--teal);}
+.footer-tagline{font-size:12px;max-width:200px;line-height:1.6;transition:color 0.5s;}
+body:not(.beezy) .footer-tagline{color:rgba(245,242,237,0.3);}
+body.beezy .footer-tagline{color:rgba(232,228,222,0.3);}
+.footer-links{display:flex;gap:52px;}
+.fcol-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;transition:color 0.5s;}
+body:not(.beezy) .fcol-title{color:rgba(245,242,237,0.25);}
+body.beezy .fcol-title{color:rgba(232,228,222,0.25);}
+.fcol-links{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.fcol-links a{font-size:12px;text-decoration:none;transition:color 0.2s;}
+body:not(.beezy) .fcol-links a{color:rgba(245,242,237,0.5);}
+body.beezy .fcol-links a{color:rgba(232,228,222,0.45);}
+body:not(.beezy) .fcol-links a:hover{color:#F5F2ED;}
+body.beezy .fcol-links a:hover{color:var(--z-ink);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:10px;transition:color 0.5s;}
+body:not(.beezy) .footer-bottom{color:rgba(245,242,237,0.18);}
+body.beezy .footer-bottom{color:rgba(232,228,222,0.18);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.rd1{transition-delay:0.12s;} .rd2{transition-delay:0.24s;}
+
+@media(max-width:900px){
+  nav{padding:14px 20px;}
+  .nav-links{display:none;}
+  .mode-toggle{transform:scale(0.9);}
+
+  section{padding:56px 20px;}
+  .pain-bridge,.demo-spot,.final-cta{padding:56px 20px;}
+  .hero{padding:100px 20px 60px;min-height:auto;}
+
+  .hero-headline{font-size:clamp(36px,9vw,56px);letter-spacing:-1.5px;}
+  .beezy-headline{font-size:clamp(34px,9vw,52px);letter-spacing:-2px;}
+  .section-headline{font-size:clamp(28px,7vw,42px);}
+  .pain-headline-b{font-size:clamp(24px,6.5vw,36px);}
+  .fheadline{font-size:clamp(26px,7vw,44px);}
+  .demo-headline{font-size:clamp(26px,7vw,40px);}
+
+  .outcomes-grid{grid-template-columns:1fr;}
+  .outcome-card{border-right:none;border-bottom:1px solid var(--border);}
+  .outcome-card:last-child{border-bottom:none;}
+
+  .journey-steps{grid-template-columns:1fr 1fr;}
+  .journey-step:nth-child(2n){border-right:none;}
+  .journey-step:nth-last-child(-n+1){border-bottom:none;}
+  .jarrow{display:none;}
+
+  .calc-wrapper{grid-template-columns:1fr;}
+  .calc-tabs{width:100%;}
+  .calc-tab{flex:1;text-align:center;}
+  .calc-trial-banner{flex-direction:column;text-align:center;}
+
+  .compound-grid{grid-template-columns:1fr;}
+  .compound-bar-wrap{height:160px;}
+
+  .pricing-grid{grid-template-columns:1fr;}
+  .pricing-card.featured{order:-1;}
+
+  .footer-top{flex-direction:column;gap:32px;}
+  .footer-links{flex-direction:column;gap:28px;}
+  .footer-bottom{flex-direction:column;gap:8px;text-align:center;}
+
+  .beezy-metrics{gap:20px;}
+  .beezy-metric-val{font-size:28px;}
+
+  .pain-stats{gap:24px;}
+  .pain-stat-val{font-size:36px;}
+
+  .demo-steps{gap:20px;}
+
+  .float-demo{bottom:16px;right:16px;font-size:12px;padding:10px 16px;}
+  .float-demo .fdot{width:6px;height:6px;}
+
+  .hero-orb1{width:300px;height:300px;top:-100px;right:-80px;}
+  .hero-orb2{width:200px;height:200px;}
+}
+</style>
+</head>
+<body>
+
+<a href="https://ig.me/m/breezy_smartshop" class="float-demo" target="_blank">
+  <div class="fdot"></div>Try the demo
+</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <div class="logo-breezy">
+      <span class="BR">BR</span><span class="ee">ee</span><span class="Z">Z</span><span class="Y">Y</span>
+    </div>
+    <div class="logo-beezy">
+      <span class="BEE">BEE</span><span class="zy">zy</span>
+    </div>
+    <div class="mode-toggle">
+      <button class="toggle-btn breezy-btn" onclick="setMode('breezy')">BReeZY</button>
+      <button class="toggle-btn beezy-btn" onclick="setMode('beezy')">BEEzy</button>
+    </div>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#outcomes">What you get</a></li>
+      <li><a href="#calculator">Calculator</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="https://ig.me/m/breezy_smartshop" class="nav-cta">Try demo free</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+
+  <!-- BREEZY HERO -->
+  <div class="hero-breezy">
+    <div class="hero-eyebrow" style="opacity:0;animation:fadeUp 0.6s ease forwards 0.2s;">Instagram commerce, built for Kenya</div>
+    <h1 class="hero-headline" style="opacity:0;animation:fadeUp 0.7s ease forwards 0.35s;">
+      Shopping on Instagram<br>should feel <em>like this.</em>
+    </h1>
+    <p class="hero-sub" style="opacity:0;animation:fadeUp 0.7s ease forwards 0.5s;">
+      A shop inside your DM. Catalogue, Mpesa payment, confirmation email, rider details and a Google review — all automatic, all from a conversation.
+    </p>
+    <div class="hero-pain" style="opacity:0;animation:fadeUp 0.6s ease forwards 0.62s;">
+      <span class="hero-pain-icon">💡</span>
+      <span class="hero-pain-text">Right now every completed sale ends at a Mpesa notification. <strong>Here's what it could leave behind instead.</strong></span>
+    </div>
+    <div class="hero-actions" style="opacity:0;animation:fadeUp 0.7s ease forwards 0.75s;">
+      <a href="https://ig.me/m/breezy_smartshop" class="btn-primary">Try it yourself — free ↗</a>
+      <a href="#calculator" class="btn-secondary">See the numbers</a>
+    </div>
+  </div>
+
+  <!-- BEEZY HERO -->
+  <div class="hero-beezy">
+    <div class="hero-eyebrow">Built for sellers who run on numbers</div>
+    <h1 class="beezy-headline">
+      Your audience<br>is <span class="hl">ready.</span><br>Your checkout<br><span class="dim">isn't.</span>
+    </h1>
+    <p class="beezy-sub">
+      Turn every DM into a paying customer, a Google review, and a return sale. <strong>All automatic. All measurable.</strong>
+    </p>
+    <div class="beezy-metrics">
+      <div class="beezy-metric">
+        <div class="beezy-metric-val">40%</div>
+        <div class="beezy-metric-label">Review rate per sale</div>
+      </div>
+      <div class="beezy-metric">
+        <div class="beezy-metric-val">30%</div>
+        <div class="beezy-metric-label">Repeat customer rate</div>
+      </div>
+      <div class="beezy-metric">
+        <div class="beezy-metric-val">&lt;60s</div>
+        <div class="beezy-metric-label">DM to payment</div>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a href="#calculator" class="btn-primary">Run your numbers ↗</a>
+      <a href="https://ig.me/m/breezy_smartshop" class="btn-secondary">Try the demo first</a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="tickerInner">
+    <!-- populated by JS -->
+  </div>
+</div>
+
+<!-- PAIN BRIDGE -->
+<div class="pain-bridge">
+  <div class="pain-bridge-inner reveal">
+    <div class="pain-eyebrow" id="painEyebrow">The gap most sellers don't see</div>
+
+    <div class="pain-breezy">
+      <h2 class="pain-headline-b">The sale happened.<br>The customer <em>disappeared.</em></h2>
+      <p class="pain-body-b">Every Instagram seller knows the feeling — someone paid, you delivered, they were happy. And then nothing. No review. No way to reach them again. No proof of what you built except a Mpesa notification you can't show anyone.<br><br><strong>That's not a customer problem. It's a system problem. And it's been there from the start because Instagram was never built to capture what happens after the sale.</strong></p>
+    </div>
+
+    <div class="pain-beezy">
+      <h2 class="pain-headline-z">Every manual sale has a hidden cost.</h2>
+      <div class="pain-stats">
+        <div class="pain-stat">
+          <div class="pain-stat-val">0</div>
+          <div class="pain-stat-label">Review trail</div>
+        </div>
+        <div class="pain-stat">
+          <div class="pain-stat-val">0%</div>
+          <div class="pain-stat-label">Retention data</div>
+        </div>
+        <div class="pain-stat">
+          <div class="pain-stat-val">∞</div>
+          <div class="pain-stat-label">Time spent manually</div>
+        </div>
+      </div>
+      <p class="pain-body-z">Payment confirmation time, missed DMs at 2am, zero customer records, no review trail. <strong>That's not a hustle problem — that's a conversion problem.</strong> Every sale you close manually is one that left nothing behind for the next one.</p>
+    </div>
+  </div>
+</div>
+
+<!-- OUTCOMES -->
+<section class="outcomes" id="outcomes">
+  <div class="reveal">
+    <div class="section-label">What changes</div>
+    <h2 class="section-headline" id="outcomesHeadline">What every sale<br>leaves <em>behind</em></h2>
+  </div>
+  <div class="outcomes-grid">
+    <div class="outcome-card reveal">
+      <div class="outcome-num">01</div>
+      <div class="outcome-icon">⭐</div>
+      <h3 class="outcome-title">A reputation that builds itself</h3>
+      <p class="outcome-body-b">Every delivery triggers a review nudge at exactly the right moment — when the experience is still fresh. Your Google profile grows with every sale, without you asking once.</p>
+      <p class="outcome-body-z">40% review rate per completed sale. Every delivery triggers an automated nudge. Google profile compounds month on month with zero manual effort.</p>
+      <div class="outcome-proof">Most Instagram shops in Kenya have 0–3 Google reviews. Your customers are already happy enough to leave one — they just never had the moment.</div>
+    </div>
+    <div class="outcome-card reveal rd1">
+      <div class="outcome-num">02</div>
+      <div class="outcome-icon">📋</div>
+      <h3 class="outcome-title">Customers you can reach again</h3>
+      <p class="outcome-body-b">Every buyer's name, email and phone goes into a secure database — yours. 30 sales this month means 30 people you can reach when new stock arrives. No hoping they see your next post.</p>
+      <p class="outcome-body-z">Name, email and phone captured on every order. 30% repeat customer rate when you have a way to reach them. Your list grows with every sale and belongs to you entirely.</p>
+      <div class="outcome-proof">Manual selling leaves you with a Mpesa notification. Breezy leaves you with a contact. The difference compounds every single month.</div>
+    </div>
+    <div class="outcome-card reveal rd2">
+      <div class="outcome-num">03</div>
+      <div class="outcome-icon">🌬️</div>
+      <h3 class="outcome-title">Sales that close themselves</h3>
+      <p class="outcome-body-b">Customer DMs, browses your catalogue, pays with Mpesa, gets a confirmation email. You find out when the order is already done. No back and forth. No missed sales at 2am.</p>
+      <p class="outcome-body-z">DM to paid order in under 60 seconds. Zero manual intervention required. Runs 24 hours, captures every interested buyer regardless of when they arrive.</p>
+      <div class="outcome-proof">A single post can reach hundreds of genuinely interested people. Every one is a potential sale — if there's a frictionless path from interest to checkout.</div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section class="journey" style="padding:80px 48px;">
+  <div class="reveal">
+    <div class="section-label">The experience</div>
+    <h2 class="section-headline" id="journeyHeadline">What your customer<br><em>actually feels</em></h2>
+  </div>
+  <div class="journey-steps reveal">
+    <div class="journey-step">
+      <div class="journey-step-num">01</div>
+      <span class="journey-step-icon">💬</span>
+      <div class="journey-step-title">They DM your page</div>
+      <div class="journey-step-body">A catalogue opens instantly. No website. No link in bio. No waiting.</div>
+      <div class="jarrow">▶</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-step-num">02</div>
+      <span class="journey-step-icon">🛍️</span>
+      <div class="journey-step-title">They browse and pick</div>
+      <div class="journey-step-body">Images, descriptions, prices — all in the DM. They tap, they decide.</div>
+      <div class="jarrow">▶</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-step-num">03</div>
+      <span class="journey-step-icon">💳</span>
+      <div class="journey-step-title">They pay with Mpesa</div>
+      <div class="journey-step-body">Enter PIN. Done. Under a minute. No screenshots, no manual confirmation.</div>
+      <div class="jarrow">▶</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-step-num">04</div>
+      <span class="journey-step-icon">📧</span>
+      <div class="journey-step-title">Email before they look up</div>
+      <div class="journey-step-body">Confirmation in inbox before they put their phone down. Rider details when it ships.</div>
+      <div class="jarrow">▶</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-step-num">05</div>
+      <span class="journey-step-icon">⭐</span>
+      <div class="journey-step-title">They review naturally</div>
+      <div class="journey-step-body">A nudge after delivery. The experience was good enough that saying so feels obvious.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO SPOT -->
+<div class="demo-spot" id="demo">
+  <div class="demo-inner reveal">
+    <div class="demo-tag">Live demo — free</div>
+    <h2 class="demo-headline">See it work on<br>your own <em>Instagram</em></h2>
+    <p class="demo-sub" id="demoSub">The best way to understand Breezy isn't reading about it — it's being the customer for two minutes. Tap, send anything, and go through it exactly as your customers would.</p>
+    <a href="https://ig.me/m/breezy_smartshop" class="demo-link-box" target="_blank">
+      Open the demo ↗
+    </a>
+    <span class="demo-url">ig.me/m/breezy_smartshop</span>
+    <div class="demo-steps">
+      <div class="dstep"><div class="dstep-num">1</div><div class="dstep-text">Tap the link</div></div>
+      <div class="dstep"><div class="dstep-num">2</div><div class="dstep-text">Send anything</div></div>
+      <div class="dstep"><div class="dstep-num">3</div><div class="dstep-text">Watch what happens</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CALCULATOR -->
+<section class="calculator" id="calculator">
+  <div class="reveal">
+    <div class="section-label">Run the numbers</div>
+    <h2 class="section-headline" id="calcHeadline">What could your store<br>look like in <em>14 days?</em></h2>
+    <p class="section-sub">Plug in your numbers. Switch between your free trial and the 6-month view.</p>
+  </div>
+  <div class="calc-tabs reveal">
+    <button class="calc-tab active" onclick="setCalcMode('trial',this)">14-day trial</button>
+    <button class="calc-tab" onclick="setCalcMode('sixmonth',this)">6 months</button>
+  </div>
+  <div class="calc-wrapper reveal">
+    <div class="calc-inputs">
+      <div class="calc-input-group">
+        <label class="calc-label">Monthly sales right now</label>
+        <div class="calc-input-row">
+          <input type="range" class="calc-range" id="sales" min="5" max="200" value="30" oninput="calculate()">
+          <div class="calc-value" id="salesVal">30</div>
+        </div>
+      </div>
+      <div class="calc-input-group">
+        <label class="calc-label">Average order value (KES)</label>
+        <div class="calc-input-row">
+          <input type="range" class="calc-range" id="aov" min="500" max="15000" step="500" value="3000" oninput="calculate()">
+          <div class="calc-value" id="aovVal">3K</div>
+        </div>
+      </div>
+      <div class="calc-input-group">
+        <label class="calc-label">Instagram followers</label>
+        <div class="calc-input-row">
+          <input type="range" class="calc-range" id="followers" min="500" max="50000" step="500" value="5000" oninput="calculate()">
+          <div class="calc-value" id="followersVal">5K</div>
+        </div>
+      </div>
+      <p class="calc-disclaimer">Conservative estimates: 40% review rate, 15% monthly growth, 30% repeat customer rate. Trial uses 50% of monthly volume over 14 days.</p>
+    </div>
+    <div class="calc-results">
+      <div class="calc-result-card">
+        <div class="calc-result-label" id="rl1">Sales closed in trial</div>
+        <div class="calc-result-value" id="rv1">15 <span>sales</span></div>
+        <div class="calc-result-note" id="rn1">Real orders, real Mpesa payouts — in 14 days.</div>
+      </div>
+      <div class="calc-result-card">
+        <div class="calc-result-label" id="rl2">Contacts in your list</div>
+        <div class="calc-result-value" id="rv2">15 <span>people</span></div>
+        <div class="calc-result-note" id="rn2">Names, emails and numbers — reachable anytime new stock arrives.</div>
+      </div>
+      <div class="calc-result-card">
+        <div class="calc-result-label" id="rl3">Google review opportunities</div>
+        <div class="calc-result-value" id="rv3">6 <span>reviews</span></div>
+        <div class="calc-result-note" id="rn3">Every delivery triggers a nudge. Your Google profile starts building in the trial.</div>
+      </div>
+      <div class="calc-result-card">
+        <div class="calc-result-label" id="rl4">Hours freed up</div>
+        <div class="calc-result-value" id="rv4">3 <span>hrs</span></div>
+        <div class="calc-result-note" id="rn4">Manual confirmations, payment checks, follow-ups — all automated.</div>
+      </div>
+      <div class="calc-trial-banner">
+        <div class="calc-trial-text">
+          <strong id="trialStrong">Start your 14-day free trial</strong>
+          <span id="trialSub">See these numbers on your own page — no subscription until month 2.</span>
+        </div>
+        <a href="https://ig.me/m/breezy_smartshop" class="calc-trial-btn">Try free ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPOUNDING -->
+<section class="compounding">
+  <div class="reveal">
+    <div class="section-label">The compounding effect</div>
+    <h2 class="section-headline">It gets stronger<br>every single <em>month</em></h2>
+  </div>
+  <div class="compound-grid reveal">
+    <div>
+      <div class="compound-bar-wrap" id="barChart">
+        <div class="compound-bar" style="height:44px"><span class="cbar-label">M1</span><span class="cbar-val">30</span></div>
+        <div class="compound-bar" style="height:70px"><span class="cbar-label">M2</span><span class="cbar-val">40</span></div>
+        <div class="compound-bar" style="height:96px"><span class="cbar-label">M3</span><span class="cbar-val">52</span></div>
+        <div class="compound-bar" style="height:122px"><span class="cbar-label">M4</span><span class="cbar-val">67</span></div>
+        <div class="compound-bar" style="height:158px"><span class="cbar-label">M5</span><span class="cbar-val">86</span></div>
+        <div class="compound-bar" style="height:196px"><span class="cbar-label">M6</span><span class="cbar-val">110</span></div>
+      </div>
+      <p class="compound-caption">Monthly sales — starting at 30/month</p>
+    </div>
+    <div>
+      <div class="cpoint"><div class="cdot"></div><div><div class="ctitle">Reviews attract more customers</div><div class="cbody">Every review makes the next sale easier. A Google profile with 40 reviews converts a new visitor before they even send a DM.</div></div></div>
+      <div class="cpoint"><div class="cdot"></div><div><div class="ctitle">Repeat customers cost nothing</div><div class="cbody">Every contact in your list is a free sale waiting to happen. No ad spend — just a message when new stock arrives.</div></div></div>
+      <div class="cpoint"><div class="cdot"></div><div><div class="ctitle">The experience becomes word of mouth</div><div class="cbody">A confirmation email, rider details, a review nudge — genuinely new on Instagram in Kenya. Customers talk about what feels different.</div></div></div>
+      <div class="cpoint"><div class="cdot"></div><div><div class="ctitle">Ads finally have somewhere to land</div><div class="cbody">TikTok or Instagram ads drive DMs that close themselves. Your ad spend stops being a gamble.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="reveal">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-headline">One system.<br>Three <em>scales.</em></h2>
+    <p class="section-sub">Every tier includes the full system. The difference is catalogue size and how many niches you run.</p>
+  </div>
+  <div class="pricing-grid reveal">
+    <div class="pricing-card">
+      <div class="ptier">Starter</div>
+      <div class="pname">Up to 20 products</div>
+      <p class="pdesc">A focused catalogue, one niche, full system.</p>
+      <div class="pprice">
+        <div class="pamount"><sup>KES</sup>6,000</div>
+        <div class="pperiod">per month</div>
+        <div class="psetup">+ KES 5,000 setup (once)</div>
+      </div>
+      <ul class="pfeatures">
+        <li>Up to 20 products, 1 niche</li>
+        <li>Full checkout + Mpesa payment</li>
+        <li>Branded email sequence</li>
+        <li>Google review generation</li>
+        <li>Secure contact list</li>
+        <li>Email support</li>
+      </ul>
+      <a href="https://ig.me/m/breezy_smartshop" class="pcta">Start 14-day free trial</a>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pricing-badge">Most popular</div>
+      <div class="ptier">Growth</div>
+      <div class="pname">Up to 50 products</div>
+      <p class="pdesc">Active sellers ready to scale. Two niches, WhatsApp support.</p>
+      <div class="pprice">
+        <div class="pamount"><sup>KES</sup>12,000</div>
+        <div class="pperiod">per month</div>
+        <div class="psetup">+ KES 8,000 setup (once)</div>
+      </div>
+      <ul class="pfeatures">
+        <li>Up to 50 products, 2 niches</li>
+        <li>Full checkout + Mpesa payment</li>
+        <li>Branded email sequence</li>
+        <li>Google review generation</li>
+        <li>Secure contact list</li>
+        <li>WhatsApp support</li>
+      </ul>
+      <a href="https://ig.me/m/breezy_smartshop" class="pcta">Start 14-day free trial</a>
+    </div>
+    <div class="pricing-card">
+      <div class="ptier">Pro</div>
+      <div class="pname">Up to 150 products</div>
+      <p class="pdesc">High-volume sellers, multiple niches, priority support.</p>
+      <div class="pprice">
+        <div class="pamount"><sup>KES</sup>20,000</div>
+        <div class="pperiod">per month</div>
+        <div class="psetup">+ KES 12,000 setup (once)</div>
+      </div>
+      <ul class="pfeatures">
+        <li>Up to 150 products, 5 niches</li>
+        <li>Full checkout + Mpesa payment</li>
+        <li>Branded email sequence</li>
+        <li>Google review generation</li>
+        <li>Secure contact list</li>
+        <li>Priority same-day support</li>
+      </ul>
+      <a href="https://ig.me/m/breezy_smartshop" class="pcta">Start 14-day free trial</a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <div class="feyebrow">14 days, completely free</div>
+  <h2 class="fheadline">See it work on your page<br><em>before you spend anything</em></h2>
+  <p class="fsub">Tap the link. Send anything. Go through it exactly as your customers would. The trial proves it before you commit to anything.</p>
+  <a href="https://ig.me/m/breezy_smartshop" class="fbtn">Try the demo now ↗</a>
+  <p class="fnote">ig.me/m/breezy_smartshop<br>No sign-up needed · Setup fee only · Subscription starts month 2</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">BRee<span>Z</span>Y</div>
+      <p class="footer-tagline">Instagram commerce built for Kenyan sellers. Every sale leaves something behind.</p>
+    </div>
+    <div class="footer-links">
+      <div>
+        <div class="fcol-title">Product</div>
+        <ul class="fcol-links">
+          <li><a href="#outcomes">What you get</a></li>
+          <li><a href="#calculator">Calculator</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="https://ig.me/m/breezy_smartshop">Try the demo</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fcol-title">Legal</div>
+        <ul class="fcol-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Data Protection (ODPC)</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fcol-title">Contact</div>
+        <ul class="fcol-links">
+          <li><a href="https://instagram.com/breezy_smartshop">@breezy_smartshop</a></li>
+          <li><a href="mailto:breezysmartshop@gmail.com">breezysmartshop@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Breezy Smartshop · Nairobi, Kenya</span>
+    <span>Compliant with Kenya Data Protection Act (ODPC)</span>
+  </div>
+</footer>
+
+<script>
+let currentMode = 'breezy';
+let calcMode = 'trial';
+
+const breezyTicker = [
+  'Reviews that build themselves','Mpesa checkout in under a minute',
+  'Contacts you can reach again','Sales while you sleep',
+  'Zero back and forth','Confirmation email before they put their phone down',
+  'Works alongside Jumia','The experience they remember'
+];
+
+const beezyTicker = [
+  '40% review rate per sale','DM to payment in under 60 seconds',
+  '30% repeat customer rate','Zero manual intervention',
+  'Runs 24 hours a day','Every sale captured and measurable',
+  'Customer list grows with every order','Conversion not content'
+];
+
+function buildTicker(items) {
+  const all = [...items, ...items];
+  return all.map(t => `<span class="ticker-item"><span class="tdot"></span>${t}</span>`).join('');
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  document.body.classList.toggle('beezy', mode === 'beezy');
+  // Scroll to top smoothly on mode switch
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  document.getElementById('tickerInner').innerHTML = buildTicker(mode === 'breezy' ? breezyTicker : beezyTicker);
+
+  // Update footer logo
+  document.querySelector('.footer-logo').innerHTML = mode === 'breezy'
+    ? 'BRee<span style="color:var(--teal)">Z</span>Y'
+    : 'BEE<span style="color:var(--teal)">z</span>y';
+
+  // Update outcomes headline
+  document.getElementById('outcomesHeadline').innerHTML = mode === 'breezy'
+    ? 'What every sale<br>leaves <em>behind</em>'
+    : 'The metrics that<br><em>compound</em>';
+
+  // Update journey headline
+  document.getElementById('journeyHeadline').innerHTML = mode === 'breezy'
+    ? 'What your customer<br><em>actually feels</em>'
+    : 'The conversion<br><em>flow</em>';
+
+  // Update demo sub
+  document.getElementById('demoSub').textContent = mode === 'breezy'
+    ? "The best way to understand Breezy isn't reading about it — it's being the customer for two minutes. Tap, send anything, and go through it exactly as your customers would."
+    : "See the full funnel in action. From first DM to confirmation email — every step measurable, every touchpoint captured.";
+
+  // Update pain eyebrow
+  document.getElementById('painEyebrow').textContent = mode === 'breezy'
+    ? 'The gap most sellers don\'t see'
+    : 'The cost of manual selling';
+
+  calculate();
+}
+
+function setCalcMode(mode, btn) {
+  calcMode = mode;
+  document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const h = document.getElementById('calcHeadline');
+  h.innerHTML = mode === 'trial'
+    ? 'What could your store<br>look like in <em>14 days?</em>'
+    : 'What could your store<br>look like in <em>6 months?</em>';
+  calculate();
+}
+
+function fmt(n) {
+  if (n >= 1000000) return (n/1000000).toFixed(1)+'M';
+  if (n >= 1000) return Math.round(n/1000)+'K';
+  return n;
+}
+
+function calculate() {
+  const sales = parseInt(document.getElementById('sales').value);
+  const aov = parseInt(document.getElementById('aov').value);
+
+  document.getElementById('salesVal').textContent = fmt(sales);
+  document.getElementById('aovVal').textContent = fmt(aov);
+  document.getElementById('followersVal').textContent = fmt(parseInt(document.getElementById('followers').value));
+
+  if (calcMode === 'trial') {
+    const ts = Math.round(sales * 0.5);
+    const tr = Math.round(ts * 0.4);
+    const th = Math.max(1, Math.round((ts * 12) / 60));
+
+    document.getElementById('rl1').textContent = 'Sales closed in 14 days';
+    document.getElementById('rv1').innerHTML = ts + ' <span>sales</span>';
+    document.getElementById('rn1').textContent = 'Real orders, real Mpesa payouts — within the free trial.';
+    document.getElementById('rl2').textContent = 'Contacts added to your list';
+    document.getElementById('rv2').innerHTML = ts + ' <span>people</span>';
+    document.getElementById('rn2').textContent = 'Names, emails and numbers — reachable anytime new stock arrives.';
+    document.getElementById('rl3').textContent = 'Google review opportunities';
+    document.getElementById('rv3').innerHTML = tr + ' <span>reviews</span>';
+    document.getElementById('rn3').textContent = 'Every delivery triggers a nudge. Your profile starts building in the trial.';
+    document.getElementById('rl4').textContent = 'Hours freed in 14 days';
+    document.getElementById('rv4').innerHTML = th + ' <span>hrs</span>';
+    document.getElementById('rn4').textContent = 'Manual confirmations, payment checks, follow-ups — all automated.';
+    document.getElementById('trialStrong').textContent = 'Start your 14-day free trial';
+    document.getElementById('trialSub').textContent = 'See these numbers on your own page — no subscription until month 2.';
+  } else {
+    let total = 0, m = sales;
+    const months = [];
+    for (let i = 0; i < 6; i++) { months.push(m); total += m; m = Math.round(m * 1.15); }
+    const rev6 = months[5] * aov;
+
+    document.getElementById('rl1').textContent = 'Total sales over 6 months';
+    document.getElementById('rv1').innerHTML = fmt(total) + ' <span>sales</span>';
+    document.getElementById('rn1').textContent = 'Growing month on month as reviews attract more customers.';
+    document.getElementById('rl2').textContent = 'Contacts in your list';
+    document.getElementById('rv2').innerHTML = fmt(Math.round(total * 0.85)) + ' <span>people</span>';
+    document.getElementById('rn2').textContent = 'Reachable anytime — new stock, re-engagement, repeat sales.';
+    document.getElementById('rl3').textContent = 'Google reviews generated';
+    document.getElementById('rv3').innerHTML = fmt(Math.round(total * 0.4)) + ' <span>reviews</span>';
+    document.getElementById('rn3').textContent = 'A profile that sells for you — built automatically, one sale at a time.';
+    document.getElementById('rl4').textContent = 'Month 6 monthly revenue';
+    document.getElementById('rv4').innerHTML = 'KES <span>' + fmt(rev6) + '</span>';
+    document.getElementById('rn4').textContent = 'Compound growth from reviews, repeat contacts and higher conversion.';
+    document.getElementById('trialStrong').textContent = 'The trial is where it starts';
+    document.getElementById('trialSub').textContent = 'Every month shown above compounds from day one of the free trial.';
+
+    updateBars(months);
+  }
+}
+
+function updateBars(months) {
+  const bars = document.querySelectorAll('.compound-bar');
+  const max = Math.max(...months);
+  bars.forEach((bar, i) => {
+    const h = Math.max(20, Math.round((months[i] / max) * 196));
+    bar.style.height = h + 'px';
+    bar.querySelector('.cbar-val').textContent = months[i];
+  });
+}
+
+// Init
+document.getElementById('tickerInner').innerHTML = buildTicker(breezyTicker);
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+calculate();
+</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account Safety — Breezy Smartshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0A0B;--paper:#F5F2ED;--surface:#FFFFFF;--teal:#1ABFA0;--teal-d:#0D9C82;--teal-f:rgba(26,191,160,0.08);--teal-b:rgba(26,191,160,0.20);--muted:#6B6860;--border:rgba(10,10,11,0.08);--border-s:rgba(10,10,11,0.14);--green-f:rgba(26,191,100,0.08);--green-b:rgba(26,191,100,0.20);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;}
+nav{position:sticky;top:0;background:rgba(245,242,237,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:16px 48px;display:flex;align-items:center;justify-content:space-between;z-index:10;}
+.nav-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--ink);text-decoration:none;letter-spacing:-0.5px;}
+.nav-logo span{color:var(--teal);}
+.nav-back{font-size:12px;font-weight:600;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.2s;}
+.nav-back:hover{color:var(--ink);}
+.container{max-width:720px;margin:0 auto;padding:64px 48px 96px;}
+.doc-eyebrow{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal-d);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.doc-eyebrow::before{content:'';width:20px;height:1.5px;background:var(--teal);}
+h1{font-family:'Instrument Serif',serif;font-size:clamp(36px,5vw,52px);line-height:1.1;letter-spacing:-1.5px;color:var(--ink);margin-bottom:12px;}
+.doc-meta{font-size:13px;color:var(--muted);margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--border);}
+.hero-answer{font-size:17px;color:var(--muted);line-height:1.85;margin-bottom:48px;padding:28px 32px;background:var(--ink);border-radius:16px;color:rgba(245,242,237,0.65);}
+.hero-answer strong{color:#F5F2ED;}
+h2{font-family:'Instrument Serif',serif;font-size:26px;letter-spacing:-0.5px;color:var(--ink);margin:48px 0 16px;}
+p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:16px;}
+p:last-child{margin-bottom:0;}
+ul{margin:0 0 16px 20px;}
+ul li{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:8px;}
+.safe-card{background:var(--surface);border:1.5px solid var(--border-s);border-radius:16px;padding:24px 28px;margin-bottom:16px;display:flex;align-items:flex-start;gap:18px;}
+.safe-card-icon{width:40px;height:40px;border-radius:10px;background:var(--teal-f);border:1px solid var(--teal-b);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.safe-card-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.safe-card-body{font-size:13px;color:var(--muted);line-height:1.65;}
+.rule-row{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);}
+.rule-row:last-child{border-bottom:none;}
+.rule-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+.rule-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.rule-body{font-size:13px;color:var(--muted);line-height:1.6;}
+.api-block{background:rgba(26,191,160,0.05);border:1.5px solid var(--teal-b);border-radius:14px;padding:24px 28px;margin:32px 0;}
+.api-block-title{font-family:'Instrument Serif',serif;font-size:20px;color:var(--ink);margin-bottom:10px;}
+.api-block p{margin-bottom:8px;}
+.contact-block{margin-top:48px;padding:28px 32px;background:var(--ink);border-radius:16px;}
+.contact-block h3{font-family:'Instrument Serif',serif;font-size:22px;color:#F5F2ED;margin-bottom:8px;}
+.contact-block p{color:rgba(245,242,237,0.6);font-size:14px;margin-bottom:4px;}
+.contact-block a{color:var(--teal);text-decoration:none;font-weight:600;}
+footer{text-align:center;padding:32px 48px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);}
+@media(max-width:700px){nav{padding:14px 20px;}.container{padding:48px 20px 72px;}h1{font-size:32px;}.safe-card{flex-direction:column;gap:12px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">BEE<span>zy</span></a>
+  <a href="index.html" class="nav-back">← Back to site</a>
+</nav>
+<div class="container">
+  <div class="doc-eyebrow">Account Safety</div>
+  <h1>Will this get my Instagram account banned?</h1>
+  <p class="doc-meta">The question every seller asks — answered honestly.</p>
+
+  <div class="hero-answer">
+    <strong>The short answer: No.</strong> Breezy operates through Instagram's official business messaging infrastructure — the same system Meta built and approves for business automation. Every message the system sends is a direct response to something your customer did first. Instagram cannot flag that as spam because it isn't spam. Your account is not at risk.
+  </div>
+
+  <h2>Why it's safe</h2>
+
+  <div class="safe-card">
+    <div class="safe-card-icon">🔑</div>
+    <div>
+      <div class="safe-card-title">Built on Instagram's official API</div>
+      <div class="safe-card-body">Breezy connects to your Instagram account through Meta's official Messenger API for Business — the same infrastructure used by major brands worldwide. Meta knows your messages are automated and has explicitly approved this use. There are no third-party scripts, no browser extensions, no bots pretending to be a human clicking around your account.</div>
+    </div>
+  </div>
+
+  <div class="safe-card">
+    <div class="safe-card-icon">💬</div>
+    <div>
+      <div class="safe-card-title">Every message is customer-initiated</div>
+      <div class="safe-card-body">The Breezy system never sends a message unless a customer sent one first. They DM your page, the system responds. They tap a button, the system responds. They complete a payment, the system confirms it. Every single action in the flow is triggered by the customer — the system only ever reacts. Instagram's spam definition is sending messages people didn't ask for. None of Breezy's messages qualify.</div>
+    </div>
+  </div>
+
+  <div class="safe-card">
+    <div class="safe-card-icon">⏱️</div>
+    <div>
+      <div class="safe-card-title">Within Instagram's messaging rules</div>
+      <div class="safe-card-body">Instagram's API allows businesses to respond to customers within 24 hours of their last message. Every Breezy interaction happens within an active conversation the customer started. The system also respects Instagram's rate limits — a maximum of 200 automated messages per hour, which a typical store would need hundreds of simultaneous customers to reach.</div>
+    </div>
+  </div>
+
+  <div class="safe-card">
+    <div class="safe-card-icon">🏪</div>
+    <div>
+      <div class="safe-card-title">Your account stays your account</div>
+      <div class="safe-card-body">Breezy does not log into your Instagram account, does not have your password, and does not perform actions on your behalf outside of the messaging API. Your account's posts, followers, profile and settings are completely unaffected. The only thing Breezy accesses is your business inbox — to respond to customers who message you.</div>
+    </div>
+  </div>
+
+  <h2>What Instagram actually bans</h2>
+  <p>Most Instagram account restrictions come from these causes — none of which apply to Breezy:</p>
+
+  <div style="border:1px solid var(--border);border-radius:14px;padding:8px 20px;margin-bottom:24px;">
+    <div class="rule-row">
+      <span class="rule-icon">❌</span>
+      <div><div class="rule-title">Unofficial third-party tools</div><div class="rule-body">Chrome extensions or desktop apps that log into Instagram and simulate human clicks. These violate Instagram's Terms of Use. Breezy uses the official API.</div></div>
+    </div>
+    <div class="rule-row">
+      <span class="rule-icon">❌</span>
+      <div><div class="rule-title">Mass unsolicited DMs</div><div class="rule-body">Sending cold messages to people who haven't interacted with you. Breezy only sends messages in response to customer actions — never cold.</div></div>
+    </div>
+    <div class="rule-row">
+      <span class="rule-icon">❌</span>
+      <div><div class="rule-title">Content policy violations</div><div class="rule-body">Hate speech, misinformation, counterfeit products. Breezy is a commerce tool — the content of your product catalogue is your responsibility.</div></div>
+    </div>
+    <div class="rule-row">
+      <span class="rule-icon">❌</span>
+      <div><div class="rule-title">Fake engagement</div><div class="rule-body">Buying likes, followers or comments. Breezy has nothing to do with engagement — it only touches your business inbox.</div></div>
+    </div>
+  </div>
+
+  <h2>The technical reason it's safe</h2>
+
+  <div class="api-block">
+    <div class="api-block-title">How the API connection works</div>
+    <p>When you connect your Instagram account to Breezy, you authorise the connection through Meta's official login flow — the same way you'd connect any approved business tool. Meta issues an access token that allows the system to read and reply to messages in your business inbox. That token can be revoked by you at any time from your Instagram settings under Connected Apps.</p>
+    <p>Meta monitors all API usage in real time. If a connected app were doing anything against their policies, Meta would revoke its API access — not ban your account. Your account is separate from the app's compliance status.</p>
+    <p>Think of it the same way a card payment terminal connects to Visa's network. The terminal is a separate approved piece of infrastructure — if the terminal had a problem, Visa would suspend the terminal, not cancel your bank account.</p>
+  </div>
+
+  <h2>One thing that could cause a restriction</h2>
+  <p>The only scenario where your account could face a temporary messaging restriction is if you personally sent a very high volume of cold DMs to people who don't follow you — from your own account, manually, before or independently of Breezy. This is a restriction on outbound cold messaging and is unrelated to the Breezy system.</p>
+  <p>If that happens, the restriction is temporary (typically 24-72 hours), it affects your ability to manually DM strangers, and it has no impact on Breezy responding to customers who message you first.</p>
+
+  <h2>Still have questions?</h2>
+  <div class="contact-block">
+    <h3>Ask us directly</h3>
+    <p>If you have specific concerns about your account or setup, we're happy to walk you through exactly how the connection works before you commit to anything.</p>
+    <p style="margin-top:12px;"><a href="mailto:breezysmartshop@gmail.com">breezysmartshop@gmail.com</a></p>
+    <p><a href="https://instagram.com/breezy_smartshop">@breezy_smartshop</a></p>
+  </div>
+</div>
+<footer>© 2026 Breezy Smartshop · Nairobi, Kenya · Built on Instagram's official Messenger API</footer>
+</body>
+</html>

@@ -1,0 +1,52 @@
+cd /workspaces/BReeZY
+cat > test-client.html << 'EOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo Store — Powered by Breezy</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Syne',sans-serif;background:#F5F2ED;color:#0A0A0B;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;}
+.logo{font-family:'Caveat',cursive;font-size:42px;font-weight:700;margin-bottom:8px;}
+.logo span{color:#1ABFA0;}
+.tagline{font-size:16px;color:#6B6860;margin-bottom:48px;}
+.card{background:#FFFFFF;border:1px solid rgba(10,10,11,0.08);border-radius:20px;padding:40px;max-width:440px;width:100%;text-align:center;}
+.card h2{font-size:20px;font-weight:700;margin-bottom:8px;}
+.card p{font-size:14px;color:#6B6860;line-height:1.6;margin-bottom:28px;}
+.btn{display:inline-block;padding:14px 32px;background:#1ABFA0;color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;transition:background 0.2s;}
+.btn:hover{background:#0D9C82;}
+.powered{margin-top:40px;font-size:12px;color:#6B6860;}
+.powered span{color:#1ABFA0;font-weight:600;}
+.seller-link{margin-top:16px;font-size:12px;color:#6B6860;}
+.seller-link a{color:#1ABFA0;text-decoration:none;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="logo">BRee<span>Z</span>Y</div>
+<div class="tagline">Order easy. Breathe easy.</div>
+<div class="card">
+  <h2>This could be your store 👋</h2>
+  <p>Browse real products, pay securely, get a confirmation email — all in a conversation. No app, no website needed. Just chat.</p>
+  <button class="btn" onclick="openWidget()">Try it yourself →</button>
+</div>
+<div class="powered">Powered by <span>Breezy</span></div>
+<div class="seller-link"><a href="/dashboard.html">Seller login</a></div>
+
+<script>
+window.addEventListener('load',function(){
+  var s=document.createElement('script');
+  s.src='https://www.uchat.com.au/js/widget/3mqg0rm2p5hxf5jh/popup.js';
+  s.onload=function(){console.log('Widget ready');};
+  document.head.appendChild(s);
+});
+function openWidget(){
+  if(window.UchatWidget){window.UchatWidget.open();}
+  else{setTimeout(function(){if(window.UchatWidget)window.UchatWidget.open();},1000);}
+}
+</script>
+</body>
+</html>
+EOF

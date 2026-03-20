@@ -3,1074 +3,647 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BReeZY — Shopping on Instagram should feel like this</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<title>Breezy — Your store. In a conversation.</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
-/* ── TOKENS ── */
-:root {
-  /* Breezy (light) */
-  --b-ink:#0A0A0B; --b-paper:#F5F2ED; --b-surface:#FFFFFF; --b-surface2:#F0EDE8;
-  --b-teal:#1ABFA0; --b-teal-d:#0D9C82; --b-teal-f:rgba(26,191,160,0.09); --b-teal-b:rgba(26,191,160,0.22);
-  --b-coral:#E8604A; --b-gold:#D4A84B; --b-gold-f:rgba(212,168,75,0.10);
-  --b-muted:#6B6860; --b-border:rgba(10,10,11,0.08); --b-border-s:rgba(10,10,11,0.15);
-  /* Beezy (dark) */
-  --z-ink:#E8E4DE; --z-paper:#0D0D0E; --z-surface:#161618; --z-surface2:#1C1C1F;
-  --z-teal:#1ABFA0; --z-teal-d:#0D9C82; --z-teal-f:rgba(26,191,160,0.10); --z-teal-b:rgba(26,191,160,0.20);
-  --z-gold:#D4A84B; --z-gold-f:rgba(212,168,75,0.08);
-  --z-muted:#6B6860; --z-border:rgba(232,228,222,0.07); --z-border-s:rgba(232,228,222,0.14);
-}
-
-/* ── MODE VARIABLES ── */
-body { --ink:var(--b-ink); --paper:var(--b-paper); --surface:var(--b-surface); --surface2:var(--b-surface2); --teal:var(--b-teal); --teal-d:var(--b-teal-d); --teal-f:var(--b-teal-f); --teal-b:var(--b-teal-b); --gold:var(--b-gold); --gold-f:var(--b-gold-f); --muted:var(--b-muted); --border:var(--b-border); --border-s:var(--b-border-s); }
-body.beezy { --ink:var(--z-ink); --paper:var(--z-paper); --surface:var(--z-surface); --surface2:var(--z-surface2); --teal:var(--z-teal); --teal-d:var(--z-teal-d); --teal-f:var(--z-teal-f); --teal-b:var(--z-teal-b); --gold:var(--z-gold); --gold-f:var(--z-gold-f); --muted:var(--z-muted); --border:var(--z-border); --border-s:var(--z-border-s); }
-
+:root{--ink:#0A0A0B;--teal:#1ABFA0;--teal-d:#0D9C82;--teal-f:rgba(26,191,160,0.08);--teal-b:rgba(26,191,160,0.15);--surface:#111113;--border:rgba(255,255,255,0.06);--border-s:rgba(255,255,255,0.1);--text:#FFFFFF;--text-2:rgba(255,255,255,0.55);--text-3:rgba(255,255,255,0.25);}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;transition:background 0.5s ease,color 0.5s ease;}
+body{font-family:'DM Sans',Helvetica,Arial,sans-serif;background:var(--ink);color:var(--text);overflow-x:hidden;}
 
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,11,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{font-size:13px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--text);}
+.nav-logo span{color:var(--teal);}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{font-size:13px;font-weight:400;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--text);}
+.nav-cta{padding:9px 20px;background:var(--teal);color:var(--ink)!important;font-weight:600!important;font-size:11px!important;letter-spacing:2px;text-transform:uppercase;}
 
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:all 0.5s ease;}
-body:not(.beezy) nav{background:rgba(245,242,237,0.88);}
-body.beezy nav{background:rgba(13,13,14,0.92);}
+.hero{min-height:100vh;padding:120px 48px 80px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(26,191,160,0.07) 0%,transparent 70%);pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid var(--teal-b);background:var(--teal-f);border-radius:100px;font-size:12px;font-weight:500;color:var(--teal);letter-spacing:0.5px;margin-bottom:32px;}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--teal);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.75);}}
+.hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(40px,6vw,76px);font-weight:400;line-height:1.06;color:var(--text);margin-bottom:24px;max-width:760px;}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-sub{font-size:17px;font-weight:300;color:var(--text-2);line-height:1.75;max-width:500px;margin-bottom:32px;}
+.hero-instruction{background:var(--surface);border:1px solid var(--border-s);border-radius:12px;padding:20px 28px;max-width:420px;margin-bottom:32px;}
+.hero-instruction p{font-size:14px;font-weight:400;color:var(--text-2);line-height:1.7;margin-bottom:10px;}
+.hero-instruction p:last-child{margin-bottom:0;}
+.hero-instruction strong{color:var(--text);font-weight:500;}
+.hero-instruction .teal{color:var(--teal);font-weight:500;}
+.hero-scroll{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;opacity:0.35;transition:opacity 0.2s;}
+.hero-scroll:hover{opacity:0.6;}
+.hero-scroll span{font-size:10px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:var(--text-3);}
+.scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--teal),transparent);}
 
-.nav-left{display:flex;align-items:center;gap:24px;}
+.intro-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:80px 48px;}
+.intro-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.section-label{font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--teal);margin-bottom:20px;}
+.section-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(26px,3.5vw,44px);font-weight:400;line-height:1.15;color:var(--text);margin-bottom:16px;}
+.section-title em{font-style:italic;color:var(--teal);}
+.section-sub{font-size:15px;font-weight:300;color:var(--text-2);line-height:1.75;}
+.outcome-list{list-style:none;}
+.outcome-list li{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);font-size:14px;font-weight:400;color:var(--text-2);line-height:1.6;}
+.outcome-list li:last-child{border-bottom:none;}
+.outcome-list li::before{content:'→';color:var(--teal);font-size:13px;margin-top:3px;flex-shrink:0;}
+.outcome-list li strong{color:var(--text);font-weight:500;}
 
-/* LOGOS */
-.logo-breezy{font-family:'Caveat',cursive;font-size:28px;font-weight:700;line-height:1;transition:opacity 0.4s,transform 0.4s;}
-.logo-breezy .BR{color:var(--b-ink);}
-.logo-breezy .ee{color:var(--b-teal);}
-.logo-breezy .Z{color:var(--b-coral);}
-.logo-breezy .Y{color:var(--b-ink);}
+.calc-section{padding:100px 48px;background:var(--ink);}
+.calc-inner{max-width:900px;margin:0 auto;}
+.calc-card{background:var(--surface);border:1px solid var(--border-s);padding:52px;margin-top:48px;}
+.calc-label{font-size:13px;font-weight:500;color:var(--text-2);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
+.calc-label span{font-family:'DM Serif Display',Georgia,serif;font-size:32px;font-weight:400;color:var(--teal);}
+input[type=range]{width:100%;-webkit-appearance:none;height:2px;background:var(--border-s);outline:none;margin-bottom:40px;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:var(--teal);border-radius:50%;cursor:pointer;}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;background:var(--teal);border-radius:50%;cursor:pointer;border:none;}
+.calc-divider{height:1px;background:var(--border);margin:0 0 40px;}
+.projections-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.proj-card{background:var(--ink);padding:28px 24px;}
+.proj-card.mid{background:var(--surface);}
+.proj-period{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text-3);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.proj-stat{margin-bottom:16px;}
+.proj-stat-value{font-family:'DM Serif Display',Georgia,serif;font-size:34px;font-weight:400;color:var(--text);line-height:1;}
+.proj-stat-value.teal{color:var(--teal);}
+.proj-stat-label{font-size:11px;font-weight:300;color:var(--text-3);margin-top:4px;line-height:1.4;}
+.calc-cta{margin-top:36px;padding:24px 28px;background:var(--teal-f);border:1px solid var(--teal-b);display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.calc-cta-text{font-size:14px;font-weight:300;color:var(--text-2);line-height:1.65;}
+.calc-cta-text strong{color:var(--text);font-weight:500;}
+.calc-cta-text .teal{color:var(--teal);font-weight:500;}
+.calc-cta-btn{flex-shrink:0;padding:13px 24px;background:var(--teal);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;white-space:nowrap;cursor:pointer;border:none;transition:background 0.2s;}
+.calc-cta-btn:hover{background:var(--teal-d);}
 
-.logo-beezy{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;line-height:1;letter-spacing:-0.5px;transition:opacity 0.4s,transform 0.4s;display:flex;align-items:baseline;gap:1px;}
-.logo-beezy .BEE{color:var(--z-teal);font-size:22px;}
-.logo-beezy .zy{color:rgba(232,228,222,0.45);font-size:14px;font-weight:600;letter-spacing:0px;}
+.reviews-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:100px 48px;}
+.reviews-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.review-timeline{margin-top:32px;}
+.timeline-row{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
+.timeline-row:last-child{border-bottom:none;}
+.timeline-period{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-3);width:90px;flex-shrink:0;}
+.timeline-bar-wrap{flex:1;height:3px;background:rgba(255,255,255,0.05);overflow:hidden;}
+.timeline-bar{height:100%;background:var(--teal);transition:width 0.6s ease;}
+.timeline-value{font-family:'DM Serif Display',Georgia,serif;font-size:22px;font-weight:400;color:var(--text);width:48px;text-align:right;flex-shrink:0;}
+.upsell-box{margin-top:28px;padding:22px;background:var(--ink);border:1px solid var(--border-s);}
+.upsell-box p{font-size:13px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:14px;}
+.upsell-tag{display:inline-block;padding:6px 14px;background:var(--teal-f);border:1px solid var(--teal-b);font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal);}
 
-body:not(.beezy) .logo-beezy{display:none;}
-body.beezy .logo-breezy{display:none;}
-body.beezy .logo-beezy{display:flex;}
+.steps-section{padding:100px 48px;}
+.steps-inner{max-width:1100px;margin:0 auto;}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-top:56px;}
+.step-num{font-family:'DM Serif Display',Georgia,serif;font-size:72px;font-weight:400;color:rgba(255,255,255,0.03);line-height:1;margin-bottom:16px;}
+.step-accent{width:24px;height:2px;background:var(--teal);margin-bottom:18px;}
+.step-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px;}
+.step-desc{font-size:13px;font-weight:300;color:var(--text-2);line-height:1.7;}
 
-/* TOGGLE */
-.mode-toggle{display:flex;align-items:center;background:var(--surface);border:1px solid var(--border-s);border-radius:100px;padding:3px;gap:2px;transition:all 0.4s;}
-.toggle-btn{padding:7px 18px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;border:none;background:transparent;font-family:'Syne',sans-serif;transition:all 0.3s;letter-spacing:0.3px;white-space:nowrap;}
-.toggle-btn.breezy-btn{color:var(--muted);}
-.toggle-btn.beezy-btn{color:var(--muted);}
-body:not(.beezy) .toggle-btn.breezy-btn{background:var(--b-ink);color:var(--b-paper);}
-body.beezy .toggle-btn.beezy-btn{background:var(--z-teal);color:white;}
+.pricing-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:100px 48px;}
+.pricing-inner{max-width:1100px;margin:0 auto;}
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:56px;}
+.price-card{background:var(--ink);padding:36px 28px;position:relative;}
+.price-card.featured{background:#0D1A18;}
+.price-card.featured::before{content:'Most Popular';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--teal);color:var(--ink);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;white-space:nowrap;}
+.price-tier{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text-3);margin-bottom:20px;}
+.price-amount{font-family:'DM Serif Display',Georgia,serif;font-size:38px;font-weight:400;color:var(--text);line-height:1;margin-bottom:4px;}
+.price-period{font-size:12px;font-weight:300;color:var(--text-3);margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.price-features{list-style:none;margin-bottom:32px;}
+.price-features li{padding:9px 0;border-bottom:1px solid var(--border);font-size:12px;font-weight:300;color:var(--text-2);display:flex;align-items:flex-start;gap:8px;line-height:1.5;}
+.price-features li:last-child{border-bottom:none;}
+.price-features li::before{content:'✓';color:var(--teal);font-size:11px;flex-shrink:0;margin-top:1px;}
+.price-features li.muted{color:var(--text-3);}
+.price-features li.muted::before{color:var(--text-3);content:'–';}
+.btn-price{display:block;width:100%;padding:12px;text-align:center;border:1px solid var(--border-s);background:transparent;color:var(--text-2);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:all 0.2s;}
+.btn-price:hover{border-color:var(--teal);color:var(--teal);}
+.btn-price.primary{background:var(--teal);border-color:var(--teal);color:var(--ink);}
+.btn-price.primary:hover{background:var(--teal-d);}
+.pricing-note{margin-top:20px;text-align:center;font-size:12px;font-weight:300;color:var(--text-3);}
+.pricing-note a{color:var(--teal);text-decoration:none;}
 
-.toggle-mode-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-left:4px;transition:color 0.4s;}
+.instagram-section{padding:100px 48px;text-align:center;position:relative;overflow:hidden;}
+.instagram-section::before{content:'';position:absolute;bottom:-100px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(26,191,160,0.05) 0%,transparent 70%);pointer-events:none;}
+.instagram-inner{max-width:640px;margin:0 auto;position:relative;}
+.insta-big{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(80px,14vw,140px);font-weight:400;color:rgba(255,255,255,0.04);line-height:1;margin-bottom:-10px;}
+.insta-label{font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--teal);margin-bottom:20px;}
+.insta-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(24px,3.5vw,40px);font-weight:400;color:var(--text);margin-bottom:16px;line-height:1.25;}
+.insta-sub{font-size:14px;font-weight:300;color:var(--text-2);line-height:1.8;margin-bottom:24px;}
+.insta-flow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:24px 0;}
+.flow-step{padding:8px 14px;background:rgba(255,255,255,0.04);border:1px solid var(--border-s);font-size:12px;font-weight:400;color:var(--text-2);}
+.flow-arrow{color:var(--teal);font-size:14px;}
+.insta-badge{display:inline-block;padding:8px 20px;border:1px solid var(--border-s);font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--text-3);}
 
-.nav-right{display:flex;align-items:center;gap:28px;}
-.nav-links{display:flex;align-items:center;gap:28px;list-style:none;}
-.nav-links a{font-size:12px;font-weight:500;color:var(--muted);text-decoration:none;transition:color 0.2s;}
-.nav-links a:hover{color:var(--ink);}
-.nav-cta{background:var(--teal)!important;color:white!important;padding:9px 20px;border-radius:100px;font-size:12px!important;font-weight:700!important;transition:background 0.2s!important;}
-.nav-cta:hover{background:var(--teal-d)!important;}
+.faq-section{background:var(--surface);border-top:1px solid var(--border);padding:100px 48px;}
+.faq-inner{max-width:680px;margin:0 auto;}
+.faq-item{border-bottom:1px solid var(--border);padding:22px 0;}
+.faq-q{font-size:15px;font-weight:500;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;}
+.faq-icon{font-size:20px;font-weight:300;color:var(--teal);flex-shrink:0;transition:transform 0.2s;line-height:1;}
+.faq-a{font-size:14px;font-weight:300;color:var(--text-2);line-height:1.75;margin-top:12px;display:none;}
+.faq-item.open .faq-a{display:block;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
 
-/* FLOAT PILL */
-.float-demo{position:fixed;bottom:32px;right:32px;z-index:200;background:var(--teal);color:white;padding:13px 22px;border-radius:100px;font-size:13px;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(26,191,160,0.30);transition:all 0.25s;opacity:0;animation:floatIn 0.5s ease forwards 1.5s;}
-.float-demo:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(26,191,160,0.42);}
-.fdot{width:7px;height:7px;border-radius:50%;background:white;animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.75);}}
-@keyframes floatIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.final-cta{padding:120px 48px;text-align:center;border-top:1px solid var(--border);position:relative;overflow:hidden;}
+.final-cta::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(26,191,160,0.06) 0%,transparent 70%);pointer-events:none;}
+.final-inner{max-width:560px;margin:0 auto;position:relative;}
+.final-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,4vw,52px);font-weight:400;color:var(--text);margin-bottom:16px;line-height:1.15;}
+.final-sub{font-size:15px;font-weight:300;color:var(--text-2);line-height:1.7;margin-bottom:36px;}
+.btn-main{display:inline-block;padding:16px 36px;background:var(--teal);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:background 0.2s;margin-right:12px;cursor:pointer;border:none;}
+.btn-main:hover{background:var(--teal-d);}
+.btn-ghost{display:inline-block;padding:16px 36px;border:1px solid var(--border-s);color:var(--text-2);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
 
-/* ── HERO ── */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 48px 80px;position:relative;overflow:hidden;}
-.hero-orb1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(26,191,160,0.10) 0%,transparent 70%);top:-200px;right:-150px;pointer-events:none;transition:opacity 0.5s;}
-.hero-orb2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,75,0.07) 0%,transparent 70%);bottom:-50px;left:80px;pointer-events:none;}
-
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal-d);margin-bottom:24px;opacity:0;animation:fadeUp 0.6s ease forwards 0.2s;}
-.hero-eyebrow::before{content:'';width:24px;height:1.5px;background:var(--teal);}
-
-/* Breezy hero content */
-.hero-breezy{transition:opacity 0.4s,transform 0.4s;}
-.hero-beezy{display:none;opacity:0;transition:opacity 0.4s,transform 0.4s;transform:translateY(16px);}
-body.beezy .hero-breezy{display:none;}
-body.beezy .hero-beezy{display:flex;flex-direction:column;opacity:1;transform:translateY(0);}
-
-.hero-headline{font-family:'Instrument Serif',serif;font-size:clamp(48px,6.5vw,88px);line-height:1.0;letter-spacing:-2px;color:var(--ink);max-width:760px;margin-bottom:24px;transition:color 0.5s;}
-.hero-headline em{font-style:italic;color:var(--teal);}
-
-.hero-sub{font-size:16px;font-weight:400;color:var(--muted);max-width:480px;line-height:1.75;margin-bottom:20px;transition:color 0.5s;}
-
-.hero-pain{display:inline-flex;align-items:flex-start;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 16px;max-width:480px;margin-bottom:40px;transition:all 0.5s;}
-.hero-pain-icon{font-size:15px;flex-shrink:0;margin-top:1px;}
-.hero-pain-text{font-size:13px;color:var(--muted);line-height:1.6;}
-.hero-pain-text strong{color:var(--ink);font-weight:600;}
-
-/* Beezy hero specific */
-.beezy-headline{font-family:'Syne',sans-serif;font-size:clamp(44px,6vw,82px);line-height:1.0;letter-spacing:-3px;font-weight:800;color:var(--z-ink);max-width:700px;margin-bottom:20px;}
-.beezy-headline .hl{color:var(--z-teal);}
-.beezy-headline .dim{color:rgba(232,228,222,0.3);}
-.beezy-sub{font-size:16px;font-weight:500;color:rgba(232,228,222,0.55);max-width:460px;line-height:1.7;margin-bottom:16px;}
-.beezy-sub strong{color:var(--z-ink);}
-.beezy-metrics{display:flex;gap:32px;margin-bottom:40px;flex-wrap:wrap;}
-.beezy-metric{display:flex;flex-direction:column;gap:3px;}
-.beezy-metric-val{font-family:'Instrument Serif',serif;font-size:36px;font-style:italic;color:var(--z-teal);line-height:1;}
-.beezy-metric-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,222,0.35);}
-
-.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
-.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:white;padding:15px 30px;border-radius:100px;font-size:14px;font-weight:700;text-decoration:none;transition:all 0.25s;border:1.5px solid var(--teal);box-shadow:0 6px 24px rgba(26,191,160,0.22);}
-.btn-primary:hover{background:var(--teal-d);border-color:var(--teal-d);transform:translateY(-2px);}
-.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink);padding:15px 30px;border-radius:100px;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.25s;border:1.5px solid var(--border-s);}
-.btn-secondary:hover{border-color:var(--ink);transform:translateY(-1px);}
-
-/* ── TICKER ── */
-.ticker{padding:12px 0;overflow:hidden;white-space:nowrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:all 0.5s;}
-body:not(.beezy) .ticker{background:var(--b-ink);}
-body.beezy .ticker{background:var(--z-surface2);}
-.ticker-inner{display:inline-flex;animation:ticker 38s linear infinite;}
-.ticker-item{display:inline-flex;align-items:center;gap:14px;padding:0 36px;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.5s;}
-body:not(.beezy) .ticker-item{color:rgba(245,242,237,0.55);}
-body.beezy .ticker-item{color:rgba(232,228,222,0.35);}
-.tdot{width:4px;height:4px;border-radius:50%;background:var(--teal);flex-shrink:0;}
-@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-
-/* ── SHARED SECTION ── */
-section{padding:96px 48px;transition:background 0.5s;}
-.section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal-d);margin-bottom:18px;}
-.section-label::before{content:'';width:20px;height:1.5px;background:var(--teal);}
-.section-headline{font-family:'Instrument Serif',serif;font-size:clamp(32px,4vw,54px);line-height:1.1;letter-spacing:-1.5px;color:var(--ink);margin-bottom:14px;transition:color 0.5s;}
-.section-headline em{font-style:italic;color:var(--teal);}
-.section-sub{font-size:15px;color:var(--muted);max-width:460px;line-height:1.7;margin-top:10px;transition:color 0.5s;}
-
-/* ── PAIN BRIDGE ── */
-.pain-bridge{padding:72px 48px;text-align:center;transition:background 0.5s;}
-body:not(.beezy) .pain-bridge{background:var(--b-ink);}
-body.beezy .pain-bridge{background:var(--z-surface2);border-top:1px solid var(--z-border);border-bottom:1px solid var(--z-border);}
-.pain-bridge-inner{max-width:660px;margin:0 auto;}
-.pain-eyebrow{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:18px;}
-
-/* Breezy pain */
-.pain-breezy{transition:opacity 0.4s;}
-body.beezy .pain-breezy{display:none;}
-.pain-headline-b{font-family:'Instrument Serif',serif;font-size:clamp(26px,3.5vw,42px);line-height:1.2;letter-spacing:-1px;color:#F5F2ED;margin-bottom:14px;}
-.pain-headline-b em{font-style:italic;color:rgba(245,242,237,0.38);}
-.pain-body-b{font-size:15px;color:rgba(245,242,237,0.5);line-height:1.85;max-width:520px;margin:0 auto;}
-.pain-body-b strong{color:#F5F2ED;}
-
-/* Beezy pain */
-.pain-beezy{display:none;transition:opacity 0.4s;}
-body.beezy .pain-beezy{display:block;}
-.pain-headline-z{font-family:'Syne',sans-serif;font-size:clamp(22px,3vw,36px);line-height:1.2;letter-spacing:-1px;font-weight:700;color:var(--z-ink);margin-bottom:14px;}
-.pain-stats{display:flex;justify-content:center;gap:48px;margin:28px 0;flex-wrap:wrap;}
-.pain-stat{text-align:center;}
-.pain-stat-val{font-family:'Instrument Serif',serif;font-size:48px;font-style:italic;color:var(--z-teal);line-height:1;}
-.pain-stat-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,222,0.35);margin-top:4px;}
-.pain-body-z{font-size:14px;color:rgba(232,228,222,0.45);line-height:1.8;max-width:500px;margin:0 auto;}
-.pain-body-z strong{color:var(--z-ink);}
-
-/* ── OUTCOMES ── */
-.outcomes{border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:background 0.5s;}
-body:not(.beezy) .outcomes{background:var(--b-surface);}
-body.beezy .outcomes{background:var(--z-surface);}
-.outcomes-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-top:56px;}
-.outcome-card{padding:44px 36px;border-right:1px solid var(--border);position:relative;overflow:hidden;transition:background 0.3s;}
-.outcome-card:last-child{border-right:none;}
-.outcome-card:hover{background:var(--teal-f);}
-.outcome-num{font-family:'Instrument Serif',serif;font-size:80px;line-height:1;color:var(--teal);opacity:0.08;position:absolute;top:16px;right:18px;font-style:italic;pointer-events:none;}
-.outcome-icon{width:42px;height:42px;border-radius:11px;background:var(--teal-f);border:1px solid var(--teal-b);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:20px;}
-.outcome-title{font-family:'Instrument Serif',serif;font-size:25px;line-height:1.2;letter-spacing:-0.5px;color:var(--ink);margin-bottom:10px;transition:color 0.5s;}
-
-/* Breezy outcome body */
-.outcome-body-b{font-size:14px;color:var(--muted);line-height:1.75;transition:color 0.5s;}
-body.beezy .outcome-body-b{display:none;}
-
-/* Beezy outcome body */
-.outcome-body-z{display:none;font-size:13px;color:var(--muted);line-height:1.75;}
-body.beezy .outcome-body-z{display:block;}
-
-.outcome-proof{margin-top:16px;padding:11px 13px;background:var(--gold-f);border:1px solid rgba(212,168,75,0.16);border-radius:8px;font-size:12px;font-weight:600;line-height:1.5;}
-body:not(.beezy) .outcome-proof{color:#9A7A30;}
-body.beezy .outcome-proof{color:var(--z-gold);}
-
-/* ── JOURNEY ── */
-.journey{transition:background 0.5s;}
-body:not(.beezy) .journey{background:var(--b-ink);}
-body.beezy .journey{background:var(--z-paper);}
-.journey .section-label{color:var(--teal);}
-.journey .section-label::before{background:var(--teal);}
-body:not(.beezy) .journey .section-headline{color:#F5F2ED;}
-body.beezy .journey .section-headline{color:var(--z-ink);}
-.journey-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:52px;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color 0.5s;}
-.journey-step{padding:30px 22px;border-right:1px solid var(--border);position:relative;transition:background 0.3s;}
-.journey-step:last-child{border-right:none;}
-.journey-step-num{font-family:'Instrument Serif',serif;font-size:12px;font-style:italic;color:var(--teal);margin-bottom:12px;opacity:0.7;}
-.journey-step-icon{font-size:20px;margin-bottom:12px;display:block;}
-.journey-step-title{font-size:13px;font-weight:600;margin-bottom:7px;line-height:1.3;transition:color 0.5s;}
-body:not(.beezy) .journey-step-title{color:#F5F2ED;}
-body.beezy .journey-step-title{color:var(--z-ink);}
-.journey-step-body{font-size:11px;font-weight:400;line-height:1.6;transition:color 0.5s;}
-body:not(.beezy) .journey-step-body{color:rgba(245,242,237,0.38);}
-body.beezy .journey-step-body{color:rgba(232,228,222,0.38);}
-.jarrow{position:absolute;right:-7px;top:50%;transform:translateY(-50%);color:var(--teal);font-size:11px;opacity:0.35;z-index:1;}
-
-/* ── DEMO SPOT ── */
-.demo-spot{padding:80px 48px;text-align:center;border-top:1px solid var(--border);transition:background 0.5s;}
-body:not(.beezy) .demo-spot{background:var(--b-paper);}
-body.beezy .demo-spot{background:var(--z-surface);}
-.demo-inner{max-width:580px;margin:0 auto;}
-.demo-tag{display:inline-block;background:var(--teal-f);border:1px solid var(--teal-b);color:var(--teal-d);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:22px;}
-body.beezy .demo-tag{color:var(--z-teal);}
-.demo-headline{font-family:'Instrument Serif',serif;font-size:clamp(30px,4vw,50px);line-height:1.1;letter-spacing:-1.5px;color:var(--ink);margin-bottom:14px;transition:color 0.5s;}
-.demo-headline em{font-style:italic;color:var(--teal);}
-.demo-sub{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:32px;transition:color 0.5s;}
-.demo-link-box{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);padding:18px 34px;border-radius:14px;text-decoration:none;transition:all 0.25s;font-size:14px;font-weight:700;}
-.demo-link-box:hover{background:var(--teal);transform:translateY(-2px);box-shadow:0 12px 36px rgba(26,191,160,0.22);}
-.demo-url{font-family:'Caveat',cursive;font-size:18px;font-weight:700;color:var(--teal);margin-top:14px;display:block;transition:color 0.5s;}
-body.beezy .demo-url{color:var(--z-teal);}
-.demo-steps{display:flex;justify-content:center;gap:36px;margin-top:28px;}
-.dstep{display:flex;flex-direction:column;align-items:center;gap:6px;}
-.dstep-num{width:26px;height:26px;border-radius:50%;background:var(--teal-f);border:1px solid var(--teal-b);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal);}
-.dstep-text{font-size:11px;color:var(--muted);font-weight:500;}
-
-/* ── CALCULATOR ── */
-.calculator{border-top:1px solid var(--border);transition:background 0.5s;}
-body:not(.beezy) .calculator{background:var(--b-surface2);}
-body.beezy .calculator{background:var(--z-surface2);}
-.calc-tabs{display:flex;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:3px;width:fit-content;margin-bottom:36px;}
-.calc-tab{padding:9px 22px;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;color:var(--muted);border:none;background:none;font-family:'Syne',sans-serif;}
-.calc-tab.active{background:var(--ink);color:var(--paper);}
-body.beezy .calc-tab.active{background:var(--z-teal);color:white;}
-.calc-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start;}
-.calc-inputs{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:34px;transition:all 0.5s;}
-.calc-input-group{margin-bottom:26px;}
-.calc-input-group:last-child{margin-bottom:0;}
-.calc-label{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:9px;display:block;}
-.calc-input-row{display:flex;align-items:center;gap:14px;}
-.calc-range{flex:1;-webkit-appearance:none;height:3px;border-radius:2px;background:var(--border-s);outline:none;cursor:pointer;}
-.calc-range::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--teal);cursor:pointer;box-shadow:0 0 0 4px var(--teal-f);transition:box-shadow 0.2s;}
-.calc-range::-webkit-slider-thumb:hover{box-shadow:0 0 0 8px var(--teal-f);}
-.calc-value{font-family:'Instrument Serif',serif;font-size:24px;font-style:italic;color:var(--teal);min-width:52px;text-align:right;}
-.calc-results{display:flex;flex-direction:column;gap:14px;}
-.calc-result-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 26px;transition:border-color 0.3s,transform 0.3s,background 0.5s;}
-.calc-result-card:hover{border-color:var(--teal-b);transform:translateX(4px);}
-.calc-result-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
-.calc-result-value{font-family:'Instrument Serif',serif;font-size:36px;font-style:italic;color:var(--ink);line-height:1;margin-bottom:4px;transition:color 0.5s;}
-.calc-result-value span{font-size:15px;color:var(--teal);font-style:normal;font-family:'Syne',sans-serif;}
-.calc-result-note{font-size:12px;color:var(--muted);line-height:1.5;}
-.calc-trial-banner{background:var(--teal-f);border:1.5px solid var(--teal-b);border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:6px;}
-.calc-trial-text{font-size:13px;font-weight:600;color:var(--teal-d);line-height:1.5;}
-body.beezy .calc-trial-text{color:var(--z-teal);}
-.calc-trial-text strong{display:block;font-size:15px;color:var(--ink);}
-.calc-trial-btn{flex-shrink:0;background:var(--teal);color:white;padding:10px 18px;border-radius:100px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;transition:all 0.2s;}
-.calc-trial-btn:hover{background:var(--teal-d);}
-.calc-disclaimer{font-size:11px;color:var(--muted);margin-top:12px;font-style:italic;opacity:0.65;line-height:1.5;}
-
-/* ── COMPOUNDING ── */
-.compounding{border-top:1px solid var(--border);transition:background 0.5s;}
-body:not(.beezy) .compounding{background:var(--b-surface);}
-body.beezy .compounding{background:var(--z-surface);}
-.compound-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:52px;align-items:center;}
-.compound-bar-wrap{display:flex;align-items:flex-end;gap:7px;height:200px;border-bottom:1.5px solid var(--border-s);}
-.compound-bar{flex:1;border-radius:4px 4px 0 0;background:var(--teal);position:relative;transition:height 0.6s ease;}
-.compound-bar:nth-child(1){opacity:0.15;} .compound-bar:nth-child(2){opacity:0.28;} .compound-bar:nth-child(3){opacity:0.44;} .compound-bar:nth-child(4){opacity:0.60;} .compound-bar:nth-child(5){opacity:0.78;} .compound-bar:nth-child(6){opacity:1.0;}
-.cbar-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:600;color:var(--muted);white-space:nowrap;}
-.cbar-val{position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;color:var(--teal-d);white-space:nowrap;}
-.compound-caption{font-size:11px;color:var(--muted);margin-top:28px;text-align:center;font-style:italic;}
-.cpoint{display:flex;align-items:flex-start;gap:13px;padding:16px 0;border-bottom:1px solid var(--border);}
-.cpoint:last-child{border-bottom:none;}
-.cdot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:5px;}
-.ctitle{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px;transition:color 0.5s;}
-.cbody{font-size:13px;color:var(--muted);line-height:1.6;transition:color 0.5s;}
-
-/* ── PRICING ── */
-.pricing{transition:background 0.5s;}
-body:not(.beezy) .pricing{background:var(--b-paper);}
-body.beezy .pricing{background:var(--z-paper);}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px;}
-.pricing-card{border:1.5px solid var(--border);border-radius:20px;padding:34px 30px;position:relative;transition:all 0.3s;background:var(--surface);}
-.pricing-card:hover{border-color:var(--teal-b);transform:translateY(-4px);box-shadow:0 20px 60px rgba(26,191,160,0.07);}
-.pricing-card.featured{background:var(--ink);border-color:var(--ink);}
-body.beezy .pricing-card.featured{background:var(--z-teal);border-color:var(--z-teal);}
-.pricing-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--teal);color:white;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 12px;border-radius:100px;white-space:nowrap;}
-body.beezy .pricing-card.featured .pricing-badge{background:var(--z-paper);color:var(--z-teal);}
-.ptier{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:5px;}
-.pname{font-family:'Instrument Serif',serif;font-size:26px;letter-spacing:-0.5px;margin-bottom:5px;color:var(--ink);transition:color 0.5s;}
-.pricing-card.featured .pname{color:var(--paper);}
-body.beezy .pricing-card.featured .pname{color:var(--z-paper);}
-.pdesc{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.5;}
-.pricing-card.featured .pdesc{color:rgba(245,242,237,0.5);}
-body.beezy .pricing-card.featured .pdesc{color:rgba(13,13,14,0.6);}
-.pprice{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);}
-.pricing-card.featured .pprice{border-color:rgba(255,255,255,0.1);}
-body.beezy .pricing-card.featured .pprice{border-color:rgba(13,13,14,0.15);}
-.pamount{font-family:'Instrument Serif',serif;font-size:40px;font-style:italic;color:var(--ink);line-height:1;transition:color 0.5s;}
-.pricing-card.featured .pamount{color:var(--paper);}
-body.beezy .pricing-card.featured .pamount{color:var(--z-paper);}
-.pamount sup{font-size:16px;font-style:normal;font-family:'Syne',sans-serif;vertical-align:super;margin-right:1px;}
-.pperiod{font-size:11px;color:var(--muted);margin-top:3px;}
-.psetup{font-size:11px;font-weight:600;color:var(--teal);margin-top:3px;}
-.pfeatures{list-style:none;margin-bottom:24px;}
-.pfeatures li{display:flex;align-items:flex-start;gap:8px;font-size:11px;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--border);line-height:1.4;}
-.pricing-card.featured .pfeatures li{color:rgba(245,242,237,0.55);border-color:rgba(255,255,255,0.07);}
-body.beezy .pricing-card.featured .pfeatures li{color:rgba(13,13,14,0.6);border-color:rgba(13,13,14,0.12);}
-.pfeatures li::before{content:'✓';color:var(--teal);font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px;}
-.pcta{display:block;text-align:center;padding:12px 18px;border-radius:100px;font-size:12px;font-weight:700;text-decoration:none;transition:all 0.2s;border:1.5px solid var(--border-s);color:var(--ink);background:transparent;}
-.pcta:hover{background:var(--ink);color:var(--paper);}
-.pricing-card.featured .pcta{background:var(--teal);border-color:var(--teal);color:white;}
-body.beezy .pricing-card.featured .pcta{background:var(--z-paper);border-color:var(--z-paper);color:var(--z-teal);}
-.pricing-card.featured .pcta:hover{background:var(--teal-d);}
-
-/* ── FINAL CTA ── */
-.final-cta{background:linear-gradient(135deg,var(--teal) 0%,var(--teal-d) 100%);padding:80px 48px;text-align:center;position:relative;overflow:hidden;}
-.final-cta::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(255,255,255,0.07);top:-200px;left:-100px;}
-.final-cta::after{content:'';position:absolute;width:300px;height:300px;border-radius:50%;border:1px solid rgba(255,255,255,0.07);bottom:-100px;right:200px;}
-.feyebrow{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:16px;}
-.fheadline{font-family:'Instrument Serif',serif;font-size:clamp(30px,4.5vw,58px);color:white;line-height:1.1;letter-spacing:-1.5px;margin-bottom:12px;}
-.fheadline em{font-style:italic;opacity:0.6;}
-.fsub{font-size:15px;color:rgba(255,255,255,0.65);max-width:420px;margin:0 auto 32px;line-height:1.65;}
-.fbtn{display:inline-flex;align-items:center;gap:9px;background:white;color:var(--teal-d);padding:17px 38px;border-radius:100px;font-size:14px;font-weight:700;text-decoration:none;transition:all 0.25s;position:relative;z-index:1;}
-.fbtn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,0.14);}
-.fnote{margin-top:16px;font-size:11px;color:rgba(255,255,255,0.4);position:relative;z-index:1;line-height:1.7;}
-
-/* ── FOOTER ── */
-footer{padding:52px 48px 34px;transition:background 0.5s;}
-body:not(.beezy) footer{background:var(--b-ink);}
-body.beezy footer{background:var(--z-paper);}
-.footer-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:40px;padding-bottom:40px;}
-body:not(.beezy) .footer-top{border-bottom:1px solid rgba(255,255,255,0.07);}
-body.beezy .footer-top{border-bottom:1px solid var(--z-border);}
-.footer-logo{font-family:'Caveat',cursive;font-size:28px;font-weight:700;margin-bottom:9px;transition:color 0.5s;}
-body:not(.beezy) .footer-logo{color:#F5F2ED;}
-body.beezy .footer-logo{color:var(--z-ink);}
+footer{padding:40px 48px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-logo{font-size:11px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--text-3);}
 .footer-logo span{color:var(--teal);}
-.footer-tagline{font-size:12px;max-width:200px;line-height:1.6;transition:color 0.5s;}
-body:not(.beezy) .footer-tagline{color:rgba(245,242,237,0.3);}
-body.beezy .footer-tagline{color:rgba(232,228,222,0.3);}
-.footer-links{display:flex;gap:52px;}
-.fcol-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;transition:color 0.5s;}
-body:not(.beezy) .fcol-title{color:rgba(245,242,237,0.25);}
-body.beezy .fcol-title{color:rgba(232,228,222,0.25);}
-.fcol-links{list-style:none;display:flex;flex-direction:column;gap:9px;}
-.fcol-links a{font-size:12px;text-decoration:none;transition:color 0.2s;}
-body:not(.beezy) .fcol-links a{color:rgba(245,242,237,0.5);}
-body.beezy .fcol-links a{color:rgba(232,228,222,0.45);}
-body:not(.beezy) .fcol-links a:hover{color:#F5F2ED;}
-body.beezy .fcol-links a:hover{color:var(--z-ink);}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:10px;transition:color 0.5s;}
-body:not(.beezy) .footer-bottom{color:rgba(245,242,237,0.18);}
-body.beezy .footer-bottom{color:rgba(232,228,222,0.18);}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap;}
+.footer-links a{font-size:12px;font-weight:300;color:var(--text-3);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:var(--text-2);}
+.footer-copy{font-size:11px;font-weight:300;color:var(--text-3);}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
-.reveal{opacity:0;transform:translateY(26px);transition:opacity 0.7s ease,transform 0.7s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-.rd1{transition-delay:0.12s;} .rd2{transition-delay:0.24s;}
-
-@media(max-width:900px){
-  nav{padding:14px 20px;}
+@media(max-width:768px){
+  nav{padding:0 20px;}
   .nav-links{display:none;}
-  .mode-toggle{transform:scale(0.9);}
-
-  section{padding:56px 20px;}
-  .pain-bridge,.demo-spot,.final-cta{padding:56px 20px;}
-  .hero{padding:100px 20px 60px;min-height:auto;}
-
-  .hero-headline{font-size:clamp(36px,9vw,56px);letter-spacing:-1.5px;}
-  .beezy-headline{font-size:clamp(34px,9vw,52px);letter-spacing:-2px;}
-  .section-headline{font-size:clamp(28px,7vw,42px);}
-  .pain-headline-b{font-size:clamp(24px,6.5vw,36px);}
-  .fheadline{font-size:clamp(26px,7vw,44px);}
-  .demo-headline{font-size:clamp(26px,7vw,40px);}
-
-  .outcomes-grid{grid-template-columns:1fr;}
-  .outcome-card{border-right:none;border-bottom:1px solid var(--border);}
-  .outcome-card:last-child{border-bottom:none;}
-
-  .journey-steps{grid-template-columns:1fr 1fr;}
-  .journey-step:nth-child(2n){border-right:none;}
-  .journey-step:nth-last-child(-n+1){border-bottom:none;}
-  .jarrow{display:none;}
-
-  .calc-wrapper{grid-template-columns:1fr;}
-  .calc-tabs{width:100%;}
-  .calc-tab{flex:1;text-align:center;}
-  .calc-trial-banner{flex-direction:column;text-align:center;}
-
-  .compound-grid{grid-template-columns:1fr;}
-  .compound-bar-wrap{height:160px;}
-
+  .hero{padding:100px 20px 60px;}
+  .hero-instruction{padding:16px 20px;}
+  .intro-section,.reviews-section{padding:60px 20px;}
+  .intro-inner,.reviews-inner{grid-template-columns:1fr;gap:40px;}
+  .calc-section,.steps-section,.instagram-section,.faq-section{padding:60px 20px;}
+  .calc-card{padding:24px 20px;}
+  .projections-grid{grid-template-columns:1fr;}
+  .calc-cta{flex-direction:column;align-items:flex-start;}
+  .steps-grid{grid-template-columns:1fr 1fr;gap:24px;}
+  .step-num{font-size:48px;}
+  .pricing-section{padding:60px 20px;}
   .pricing-grid{grid-template-columns:1fr;}
-  .pricing-card.featured{order:-1;}
-
-  .footer-top{flex-direction:column;gap:32px;}
-  .footer-links{flex-direction:column;gap:28px;}
-  .footer-bottom{flex-direction:column;gap:8px;text-align:center;}
-
-  .beezy-metrics{gap:20px;}
-  .beezy-metric-val{font-size:28px;}
-
-  .pain-stats{gap:24px;}
-  .pain-stat-val{font-size:36px;}
-
-  .demo-steps{gap:20px;}
-
-  .float-demo{bottom:16px;right:16px;font-size:12px;padding:10px 16px;}
-  .float-demo .fdot{width:6px;height:6px;}
-
-  .hero-orb1{width:300px;height:300px;top:-100px;right:-80px;}
-  .hero-orb2{width:200px;height:200px;}
+  .price-card.featured::before{font-size:8px;}
+  .final-cta{padding:80px 20px;}
+  .btn-main,.btn-ghost{display:block;margin:0 0 12px 0;text-align:center;}
+  footer{flex-direction:column;text-align:center;padding:28px 20px;}
+  .footer-links{justify-content:center;}
 }
 </style>
 </head>
 <body>
 
-<a href="https://ig.me/m/breezy_smartshop" class="float-demo" target="_blank">
-  <div class="fdot"></div>Try the demo
-</a>
-
-<!-- NAV -->
 <nav>
-  <div class="nav-left">
-    <div class="logo-breezy">
-      <span class="BR">BR</span><span class="ee">ee</span><span class="Z">Z</span><span class="Y">Y</span>
-    </div>
-    <div class="logo-beezy">
-      <span class="BEE">BEE</span><span class="zy">zy</span>
-    </div>
-    <div class="mode-toggle">
-      <button class="toggle-btn breezy-btn" onclick="setMode('breezy')">BReeZY</button>
-      <button class="toggle-btn beezy-btn" onclick="setMode('beezy')">BEEzy</button>
-    </div>
-  </div>
-  <div class="nav-right">
-    <ul class="nav-links">
-      <li><a href="#outcomes">What you get</a></li>
-      <li><a href="#calculator">Calculator</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="safety.html">Account Safety</a></li>
-      <li><a href="https://ig.me/m/breezy_smartshop" class="nav-cta">Try demo free</a></li>
-    </ul>
+  <div class="nav-logo">B R E E<span>Z</span>Y</div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#calculator">Calculator</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="/dashboard.html">Seller login</a>
+    <a href="#" onclick="openWidget();return false;" class="nav-cta">Try demo</a>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-orb1"></div>
-  <div class="hero-orb2"></div>
+<div class="hero">
+  <div class="hero-badge">14-day free trial · No card needed</div>
+  <h1>Your store.<br/><em>In a conversation.</em></h1>
+  <p class="hero-sub">Your customers browse, choose and pay — without leaving a chat window. No app. No website. Just a link.</p>
 
-  <!-- BREEZY HERO -->
-  <div class="hero-breezy">
-    <div class="hero-eyebrow" style="opacity:0;animation:fadeUp 0.6s ease forwards 0.2s;">Instagram commerce, built for Kenya</div>
-    <h1 class="hero-headline" style="opacity:0;animation:fadeUp 0.7s ease forwards 0.35s;">
-      Shopping on Instagram<br>should feel <em>like this.</em>
-    </h1>
-    <p class="hero-sub" style="opacity:0;animation:fadeUp 0.7s ease forwards 0.5s;">
-      A shop inside your DM. Catalogue, Mpesa payment, confirmation email, rider details and a Google review — all automatic, all from a conversation.
-    </p>
-    <div class="hero-pain" style="opacity:0;animation:fadeUp 0.6s ease forwards 0.62s;">
-      <span class="hero-pain-icon">💡</span>
-      <span class="hero-pain-text">Right now every completed sale ends at a Mpesa notification. <strong>Here's what it could leave behind instead.</strong></span>
-    </div>
-    <div class="hero-actions" style="opacity:0;animation:fadeUp 0.7s ease forwards 0.75s;">
-      <a href="https://ig.me/m/breezy_smartshop" class="btn-primary">Try it yourself — free ↗</a>
-      <a href="#calculator" class="btn-secondary">See the numbers</a>
-    </div>
+  <div class="hero-instruction">
+    <p>👋 <strong>Say hello to the assistant</strong> — the widget is in the bottom right corner. Tap it to open.</p>
+    <p>Inside, you can <span class="teal">try the demo</span> as a customer, or tap <span class="teal">Register</span> to start your free 14-day trial.</p>
   </div>
 
-  <!-- BEEZY HERO -->
-  <div class="hero-beezy">
-    <div class="hero-eyebrow">Built for sellers who run on numbers</div>
-    <h1 class="beezy-headline">
-      Your audience<br>is <span class="hl">ready.</span><br>Your checkout<br><span class="dim">isn't.</span>
-    </h1>
-    <p class="beezy-sub">
-      Turn every DM into a paying customer, a Google review, and a return sale. <strong>All automatic. All measurable.</strong>
-    </p>
-    <div class="beezy-metrics">
-      <div class="beezy-metric">
-        <div class="beezy-metric-val">40%</div>
-        <div class="beezy-metric-label">Review rate per sale</div>
-      </div>
-      <div class="beezy-metric">
-        <div class="beezy-metric-val">30%</div>
-        <div class="beezy-metric-label">Repeat customer rate</div>
-      </div>
-      <div class="beezy-metric">
-        <div class="beezy-metric-val">&lt;60s</div>
-        <div class="beezy-metric-label">DM to payment</div>
-      </div>
-    </div>
-    <div class="hero-actions">
-      <a href="#calculator" class="btn-primary">Run your numbers ↗</a>
-      <a href="https://ig.me/m/breezy_smartshop" class="btn-secondary">Try the demo first</a>
-    </div>
-  </div>
-</section>
-
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner" id="tickerInner">
-    <!-- populated by JS -->
+  <div class="hero-scroll" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">
+    <span>See how it works</span>
+    <div class="scroll-line"></div>
   </div>
 </div>
 
-<!-- PAIN BRIDGE -->
-<div class="pain-bridge">
-  <div class="pain-bridge-inner reveal">
-    <div class="pain-eyebrow" id="painEyebrow">The gap most sellers don't see</div>
-
-    <div class="pain-breezy">
-      <h2 class="pain-headline-b">The sale happened.<br>The customer <em>disappeared.</em></h2>
-      <p class="pain-body-b">Every Instagram seller knows the feeling — someone paid, you delivered, they were happy. And then nothing. No review. No way to reach them again. No proof of what you built except a Mpesa notification you can't show anyone.<br><br><strong>That's not a customer problem. It's a system problem. And it's been there from the start because Instagram was never built to capture what happens after the sale.</strong></p>
+<!-- INTRO -->
+<div class="intro-section" id="intro">
+  <div class="intro-inner">
+    <div>
+      <p class="section-label">What Breezy does</p>
+      <h2 class="section-title">Every sale runs<br/><em>by itself.</em></h2>
+      <p class="section-sub">From the moment a customer says hi to the moment they leave a review — Breezy handles everything in between. You focus on your product. Breezy handles the rest.</p>
     </div>
-
-    <div class="pain-beezy">
-      <h2 class="pain-headline-z">Every manual sale has a hidden cost.</h2>
-      <div class="pain-stats">
-        <div class="pain-stat">
-          <div class="pain-stat-val">0</div>
-          <div class="pain-stat-label">Review trail</div>
-        </div>
-        <div class="pain-stat">
-          <div class="pain-stat-val">0%</div>
-          <div class="pain-stat-label">Retention data</div>
-        </div>
-        <div class="pain-stat">
-          <div class="pain-stat-val">∞</div>
-          <div class="pain-stat-label">Time spent manually</div>
-        </div>
-      </div>
-      <p class="pain-body-z">Payment confirmation time, missed DMs at 2am, zero customer records, no review trail. <strong>That's not a hustle problem — that's a conversion problem.</strong> Every sale you close manually is one that left nothing behind for the next one.</p>
-    </div>
-  </div>
-</div>
-
-<!-- OUTCOMES -->
-<section class="outcomes" id="outcomes">
-  <div class="reveal">
-    <div class="section-label">What changes</div>
-    <h2 class="section-headline" id="outcomesHeadline">What every sale<br>leaves <em>behind</em></h2>
-  </div>
-  <div class="outcomes-grid">
-    <div class="outcome-card reveal">
-      <div class="outcome-num">01</div>
-      <div class="outcome-icon">⭐</div>
-      <h3 class="outcome-title">A reputation that builds itself</h3>
-      <p class="outcome-body-b">Every delivery triggers a review nudge at exactly the right moment — when the experience is still fresh. Your Google profile grows with every sale, without you asking once.</p>
-      <p class="outcome-body-z">40% review rate per completed sale. Every delivery triggers an automated nudge. Google profile compounds month on month with zero manual effort.</p>
-      <div class="outcome-proof">Most Instagram shops in Kenya have 0–3 Google reviews. Your customers are already happy enough to leave one — they just never had the moment.</div>
-    </div>
-    <div class="outcome-card reveal rd1">
-      <div class="outcome-num">02</div>
-      <div class="outcome-icon">📋</div>
-      <h3 class="outcome-title">Customers you can reach again</h3>
-      <p class="outcome-body-b">Every buyer's name, email and phone goes into a secure database — yours. 30 sales this month means 30 people you can reach when new stock arrives. No hoping they see your next post.</p>
-      <p class="outcome-body-z">Name, email and phone captured on every order. 30% repeat customer rate when you have a way to reach them. Your list grows with every sale and belongs to you entirely.</p>
-      <div class="outcome-proof">Manual selling leaves you with a Mpesa notification. Breezy leaves you with a contact. The difference compounds every single month.</div>
-    </div>
-    <div class="outcome-card reveal rd2">
-      <div class="outcome-num">03</div>
-      <div class="outcome-icon">🌬️</div>
-      <h3 class="outcome-title">Sales that close themselves</h3>
-      <p class="outcome-body-b">Customer DMs, browses your catalogue, pays with Mpesa, gets a confirmation email. You find out when the order is already done. No back and forth. No missed sales at 2am.</p>
-      <p class="outcome-body-z">DM to paid order in under 60 seconds. Zero manual intervention required. Runs 24 hours, captures every interested buyer regardless of when they arrive.</p>
-      <div class="outcome-proof">A single post can reach hundreds of genuinely interested people. Every one is a potential sale — if there's a frictionless path from interest to checkout.</div>
-    </div>
-  </div>
-</section>
-
-<!-- JOURNEY -->
-<section class="journey" style="padding:80px 48px;">
-  <div class="reveal">
-    <div class="section-label">The experience</div>
-    <h2 class="section-headline" id="journeyHeadline">What your customer<br><em>actually feels</em></h2>
-  </div>
-  <div class="journey-steps reveal">
-    <div class="journey-step">
-      <div class="journey-step-num">01</div>
-      <span class="journey-step-icon">💬</span>
-      <div class="journey-step-title">They DM your page</div>
-      <div class="journey-step-body">A catalogue opens instantly. No website. No link in bio. No waiting.</div>
-      <div class="jarrow">▶</div>
-    </div>
-    <div class="journey-step">
-      <div class="journey-step-num">02</div>
-      <span class="journey-step-icon">🛍️</span>
-      <div class="journey-step-title">They browse and pick</div>
-      <div class="journey-step-body">Images, descriptions, prices — all in the DM. They tap, they decide.</div>
-      <div class="jarrow">▶</div>
-    </div>
-    <div class="journey-step">
-      <div class="journey-step-num">03</div>
-      <span class="journey-step-icon">💳</span>
-      <div class="journey-step-title">They pay with Mpesa</div>
-      <div class="journey-step-body">Enter PIN. Done. Under a minute. No screenshots, no manual confirmation.</div>
-      <div class="jarrow">▶</div>
-    </div>
-    <div class="journey-step">
-      <div class="journey-step-num">04</div>
-      <span class="journey-step-icon">📧</span>
-      <div class="journey-step-title">Email before they look up</div>
-      <div class="journey-step-body">Confirmation in inbox before they put their phone down. Rider details when it ships.</div>
-      <div class="jarrow">▶</div>
-    </div>
-    <div class="journey-step">
-      <div class="journey-step-num">05</div>
-      <span class="journey-step-icon">⭐</span>
-      <div class="journey-step-title">They review naturally</div>
-      <div class="journey-step-body">A nudge after delivery. The experience was good enough that saying so feels obvious.</div>
-    </div>
-  </div>
-</section>
-
-<!-- DEMO SPOT -->
-<div class="demo-spot" id="demo">
-  <div class="demo-inner reveal">
-    <div class="demo-tag">Live demo — free</div>
-    <h2 class="demo-headline">See it work on<br>your own <em>Instagram</em></h2>
-    <p class="demo-sub" id="demoSub">The best way to understand Breezy isn't reading about it — it's being the customer for two minutes. Tap, send anything, and go through it exactly as your customers would.</p>
-    <a href="https://ig.me/m/breezy_smartshop" class="demo-link-box" target="_blank">
-      Open the demo ↗
-    </a>
-    <span class="demo-url">ig.me/m/breezy_smartshop</span>
-    <div class="demo-steps">
-      <div class="dstep"><div class="dstep-num">1</div><div class="dstep-text">Tap the link</div></div>
-      <div class="dstep"><div class="dstep-num">2</div><div class="dstep-text">Send anything</div></div>
-      <div class="dstep"><div class="dstep-num">3</div><div class="dstep-text">Watch what happens</div></div>
-    </div>
+    <ul class="outcome-list">
+      <li><strong>Order confirmed</strong> — customer gets an email the moment they pay</li>
+      <li><strong>Dashboard updated</strong> — every order, customer and sale logged automatically</li>
+      <li><strong>Delivery update sent</strong> — you add the rider details, Breezy tells the customer</li>
+      <li><strong>Review requested</strong> — automatically, after every completed order</li>
+      <li><strong>Stock adjusted</strong> — real-time, on every purchase</li>
+    </ul>
   </div>
 </div>
 
 <!-- CALCULATOR -->
-<section class="calculator" id="calculator">
-  <div class="reveal">
-    <div class="section-label">Run the numbers</div>
-    <h2 class="section-headline" id="calcHeadline">What could your store<br>look like in <em>14 days?</em></h2>
-    <p class="section-sub">Plug in your numbers. Switch between your free trial and the 6-month view.</p>
-  </div>
-  <div class="calc-tabs reveal">
-    <button class="calc-tab active" onclick="setCalcMode('trial',this)">14-day trial</button>
-    <button class="calc-tab" onclick="setCalcMode('month1',this)">Month 1</button>
-    <button class="calc-tab" onclick="setCalcMode('month3',this)">Month 3</button>
-  </div>
-  <div class="calc-wrapper reveal">
-    <div class="calc-inputs">
-      <div class="calc-input-group">
-        <label class="calc-label">Monthly sales right now</label>
-        <div class="calc-input-row">
-          <input type="range" class="calc-range" id="sales" min="1" max="200" value="10" oninput="calculate()">
-          <div class="calc-value" id="salesVal">30</div>
-        </div>
-      </div>
-      <div class="calc-input-group">
-        <label class="calc-label">Average order value (KES)</label>
-        <div class="calc-input-row">
-          <input type="range" class="calc-range" id="aov" min="200" max="15000" step="200" value="1500" oninput="calculate()">
-          <div class="calc-value" id="aovVal">3K</div>
-        </div>
-      </div>
-      <div class="calc-input-group">
-        <label class="calc-label">Instagram followers</label>
-        <div class="calc-input-row">
-          <input type="range" class="calc-range" id="followers" min="100" max="50000" step="100" value="1000" oninput="calculate()">
-          <div class="calc-value" id="followersVal">5K</div>
-        </div>
-      </div>
-      <p class="calc-disclaimer">Conservative estimates: 40% review rate, 15% monthly growth, 30% repeat customer rate. Trial uses 50% of monthly volume over 14 days.</p>
-    </div>
-    <div class="calc-results">
-      <div class="calc-result-card">
-        <div class="calc-result-label" id="rl1">Sales closed in trial</div>
-        <div class="calc-result-value" id="rv1">15 <span>sales</span></div>
-        <div class="calc-result-note" id="rn1">Real orders, real Mpesa payouts — in 14 days.</div>
-      </div>
-      <div class="calc-result-card">
-        <div class="calc-result-label" id="rl2">Contacts in your list</div>
-        <div class="calc-result-value" id="rv2">15 <span>people</span></div>
-        <div class="calc-result-note" id="rn2">Names, emails and numbers — reachable anytime new stock arrives.</div>
-      </div>
-      <div class="calc-result-card">
-        <div class="calc-result-label" id="rl3">Google review opportunities</div>
-        <div class="calc-result-value" id="rv3">6 <span>reviews</span></div>
-        <div class="calc-result-note" id="rn3">Every delivery triggers a nudge. Your Google profile starts building in the trial.</div>
-      </div>
-      <div class="calc-result-card">
-        <div class="calc-result-label" id="rl4">Hours freed up</div>
-        <div class="calc-result-value" id="rv4">3 <span>hrs</span></div>
-        <div class="calc-result-note" id="rn4">Manual confirmations, payment checks, follow-ups — all automated.</div>
-      </div>
-      <div class="calc-trial-banner">
-        <div class="calc-trial-text">
-          <strong id="trialStrong">Start your 14-day free trial</strong>
-          <span id="trialSub">See these numbers on your own page — no subscription until month 2.</span>
-        </div>
-        <a href="https://wa.me/254762826978?text=Hi%2C%20I%27d%20like%20to%20start%20my%20Breezy%20free%20trial" class="calc-trial-btn">Start trial ↗</a>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="calc-section" id="calculator">
+  <div class="calc-inner">
+    <p class="section-label">Your numbers</p>
+    <h2 class="section-title">See what Breezy<br/><em>does for your store.</em></h2>
+    <p class="section-sub" style="margin-top:12px;">Move the slider to match your weekly orders. The projections update instantly.</p>
 
-<!-- COMPOUNDING -->
-<section class="compounding">
-  <div class="reveal">
-    <div class="section-label">The compounding effect</div>
-    <h2 class="section-headline">It gets stronger<br>every single <em>month</em></h2>
-  </div>
-  <div class="compound-grid reveal">
-    <div>
-      <div class="compound-bar-wrap" id="barChart">
-        <div class="compound-bar" style="height:44px"><span class="cbar-label">M1</span><span class="cbar-val">30</span></div>
-        <div class="compound-bar" style="height:70px"><span class="cbar-label">M2</span><span class="cbar-val">40</span></div>
-        <div class="compound-bar" style="height:96px"><span class="cbar-label">M3</span><span class="cbar-val">52</span></div>
-        <div class="compound-bar" style="height:122px"><span class="cbar-label">M4</span><span class="cbar-val">67</span></div>
-        <div class="compound-bar" style="height:158px"><span class="cbar-label">M5</span><span class="cbar-val">86</span></div>
-        <div class="compound-bar" style="height:196px"><span class="cbar-label">M6</span><span class="cbar-val">110</span></div>
+    <div class="calc-card">
+      <div class="calc-label">
+        Orders per week
+        <span id="ordersVal">10</span>
       </div>
-      <p class="compound-caption">Monthly sales — starting at 30/month</p>
-    </div>
-    <div>
-      <div class="cpoint"><div class="cdot"></div><div><div class="ctitle">Reviews attract more customers</div><div class="cbody">Every review makes the next sale easier. A Google profile with 40 reviews converts a new visitor before they even send a DM.</div></div></div>
-      <div class="cpoint"><div class="cdot"></div><div><div class="ctitle">Repeat customers cost nothing</div><div class="cbody">Every contact in your list is a free sale waiting to happen. No ad spend — just a message when new stock arrives.</div></div></div>
-      <div class="cpoint"><div class="cdot"></div><div><div class="ctitle">The experience becomes word of mouth</div><div class="cbody">A confirmation email, rider details, a review nudge — genuinely new on Instagram in Kenya. Customers talk about what feels different.</div></div></div>
-      <div class="cpoint"><div class="cdot"></div><div><div class="ctitle">Ads finally have somewhere to land</div><div class="cbody">TikTok or Instagram ads drive DMs that close themselves. Your ad spend stops being a gamble.</div></div></div>
+      <input type="range" id="ordersSlider" min="1" max="150" value="10" oninput="updateCalc()">
+      <div class="calc-divider"></div>
+
+      <div class="projections-grid">
+        <div class="proj-card">
+          <div class="proj-period">14-day trial</div>
+          <div class="proj-stat">
+            <div class="proj-stat-value teal" id="p1orders">20</div>
+            <div class="proj-stat-label">orders processed</div>
+          </div>
+          <div class="proj-stat">
+            <div class="proj-stat-value" id="p1emails">20</div>
+            <div class="proj-stat-label">confirmation emails sent</div>
+          </div>
+          <div class="proj-stat">
+            <div class="proj-stat-value" id="p1reqsent">20</div>
+            <div class="proj-stat-label">review requests sent</div>
+          </div>
+          <div class="proj-stat">
+            <div class="proj-stat-value teal" id="p1reviews">7</div>
+            <div class="proj-stat-label">reviews you'll likely receive</div>
+          </div>
+        </div>
+
+        <div class="proj-card mid">
+          <div class="proj-period">3 months</div>
+          <div class="proj-stat">
+            <div class="proj-stat-value teal" id="p3orders">130</div>
+            <div class="proj-stat-label">orders processed</div>
+          </div>
+          <div class="proj-stat">
+            <div class="proj-stat-value" id="p3emails">130</div>
+            <div class="proj-stat-label">confirmation emails sent</div>
+          </div>
+          <div class="proj-stat">
+            <div class="proj-stat-value" id="p3reqsent">130</div>
+            <div class="proj-stat-label">review requests sent</div>
+          </div>
+          <div class="proj-stat">
+            <div class="proj-stat-value teal" id="p3reviews">43</div>
+            <div class="proj-stat-label">reviews you'll likely receive</div>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-period">6 months</div>
+          <div class="proj-stat">
+            <div class="proj-stat-value teal" id="p6orders">260</div>
+            <div class="proj-stat-label">orders processed</div>
+          </div>
+          <div class="proj-stat">
+            <div class="proj-stat-value" id="p6emails">260</div>
+            <div class="proj-stat-label">confirmation emails sent</div>
+          </div>
+          <div class="proj-stat">
+            <div class="proj-stat-value" id="p6reqsent">260</div>
+            <div class="proj-stat-label">review requests sent</div>
+          </div>
+          <div class="proj-stat">
+            <div class="proj-stat-value teal" id="p6reviews">86</div>
+            <div class="proj-stat-label">reviews you'll likely receive</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-cta">
+        <div class="calc-cta-text">
+          Your 14-day trial is <strong>completely free</strong> — no card needed. Those numbers above? You get all of that before paying a shilling. <span class="teal">Tap Register in the widget</span> to start.
+        </div>
+        <button onclick="openWidget()" class="calc-cta-btn">Start free trial →</button>
+      </div>
     </div>
   </div>
-</section>
+</div>
+
+<!-- REVIEWS -->
+<div class="reviews-section">
+  <div class="reviews-inner">
+    <div>
+      <p class="section-label">Review building</p>
+      <h2 class="section-title">Real reviews.<br/><em>Without asking.</em></h2>
+      <p class="section-sub">Every completed order triggers an automatic review request — sent at the right moment, when the customer is happiest. Reviews live on your Breezy store page, visible to every new customer.</p>
+      <div class="upsell-box">
+        <p>Want your reviews on Google? Every review request redirects to your Google Business profile — so customers leave it where it counts most.</p>
+        <span class="upsell-tag">Google reviews — Growth plan</span>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--text-3);margin-bottom:20px;">Reviews at <span id="reviewBase">10</span> orders/week · 35% conversion</p>
+      <div class="review-timeline">
+        <div class="timeline-row">
+          <div class="timeline-period">14 days</div>
+          <div class="timeline-bar-wrap"><div class="timeline-bar" id="bar1" style="width:5%"></div></div>
+          <div class="timeline-value" id="rv1">7</div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-period">1 month</div>
+          <div class="timeline-bar-wrap"><div class="timeline-bar" id="bar2" style="width:15%"></div></div>
+          <div class="timeline-value" id="rv2">15</div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-period">3 months</div>
+          <div class="timeline-bar-wrap"><div class="timeline-bar" id="bar3" style="width:35%"></div></div>
+          <div class="timeline-value" id="rv3">43</div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-period">6 months</div>
+          <div class="timeline-bar-wrap"><div class="timeline-bar" id="bar4" style="width:70%"></div></div>
+          <div class="timeline-value" id="rv4">86</div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-period">12 months</div>
+          <div class="timeline-bar-wrap"><div class="timeline-bar" id="bar5" style="width:100%"></div></div>
+          <div class="timeline-value" id="rv5">173</div>
+        </div>
+      </div>
+      <p style="font-size:11px;font-weight:300;color:var(--text-3);margin-top:14px;line-height:1.6;">Based on 35% review conversion rate for post-purchase follow-up. Actual results vary.</p>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT STARTS -->
+<div class="steps-section" id="how">
+  <div class="steps-inner">
+    <p class="section-label">Getting started</p>
+    <h2 class="section-title">From first tap<br/><em>to live store.</em></h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-accent"></div>
+        <div class="step-title">Tap the widget</div>
+        <div class="step-desc">Bottom right corner — it's already there. Say hi. Try it as a customer. Browse products, choose one, pay. That's your customers' exact experience.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-accent"></div>
+        <div class="step-title">Tap Register</div>
+        <div class="step-desc">Start your free trial inside the same chat. A short conversation — your name, store name, what you sell. Two minutes, that's it.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-accent"></div>
+        <div class="step-title">We call you</div>
+        <div class="step-desc">A Breezy team member WhatsApps you within 24 hours. We confirm your setup, configure your categories and have everything ready same day.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-accent"></div>
+        <div class="step-title">You go live</div>
+        <div class="step-desc">Log in to your dashboard, add your products. Share your store link. Customers start buying — payments go directly to your Paystack account.</div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- PRICING -->
-<section class="pricing" id="pricing">
-  <div class="reveal">
-    <div class="section-label">Pricing</div>
-    <h2 class="section-headline">One system.<br>Three <em>scales.</em></h2>
-    <p class="section-sub">Every tier includes the full system. The difference is catalogue size and how many niches you run.</p>
-  </div>
-  <div class="pricing-grid reveal">
-    <div class="pricing-card">
-      <div class="ptier">Starter</div>
-      <div class="pname">Up to 20 products</div>
-      <p class="pdesc">A focused catalogue, one niche, full system.</p>
-      <div class="pprice">
-        <div class="pamount"><sup>KES</sup>6,000</div>
-        <div class="pperiod">per month</div>
-        <div class="psetup">+ KES 5,000 setup (once)</div>
-      </div>
-      <ul class="pfeatures">
-        <li>Up to 20 products, 1 niche</li>
-        <li>Full checkout + Mpesa payment</li>
-        <li>Branded email sequence</li>
-        <li>Google review generation</li>
-        <li>Secure contact list</li>
-        <li>Email support</li>
-      </ul>
-      <a href="https://wa.me/254762826978?text=Hi%2C%20I%27d%20like%20to%20start%20my%20Breezy%20free%20trial" class="pcta">Start 14-day free trial</a>
-    </div>
-    <div class="pricing-card featured">
-      <div class="pricing-badge">Most popular</div>
-      <div class="ptier">Growth</div>
-      <div class="pname">Up to 50 products</div>
-      <p class="pdesc">Active sellers ready to scale. Two niches, WhatsApp support.</p>
-      <div class="pprice">
-        <div class="pamount"><sup>KES</sup>12,000</div>
-        <div class="pperiod">per month</div>
-        <div class="psetup">+ KES 8,000 setup (once)</div>
-      </div>
-      <ul class="pfeatures">
-        <li>Up to 50 products, 2 niches</li>
-        <li>Full checkout + Mpesa payment</li>
-        <li>Branded email sequence</li>
-        <li>Google review generation</li>
-        <li>Secure contact list</li>
-        <li>WhatsApp support</li>
-      </ul>
-      <a href="https://wa.me/254762826978?text=Hi%2C%20I%27d%20like%20to%20start%20my%20Breezy%20free%20trial" class="pcta">Start 14-day free trial</a>
-    </div>
-    <div class="pricing-card">
-      <div class="ptier">Pro</div>
-      <div class="pname">Up to 150 products</div>
-      <p class="pdesc">High-volume sellers, multiple niches, priority support.</p>
-      <div class="pprice">
-        <div class="pamount"><sup>KES</sup>20,000</div>
-        <div class="pperiod">per month</div>
-        <div class="psetup">+ KES 12,000 setup (once)</div>
-      </div>
-      <ul class="pfeatures">
-        <li>Up to 150 products, 5 niches</li>
-        <li>Full checkout + Mpesa payment</li>
-        <li>Branded email sequence</li>
-        <li>Google review generation</li>
-        <li>Secure contact list</li>
-        <li>Priority same-day support</li>
-      </ul>
-      <a href="https://wa.me/254762826978?text=Hi%2C%20I%27d%20like%20to%20start%20my%20Breezy%20free%20trial" class="pcta">Start 14-day free trial</a>
-    </div>
-  </div>
-</section>
+<div class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <p class="section-label">Pricing</p>
+    <h2 class="section-title">Simple tiers.<br/><em>No surprises.</em></h2>
+    <p class="section-sub" style="margin-top:8px;">Start free. Pay only when it's working for you.</p>
+    <div class="pricing-grid">
 
-<!-- SAFETY STRIP -->
-<div style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 48px;transition:background 0.5s;">
-  <div style="max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <span style="font-size:20px;">🔑</span>
-      <div>
-        <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;">Built on Instagram's official API</div>
-        <div style="font-size:12px;color:var(--muted);">Every message is customer-initiated. Your account is never at risk.</div>
+      <div class="price-card">
+        <div class="price-tier">Basic</div>
+        <div class="price-amount">2,000</div>
+        <div class="price-period">KES / month · after free trial</div>
+        <ul class="price-features">
+          <li>Conversational store on shopbreezy.co.ke</li>
+          <li>Unlimited orders</li>
+          <li>Paystack payments — direct to you</li>
+          <li>Order notification email to you</li>
+          <li>Up to 2 product categories</li>
+          <li class="muted">Seller dashboard</li>
+          <li class="muted">Automatic customer emails</li>
+          <li class="muted">Review requests</li>
+          <li class="muted">Instagram</li>
+        </ul>
+        <a href="#" onclick="openWidget();return false;" class="btn-price">Start free trial</a>
       </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;">
-      <span style="font-size:20px;">🛡️</span>
-      <div>
-        <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;">No third-party scripts</div>
-        <div style="font-size:12px;color:var(--muted);">No browser extensions. No bots pretending to be human.</div>
+
+      <div class="price-card">
+        <div class="price-tier">Starter</div>
+        <div class="price-amount">4,000</div>
+        <div class="price-period">KES / month · after free trial</div>
+        <ul class="price-features">
+          <li>Everything in Basic</li>
+          <li>Full seller dashboard</li>
+          <li>Automatic order & delivery emails</li>
+          <li>Review requests on every order</li>
+          <li>Reviews on your Breezy page</li>
+          <li>Up to 5 product categories</li>
+          <li class="muted">Web widget on own domain</li>
+          <li class="muted">Instagram automation</li>
+          <li class="muted">Google review redirect</li>
+        </ul>
+        <a href="#" onclick="openWidget();return false;" class="btn-price">Start free trial</a>
       </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;">
-      <span style="font-size:20px;">✅</span>
-      <div>
-        <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;">Meta-approved infrastructure</div>
-        <div style="font-size:12px;color:var(--muted);">The same system major brands use worldwide.</div>
+
+      <div class="price-card featured">
+        <div class="price-tier">Growth</div>
+        <div class="price-amount">7,000</div>
+        <div class="price-period">KES / month</div>
+        <ul class="price-features">
+          <li>Everything in Starter</li>
+          <li>Your own domain connected</li>
+          <li>Web widget on your site</li>
+          <li>Instagram — first 14 days free</li>
+          <li>Google review redirect</li>
+          <li>Branded emails — your store name</li>
+          <li>Up to 10 product categories</li>
+          <li>Priority support</li>
+          <li class="muted">White label</li>
+        </ul>
+        <a href="#" onclick="openWidget();return false;" class="btn-price primary">Get started</a>
       </div>
+
+      <div class="price-card">
+        <div class="price-tier">Pro</div>
+        <div class="price-amount">12,000</div>
+        <div class="price-period">KES / month</div>
+        <ul class="price-features">
+          <li>Everything in Growth</li>
+          <li>Full white label</li>
+          <li>Custom email domain</li>
+          <li>Unlimited categories</li>
+          <li>CSV bulk product import</li>
+          <li>Promo email broadcasts</li>
+          <li>Custom bot personality</li>
+          <li>Dedicated support</li>
+        </ul>
+        <a href="https://wa.me/254762826978" class="btn-price">Talk to us</a>
+      </div>
+
     </div>
-    <a href="safety.html" style="font-size:12px;font-weight:700;color:var(--teal);text-decoration:none;white-space:nowrap;border:1px solid var(--teal-b);padding:8px 16px;border-radius:100px;background:var(--teal-f);">Read more →</a>
+    <p class="pricing-note">Doing serious volume? <a href="https://wa.me/254762826978">Let's talk custom pricing →</a></p>
+  </div>
+</div>
+
+<!-- INSTAGRAM -->
+<div class="instagram-section">
+  <div class="instagram-inner">
+    <div class="insta-big">3h</div>
+    <p class="insta-label">Daily Instagram usage in Kenya</p>
+    <h3 class="insta-title">Your customers are already there.<br/>Meet them where they scroll.</h3>
+    <p class="insta-sub">A customer comments on your post. Breezy sends an automatic DM. They browse your catalogue, choose and pay — without ever leaving Instagram.</p>
+    <div class="insta-flow">
+      <span class="flow-step">Customer comments</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Auto DM sent</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">They browse</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">They pay</span>
+    </div>
+    <p style="font-size:13px;font-weight:300;color:var(--text-3);margin-bottom:20px;">You wake up to orders. No manual DMs. No missed comments.</p>
+    <span class="insta-badge">Included in Growth · First 14 days free</span>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section" id="faq">
+  <div class="faq-inner">
+    <p class="section-label" style="text-align:center">Questions</p>
+    <h2 class="section-title" style="text-align:center;margin-bottom:48px">The honest answers.</h2>
+    <div class="faq-item">
+      <div class="faq-q">Do I need a website?<span class="faq-icon">+</span></div>
+      <div class="faq-a">No. Your store lives at shopbreezy.co.ke/yourstore — a clean link you share on Instagram, WhatsApp, or anywhere. If you already have a domain, connect it on Growth plan and the experience becomes fully yours.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do my customers need to download anything?<span class="faq-icon">+</span></div>
+      <div class="faq-a">Nothing. They tap your link and the conversation opens in the browser. They browse, choose and pay with M-Pesa or card. No app, no account, no friction.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Where does the money go?<span class="faq-icon">+</span></div>
+      <div class="faq-a">Directly to your Paystack account. Breezy never touches your money. You connect your own Paystack secret key in the dashboard — every payment settles to your account instantly.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What does the free trial include?<span class="faq-icon">+</span></div>
+      <div class="faq-a">Everything in the Starter plan — full store, real payments, dashboard, automatic emails and review requests. 14 days, completely free. No card required to start.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How long does setup take?<span class="faq-icon">+</span></div>
+      <div class="faq-a">Tap Register in the widget, we call you within 24 hours, your store goes live the same day. Most sellers are up and running within a few hours of the call.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I have a lot of products?<span class="faq-icon">+</span></div>
+      <div class="faq-a">You add products through the dashboard — most sellers with under 50 products are done in under an hour. For larger catalogues, CSV bulk import is available on Pro.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I cancel anytime?<span class="faq-icon">+</span></div>
+      <div class="faq-a">Yes. No contracts. Your customer list and order history are exportable anytime. If Breezy isn't working for you, you stop.</div>
+    </div>
   </div>
 </div>
 
 <!-- FINAL CTA -->
 <div class="final-cta">
-  <div class="feyebrow">14 days, completely free</div>
-  <h2 class="fheadline">See it work on your page<br><em>before you spend anything</em></h2>
-  <p class="fsub">Tap the link. Send anything. Go through it exactly as your customers would. The trial proves it before you commit to anything.</p>
-  <a href="https://ig.me/m/breezy_smartshop" class="fbtn">Try the demo now ↗</a>
-  <p class="fnote">ig.me/m/breezy_smartshop<br>No sign-up needed · Setup fee only · Subscription starts month 2</p>
+  <div class="final-inner">
+    <p class="section-label">Get started</p>
+    <h2 class="final-title">Still reading?<br/>The widget is right there.</h2>
+    <p class="final-sub">14 days free. Setup in hours. Tap the widget — say hi, try the demo, then tap <strong style="color:var(--teal)">Register</strong> to start your trial.</p>
+    <button onclick="openWidget()" class="btn-main">Open the widget →</button>
+    <a href="https://wa.me/254762826978" class="btn-ghost">WhatsApp us</a>
+    <p style="margin-top:20px;font-size:11px;color:var(--text-3);letter-spacing:0.5px;">No card needed · Setup in hours · Cancel anytime</p>
+  </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-logo">BRee<span>Z</span>Y</div>
-      <p class="footer-tagline">Instagram commerce built for Kenyan sellers. Every sale leaves something behind.</p>
-    </div>
-    <div class="footer-links">
-      <div>
-        <div class="fcol-title">Product</div>
-        <ul class="fcol-links">
-          <li><a href="#outcomes">What you get</a></li>
-          <li><a href="#calculator">Calculator</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="https://ig.me/m/breezy_smartshop">Try the demo</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="fcol-title">Legal</div>
-        <ul class="fcol-links">
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
-          <li><a href="safety.html">Account Safety</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="fcol-title">Contact</div>
-        <ul class="fcol-links">
-          <li><a href="https://instagram.com/breezy_smartshop">@breezy_smartshop</a></li>
-          <li><a href="mailto:breezysmartshop@gmail.com">breezysmartshop@gmail.com</a></li>
-        </ul>
-      </div>
-    </div>
+  <div class="footer-logo">B R E E<span>Z</span>Y</div>
+  <div class="footer-links">
+    <a href="#how">How it works</a>
+    <a href="#calculator">Calculator</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="/dashboard.html">Seller login</a>
+    <a href="https://wa.me/254762826978">WhatsApp</a>
   </div>
-  <div class="footer-bottom">
-    <span>© 2026 Breezy Smartshop · Nairobi, Kenya</span>
-    <span>Compliant with Kenya Data Protection Act (ODPC)</span>
-  </div>
+  <div class="footer-copy">© 2026 Breezy · Nairobi, Kenya</div>
 </footer>
 
+<!-- UCHAT WIDGET PLACEHOLDER — paste your widget script here -->
 <script>
-let currentMode = 'breezy';
-let calcMode = 'trial';
-
-const breezyTicker = [
-  'Reviews that build themselves','Mpesa checkout in under a minute',
-  'Contacts you can reach again','Sales while you sleep',
-  'Zero back and forth','Confirmation email before they put their phone down',
-  'Works alongside Jumia','The experience they remember'
-];
-
-const beezyTicker = [
-  '40% review rate per sale','DM to payment in under 60 seconds',
-  '30% repeat customer rate','Zero manual intervention',
-  'Runs 24 hours a day','Every sale captured and measurable',
-  'Customer list grows with every order','Conversion not content'
-];
-
-function buildTicker(items) {
-  const all = [...items, ...items];
-  return all.map(t => `<span class="ticker-item"><span class="tdot"></span>${t}</span>`).join('');
+/* ===== UCHAT WIDGET — REPLACE THIS BLOCK =====
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.src = 'YOUR_UCHAT_WIDGET_SCRIPT_URL_HERE';
+  document.head.appendChild(s);
+});
+============================================== */
+<script async defer src="https://www.uchat.com.au/js/widget/3mqg0rm2p5hxf5jh/popup.js"></script>
+// Once widget is added above, this opens it
+function openWidget() {
+  if (window.UchatWidget) { window.UchatWidget.open(); }
+  else { setTimeout(function(){ if(window.UchatWidget) window.UchatWidget.open(); }, 800); }
+  return false;
 }
 
-function setMode(mode) {
-  currentMode = mode;
-  document.body.classList.toggle('beezy', mode === 'beezy');
-  // Scroll to top smoothly on mode switch
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  document.getElementById('tickerInner').innerHTML = buildTicker(mode === 'breezy' ? breezyTicker : beezyTicker);
+// Calculator
+function updateCalc() {
+  var w = parseInt(document.getElementById('ordersSlider').value);
+  document.getElementById('ordersVal').textContent = w;
+  document.getElementById('reviewBase').textContent = w;
 
-  // Update footer logo
-  document.querySelector('.footer-logo').innerHTML = mode === 'breezy'
-    ? 'BRee<span style="color:var(--teal)">Z</span>Y'
-    : 'BEE<span style="color:var(--teal)">z</span>y';
+  // 14 days = 2 weeks
+  var o14 = w * 2;
+  var rv14 = Math.round(o14 * 0.35);
 
-  // Update outcomes headline
-  document.getElementById('outcomesHeadline').innerHTML = mode === 'breezy'
-    ? 'What every sale<br>leaves <em>behind</em>'
-    : 'The metrics that<br><em>compound</em>';
+  // 3 months = 13 weeks
+  var o3m = w * 13;
+  var rv3m = Math.round(o3m * 0.35);
 
-  // Update journey headline
-  document.getElementById('journeyHeadline').innerHTML = mode === 'breezy'
-    ? 'What your customer<br><em>actually feels</em>'
-    : 'The conversion<br><em>flow</em>';
+  // 6 months = 26 weeks
+  var o6m = w * 26;
+  var rv6m = Math.round(o6m * 0.35);
 
-  // Update demo sub
-  document.getElementById('demoSub').textContent = mode === 'breezy'
-    ? "The best way to understand Breezy isn't reading about it — it's being the customer for two minutes. Tap, send anything, and go through it exactly as your customers would."
-    : "See the full funnel in action. From first DM to confirmation email — every step measurable, every touchpoint captured.";
+  // review timeline
+  var o1m  = w * 4;
+  var o12m = w * 52;
+  var rv1m  = Math.round(o1m  * 0.35);
+  var rv12m = Math.round(o12m * 0.35);
+  var maxRv = rv12m || 1;
 
-  // Update pain eyebrow
-  document.getElementById('painEyebrow').textContent = mode === 'breezy'
-    ? 'The gap most sellers don\'t see'
-    : 'The cost of manual selling';
+  // projections
+  document.getElementById('p1orders').textContent   = o14;
+  document.getElementById('p1emails').textContent   = o14;
+  document.getElementById('p1reqsent').textContent  = o14;
+  document.getElementById('p1reviews').textContent  = rv14;
 
-  calculate();
+  document.getElementById('p3orders').textContent   = o3m;
+  document.getElementById('p3emails').textContent   = o3m;
+  document.getElementById('p3reqsent').textContent  = o3m;
+  document.getElementById('p3reviews').textContent  = rv3m;
+
+  document.getElementById('p6orders').textContent   = o6m;
+  document.getElementById('p6emails').textContent   = o6m;
+  document.getElementById('p6reqsent').textContent  = o6m;
+  document.getElementById('p6reviews').textContent  = rv6m;
+
+  // timeline bars
+  document.getElementById('rv1').textContent = rv14;
+  document.getElementById('rv2').textContent = rv1m;
+  document.getElementById('rv3').textContent = rv3m;
+  document.getElementById('rv4').textContent = rv6m;
+  document.getElementById('rv5').textContent = rv12m;
+
+  document.getElementById('bar1').style.width = Math.max(2, Math.round(rv14/maxRv*100))  + '%';
+  document.getElementById('bar2').style.width = Math.max(2, Math.round(rv1m/maxRv*100))  + '%';
+  document.getElementById('bar3').style.width = Math.max(2, Math.round(rv3m/maxRv*100))  + '%';
+  document.getElementById('bar4').style.width = Math.max(2, Math.round(rv6m/maxRv*100))  + '%';
+  document.getElementById('bar5').style.width = '100%';
 }
 
-function setCalcMode(mode, btn) {
-  calcMode = mode;
-  document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  const h = document.getElementById('calcHeadline');
-  const labels = {
-    trial:  'What happens in your<br><em>14-day free trial?</em>',
-    month1: 'What does<br><em>Month 1</em> look like?',
-    month3: 'By Month 3,<br>this is <em>compounding.</em>'
-  };
-  h.innerHTML = labels[mode];
-  calculate();
-}
+updateCalc();
 
-function fmt(n) {
-  if (n >= 1000000) return (n/1000000).toFixed(1)+'M';
-  if (n >= 1000) return Math.round(n/1000)+'K';
-  return n;
-}
-
-function calculate() {
-  const sales = parseInt(document.getElementById('sales').value);
-  const aov   = parseInt(document.getElementById('aov').value);
-
-  document.getElementById('salesVal').textContent    = fmt(sales);
-  document.getElementById('aovVal').textContent      = fmt(aov);
-  document.getElementById('followersVal').textContent = fmt(parseInt(document.getElementById('followers').value));
-
-  if (calcMode === 'trial') {
-    // 14 days = roughly half a month
-    const ts = Math.max(1, Math.round(sales * 0.5));
-    const tr = Math.max(0, Math.round(ts * 0.4));
-    const th = Math.max(1, Math.round((ts * 12) / 60));
-
-    document.getElementById('rl1').textContent = 'Sales closed in 14 days';
-    document.getElementById('rv1').innerHTML   = ts + ' <span>sales</span>';
-    document.getElementById('rn1').textContent = 'Real orders, real Mpesa payouts — all within the free trial.';
-
-    document.getElementById('rl2').textContent = 'Contacts in your list';
-    document.getElementById('rv2').innerHTML   = ts + ' <span>people</span>';
-    document.getElementById('rn2').textContent = 'Names, emails and numbers — reachable when new stock arrives.';
-
-    document.getElementById('rl3').textContent = 'Google review opportunities';
-    document.getElementById('rv3').innerHTML   = tr + ' <span>reviews</span>';
-    document.getElementById('rn3').textContent = tr > 0
-      ? 'Every delivery triggers a nudge. Your Google profile starts here.'
-      : 'Even 1 sale triggers a review nudge — your profile starts from day one.';
-
-    document.getElementById('rl4').textContent = 'Hours saved in 14 days';
-    document.getElementById('rv4').innerHTML   = th + ' <span>hrs</span>';
-    document.getElementById('rn4').textContent = 'Manual confirmations, payment checks, follow-ups — gone.';
-
-    document.getElementById('trialStrong').textContent = 'Start your 14-day free trial';
-    document.getElementById('trialSub').textContent    = 'No subscription until month 2. These numbers are yours to keep after the trial ends.';
-
-  } else if (calcMode === 'month1') {
-    // Full first month — trial data carries over, subscription begins
-    const m1sales    = sales;
-    const m1contacts = m1sales + Math.round(sales * 0.5); // trial + month 1
-    const m1reviews  = Math.round(m1contacts * 0.4);
-    const m1revenue  = m1sales * aov;
-    const m1hours    = Math.max(1, Math.round((m1sales * 12) / 60));
-
-    document.getElementById('rl1').textContent = 'Total sales after month 1';
-    document.getElementById('rv1').innerHTML   = fmt(m1contacts) + ' <span>sales</span>';
-    document.getElementById('rn1').textContent = 'Trial sales carry over. Month 1 adds your full monthly volume on top.';
-
-    document.getElementById('rl2').textContent = 'Contacts in your list';
-    document.getElementById('rv2').innerHTML   = fmt(m1contacts) + ' <span>people</span>';
-    document.getElementById('rn2').textContent = 'Every buyer reachable — not just followers who might see a post.';
-
-    document.getElementById('rl3').textContent = 'Google reviews building';
-    document.getElementById('rv3').innerHTML   = m1reviews + ' <span>reviews</span>';
-    document.getElementById('rn3').textContent = 'Coming in automatically after every delivery. No asking needed.';
-
-    document.getElementById('rl4').textContent = 'Monthly revenue';
-    document.getElementById('rv4').innerHTML   = 'KES <span>' + fmt(m1revenue) + '</span>';
-    document.getElementById('rn4').textContent = 'From your current sales volume — before any growth from reviews or repeat customers.';
-
-    document.getElementById('trialStrong').textContent = 'Month 1 is where the foundation sets';
-    document.getElementById('trialSub').textContent    = 'By the end of month 1 you have a list, reviews starting, and a system running itself.';
-
-  } else {
-    // Month 3 — compound effect visible
-    const m3sales    = Math.round(sales * Math.pow(1.15, 2)); // 15% growth x2
-    const totalSales = Math.round(sales * 0.5) + sales + Math.round(sales * 1.15) + m3sales;
-    const m3reviews  = Math.round(totalSales * 0.4);
-    const m3contacts = Math.round(totalSales * 0.9);
-    const m3revenue  = m3sales * aov;
-
-    document.getElementById('rl1').textContent = 'Month 3 monthly sales';
-    document.getElementById('rv1').innerHTML   = fmt(m3sales) + ' <span>sales</span>';
-    document.getElementById('rn1').textContent = 'Growing because reviews are converting new visitors before they even DM you.';
-
-    document.getElementById('rl2').textContent = 'Contacts in your list';
-    document.getElementById('rv2').innerHTML   = fmt(m3contacts) + ' <span>people</span>';
-    document.getElementById('rn2').textContent = 'Every one reachable for your next drop. Free re-engagement, every time.';
-
-    document.getElementById('rl3').textContent = 'Google reviews on your profile';
-    document.getElementById('rv3').innerHTML   = m3reviews + ' <span>reviews</span>';
-    document.getElementById('rn3').textContent = 'A profile that sells for you before a customer even messages. This is the compounding effect.';
-
-    document.getElementById('rl4').textContent = 'Month 3 monthly revenue';
-    document.getElementById('rv4').innerHTML   = 'KES <span>' + fmt(m3revenue) + '</span>';
-    document.getElementById('rn4').textContent = 'Driven by reviews bringing new customers and your list bringing repeat ones.';
-
-    document.getElementById('trialStrong').textContent = 'The trial starts this. Month 3 proves it.';
-    document.getElementById('trialSub').textContent    = 'Free to start. By month 3 the numbers speak for themselves.';
-
-    updateBars([
-      Math.round(sales * 0.5),
-      sales,
-      Math.round(sales * 1.15),
-      m3sales
-    ].concat([0,0]).slice(0,6).map((v,i) => v || Math.round(m3sales * (0.85 + i*0.05))));
-  }
-}
-
-function updateBars(months) {
-  const bars = document.querySelectorAll('.compound-bar');
-  const max = Math.max(...months);
-  bars.forEach((bar, i) => {
-    const h = Math.max(20, Math.round((months[i] / max) * 196));
-    bar.style.height = h + 'px';
-    bar.querySelector('.cbar-val').textContent = months[i];
+// FAQ
+document.querySelectorAll('.faq-q').forEach(function(q){
+  q.addEventListener('click', function(){
+    var item = this.parentElement;
+    var wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+    if (!wasOpen) item.classList.add('open');
   });
-}
-
-// Init
-document.getElementById('tickerInner').innerHTML = buildTicker(breezyTicker);
-
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-calculate();
+});
 </script>
+
 </body>
 </html>

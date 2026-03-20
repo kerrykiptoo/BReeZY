@@ -16,7 +16,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);}
 
-/* ── AUTH ── */
+/* AUTH */
 .auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
 .auth-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(0,0,0,0.06);}
 .auth-logo{font-family:'Caveat',cursive;font-size:36px;font-weight:700;color:var(--ink);text-align:center;margin-bottom:8px;}
@@ -30,8 +30,9 @@ body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);}
 .btn-login:hover{background:var(--teal-d);}
 .btn-login:disabled{opacity:0.6;cursor:not-allowed;}
 .auth-error{background:var(--danger-f);border:1px solid rgba(226,75,74,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--danger);margin-bottom:16px;display:none;}
+.auth-success{background:rgba(26,191,160,0.08);border:1px solid rgba(26,191,160,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--teal-d);margin-bottom:16px;display:none;}
 
-/* ── APP SHELL ── */
+/* APP SHELL */
 .app{display:none;min-height:100vh;flex-direction:column;}
 
 /* NAV */
@@ -45,8 +46,8 @@ body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);}
 .btn-logout:hover{border-color:var(--danger);color:var(--danger);}
 
 /* TABS */
-.tabs{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;display:flex;gap:0;}
-.tab-btn{padding:16px 24px;font-size:13px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;border:none;background:transparent;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s;margin-bottom:-1px;}
+.tabs{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;display:flex;gap:0;overflow-x:auto;}
+.tab-btn{padding:16px 24px;font-size:13px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;border:none;background:transparent;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s;margin-bottom:-1px;white-space:nowrap;}
 .tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);}
 .tab-btn:hover{color:var(--ink);}
 
@@ -61,7 +62,7 @@ body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);}
 .btn-primary{padding:10px 20px;background:var(--teal);color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;transition:background 0.2s;}
 .btn-primary:hover{background:var(--teal-d);}
 
-/* STATS ROW */
+/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;}
 .stat-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;}
@@ -76,7 +77,7 @@ td{padding:14px 20px;font-size:13px;color:var(--ink);border-bottom:1px solid var
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:var(--teal-f);}
 
-/* STATUS BADGES */
+/* BADGES */
 .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
 .badge-confirmed{background:rgba(26,191,160,0.1);color:var(--teal-d);}
 .badge-shipped{background:rgba(59,130,246,0.1);color:#1d4ed8;}
@@ -94,7 +95,7 @@ tr:hover td{background:var(--teal-f);}
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--surface);border-radius:16px;padding:32px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;}
+.modal{background:var(--surface);border-radius:16px;padding:32px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;}
 .modal-title{font-size:18px;font-weight:700;margin-bottom:24px;color:var(--ink);}
 .modal-footer{display:flex;gap:12px;justify-content:flex-end;margin-top:24px;}
 .btn-cancel{padding:10px 20px;background:transparent;border:1px solid var(--border-s);border-radius:8px;font-size:13px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;color:var(--muted);}
@@ -102,16 +103,23 @@ tr:hover td{background:var(--teal-f);}
 .btn-save:hover{background:var(--teal-d);}
 
 /* IMAGE UPLOAD */
-.img-upload-area{border:2px dashed var(--border-s);border-radius:10px;padding:24px;text-align:center;cursor:pointer;transition:border-color 0.2s;margin-bottom:8px;}
-.img-upload-area:hover{border-color:var(--teal);}
-.img-upload-area input{display:none;}
-.img-preview{width:80px;height:80px;object-fit:cover;border-radius:8px;margin-top:8px;display:none;}
-.img-upload-text{font-size:13px;color:var(--muted);}
+.img-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;}
+.img-slot{border:2px dashed var(--border-s);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:border-color 0.2s;position:relative;}
+.img-slot:hover{border-color:var(--teal);}
+.img-slot input{display:none;}
+.img-slot-preview{width:100%;height:80px;object-fit:cover;border-radius:6px;display:none;}
+.img-slot-text{font-size:12px;color:var(--muted);}
+.img-slot-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--teal);margin-bottom:6px;}
+.img-remove{position:absolute;top:6px;right:6px;width:20px;height:20px;background:var(--danger);color:white;border:none;border-radius:50%;font-size:12px;cursor:pointer;display:none;align-items:center;justify-content:center;}
 
-/* LOADING */
+/* SETTINGS */
+.settings-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:20px;max-width:500px;}
+.settings-title{font-size:15px;font-weight:700;margin-bottom:20px;color:var(--ink);}
+.settings-success{background:rgba(26,191,160,0.08);border:1px solid rgba(26,191,160,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--teal-d);margin-bottom:16px;display:none;}
+.settings-error{background:var(--danger-f);border:1px solid rgba(226,75,74,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--danger);margin-bottom:16px;display:none;}
+
+/* LOADING / EMPTY */
 .loading{text-align:center;padding:40px;color:var(--muted);font-size:14px;}
-
-/* EMPTY */
 .empty{text-align:center;padding:60px 20px;color:var(--muted);}
 .empty-icon{font-size:40px;margin-bottom:12px;}
 .empty-text{font-size:14px;}
@@ -119,10 +127,11 @@ tr:hover td{background:var(--teal-f);}
 @media(max-width:768px){
   .stats-row{grid-template-columns:1fr 1fr;}
   .nav{padding:0 16px;}
-  .tabs{padding:0 16px;overflow-x:auto;}
+  .tabs{padding:0 16px;}
   .content{padding:16px;}
   table{font-size:12px;}
   th,td{padding:10px 12px;}
+  .img-grid{grid-template-columns:1fr 1fr;}
 }
 </style>
 </head>
@@ -162,11 +171,12 @@ tr:hover td{background:var(--teal-f);}
     <button class="tab-btn" onclick="switchTab('products',this)">Products</button>
     <button class="tab-btn" onclick="switchTab('customers',this)">Customers</button>
     <button class="tab-btn" onclick="switchTab('analytics',this)">Analytics</button>
+    <button class="tab-btn" onclick="switchTab('settings',this)">Settings</button>
   </div>
 
   <div class="content">
 
-    <!-- ORDERS TAB -->
+    <!-- ORDERS -->
     <div class="tab-panel active" id="tab-orders">
       <div class="page-header">
         <div class="page-title">Orders</div>
@@ -191,7 +201,7 @@ tr:hover td{background:var(--teal-f);}
       </div>
     </div>
 
-    <!-- PRODUCTS TAB -->
+    <!-- PRODUCTS -->
     <div class="tab-panel" id="tab-products">
       <div class="page-header">
         <div class="page-title">Products</div>
@@ -217,7 +227,7 @@ tr:hover td{background:var(--teal-f);}
       </div>
     </div>
 
-    <!-- CUSTOMERS TAB -->
+    <!-- CUSTOMERS -->
     <div class="tab-panel" id="tab-customers">
       <div class="page-header">
         <div class="page-title">Customers</div>
@@ -241,16 +251,58 @@ tr:hover td{background:var(--teal-f);}
       </div>
     </div>
 
-    <!-- ANALYTICS TAB -->
+    <!-- ANALYTICS -->
     <div class="tab-panel" id="tab-analytics">
       <div class="page-header">
         <div class="page-title">Analytics</div>
       </div>
-      <div class="stats-row" id="analyticsStats">
+      <div class="stats-row">
         <div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value teal" id="statTotal">—</div></div>
         <div class="stat-card"><div class="stat-label">Revenue (KES)</div><div class="stat-value" id="statRevenue">—</div></div>
         <div class="stat-card"><div class="stat-label">Customers</div><div class="stat-value" id="statCustomers">—</div></div>
-        <div class="stat-card"><div class="stat-label">Review Opportunities</div><div class="stat-value teal" id="statReviews">—</div></div>
+        <div class="stat-card"><div class="stat-label">Reviews Sent</div><div class="stat-value teal" id="statReviews">—</div></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="tab-panel" id="tab-settings">
+      <div class="page-header">
+        <div class="page-title">Settings</div>
+      </div>
+
+      <div class="settings-card">
+        <div class="settings-title">Change Password</div>
+        <div class="settings-success" id="pwSuccess">Password changed successfully.</div>
+        <div class="settings-error" id="pwError"></div>
+        <div class="form-group">
+          <label class="form-label">Current Password</label>
+          <input type="password" class="form-input" id="currentPw" placeholder="••••••••">
+        </div>
+        <div class="form-group">
+          <label class="form-label">New Password</label>
+          <input type="password" class="form-input" id="newPw" placeholder="••••••••">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm New Password</label>
+          <input type="password" class="form-input" id="confirmPw" placeholder="••••••••">
+        </div>
+        <button class="btn-primary" onclick="changePassword()">Update Password</button>
+      </div>
+
+      <div class="settings-card">
+        <div class="settings-title">Account Info</div>
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-input" id="settingsName" readonly>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="text" class="form-input" id="settingsEmail" readonly>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Store ID</label>
+          <input type="text" class="form-input" id="settingsClientId" readonly>
+        </div>
       </div>
     </div>
 
@@ -303,17 +355,45 @@ tr:hover td{background:var(--teal-f);}
       <input type="number" class="form-input" id="pStock" placeholder="10">
     </div>
     <div class="form-group">
-      <label class="form-label">Category / Niche</label>
+      <label class="form-label">Category</label>
       <input type="text" class="form-input" id="pCategory" placeholder="Heels">
     </div>
     <div class="form-group">
-      <label class="form-label">Product Image</label>
-      <div class="img-upload-area" onclick="document.getElementById('imgFile').click()">
-        <input type="file" id="imgFile" accept="image/*" onchange="previewImage(this)">
-        <div class="img-upload-text">Click to upload image</div>
-        <img class="img-preview" id="imgPreview">
+      <label class="form-label">Product Images (up to 4)</label>
+      <div class="img-grid">
+        <div class="img-slot" onclick="document.getElementById('imgFile1').click()">
+          <div class="img-slot-label">Cover Image</div>
+          <input type="file" id="imgFile1" accept="image/*" onchange="uploadImage(this,1)">
+          <img class="img-slot-preview" id="imgPreview1">
+          <div class="img-slot-text" id="imgText1">Click to upload</div>
+          <button class="img-remove" id="imgRemove1" onclick="removeImage(event,1)">×</button>
+        </div>
+        <div class="img-slot" onclick="document.getElementById('imgFile2').click()">
+          <div class="img-slot-label">Image 2</div>
+          <input type="file" id="imgFile2" accept="image/*" onchange="uploadImage(this,2)">
+          <img class="img-slot-preview" id="imgPreview2">
+          <div class="img-slot-text" id="imgText2">Click to upload</div>
+          <button class="img-remove" id="imgRemove2" onclick="removeImage(event,2)">×</button>
+        </div>
+        <div class="img-slot" onclick="document.getElementById('imgFile3').click()">
+          <div class="img-slot-label">Image 3</div>
+          <input type="file" id="imgFile3" accept="image/*" onchange="uploadImage(this,3)">
+          <img class="img-slot-preview" id="imgPreview3">
+          <div class="img-slot-text" id="imgText3">Click to upload</div>
+          <button class="img-remove" id="imgRemove3" onclick="removeImage(event,3)">×</button>
+        </div>
+        <div class="img-slot" onclick="document.getElementById('imgFile4').click()">
+          <div class="img-slot-label">Image 4</div>
+          <input type="file" id="imgFile4" accept="image/*" onchange="uploadImage(this,4)">
+          <img class="img-slot-preview" id="imgPreview4">
+          <div class="img-slot-text" id="imgText4">Click to upload</div>
+          <button class="img-remove" id="imgRemove4" onclick="removeImage(event,4)">×</button>
+        </div>
       </div>
-      <input type="hidden" id="pImage" value="">
+      <input type="hidden" id="pImage1">
+      <input type="hidden" id="pImage2">
+      <input type="hidden" id="pImage3">
+      <input type="hidden" id="pImage4">
     </div>
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeModal('productModal')">Cancel</button>
@@ -330,23 +410,24 @@ const PRESET = 'breezy_products';
 let token = localStorage.getItem('breezy_token');
 let clientId = localStorage.getItem('breezy_client_id');
 let userName = localStorage.getItem('breezy_name');
+let userEmail = localStorage.getItem('breezy_email');
 
 if (token && clientId) showApp();
 
 async function login() {
-  const email    = document.getElementById('loginEmail').value.trim();
+  const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
-  const btn      = document.getElementById('loginBtn');
-  const errEl    = document.getElementById('authError');
+  const btn = document.getElementById('loginBtn');
+  const errEl = document.getElementById('authError');
 
-  if (!email || !password) { showError('Please enter email and password'); return; }
+  if (!email || !password) { showAuthError('Please enter email and password'); return; }
 
   btn.disabled = true;
   btn.textContent = 'Signing in...';
   errEl.style.display = 'none';
 
   try {
-    const res  = await fetch(`${API}/auth/login`, {
+    const res = await fetch(`${API}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -354,43 +435,48 @@ async function login() {
     const data = await res.json();
 
     if (data.success) {
-      localStorage.setItem('breezy_token',     data.token);
+      localStorage.setItem('breezy_token', data.token);
       localStorage.setItem('breezy_client_id', data.client_id);
-      localStorage.setItem('breezy_name',      data.name);
-      token    = data.token;
+      localStorage.setItem('breezy_name', data.name);
+      localStorage.setItem('breezy_email', data.email);
+      token = data.token;
       clientId = data.client_id;
       userName = data.name;
+      userEmail = data.email;
       showApp();
     } else {
-      showError(data.error || 'Invalid credentials');
+      showAuthError(data.error || 'Invalid credentials');
     }
   } catch (err) {
-    showError('Connection error. Please try again.');
+    showAuthError('Connection error. Please try again.');
   }
 
   btn.disabled = false;
   btn.textContent = 'Sign in';
 }
 
-function showError(msg) {
+function showAuthError(msg) {
   const el = document.getElementById('authError');
   el.textContent = msg;
   el.style.display = 'block';
 }
 
 function showApp() {
-  document.getElementById('authWrap').style.display  = 'none';
-  document.getElementById('appShell').style.display  = 'flex';
+  document.getElementById('authWrap').style.display = 'none';
+  document.getElementById('appShell').style.display = 'flex';
   document.getElementById('navName').textContent = userName || clientId;
+  document.getElementById('settingsName').value = userName || '';
+  document.getElementById('settingsEmail').value = userEmail || '';
+  document.getElementById('settingsClientId').value = clientId || '';
   loadOrders();
   loadAnalytics();
 }
 
 function logout() {
   localStorage.clear();
-  token = null; clientId = null; userName = null;
-  document.getElementById('authWrap').style.display  = 'flex';
-  document.getElementById('appShell').style.display  = 'none';
+  token = null; clientId = null; userName = null; userEmail = null;
+  document.getElementById('authWrap').style.display = 'flex';
+  document.getElementById('appShell').style.display = 'none';
 }
 
 function switchTab(name, btn) {
@@ -398,8 +484,8 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   btn.classList.add('active');
-  if (name === 'orders')    loadOrders();
-  if (name === 'products')  loadProducts();
+  if (name === 'orders') loadOrders();
+  if (name === 'products') loadProducts();
   if (name === 'customers') loadCustomers();
   if (name === 'analytics') loadAnalytics();
 }
@@ -408,10 +494,10 @@ function closeModal(id) {
   document.getElementById(id).classList.remove('open');
 }
 
-// ── ORDERS ──
+// ORDERS
 async function loadOrders() {
   try {
-    const res  = await fetch(`${API}/orders/list?client_id=${clientId}`, {
+    const res = await fetch(`${API}/orders/list?client_id=${clientId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
@@ -432,7 +518,7 @@ async function loadOrders() {
         <td style="font-size:11px">${new Date(o.created_at).toLocaleDateString()}</td>
         <td>
           ${!o.shipped ? `<button class="btn-action btn-ship" onclick="openShipModal('${o.order_reference}')">Ship</button>` : ''}
-          ${o.shipped && !o.complete ? `<button class="btn-action btn-complete" onclick="completeOrder('${o.order_reference}', this)">Complete</button>` : ''}
+          ${o.shipped && !o.complete ? `<button class="btn-action btn-complete" onclick="completeOrder('${o.order_reference}',this)">Complete</button>` : ''}
           ${o.complete ? '<span style="font-size:11px;color:var(--muted)">Done</span>' : ''}
         </td>
       </tr>
@@ -452,9 +538,9 @@ function openShipModal(orderRef) {
 
 async function confirmShip() {
   const orderRef = document.getElementById('shipOrderRef').value;
-  const riderName  = document.getElementById('riderName').value.trim();
+  const riderName = document.getElementById('riderName').value.trim();
   const riderPhone = document.getElementById('riderPhone').value.trim();
-  const eta        = document.getElementById('riderETA').value.trim();
+  const eta = document.getElementById('riderETA').value.trim();
 
   if (!riderName || !riderPhone) { alert('Please enter rider name and phone'); return; }
 
@@ -471,7 +557,7 @@ async function confirmShip() {
 }
 
 async function completeOrder(orderRef, btn) {
-  if (!confirm('Mark this order as complete and send review email?')) return;
+  if (!confirm('Mark complete and send review email?')) return;
   btn.disabled = true;
   try {
     const res = await fetch(`${API}/orders/complete`, {
@@ -485,17 +571,17 @@ async function completeOrder(orderRef, btn) {
   } catch (err) { alert('Connection error'); }
 }
 
-// ── PRODUCTS ──
+// PRODUCTS
 async function loadProducts() {
   try {
-    const res  = await fetch(`${API}/products/list?client_id=${clientId}`, {
+    const res = await fetch(`${API}/products/list?client_id=${clientId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
     const tbody = document.getElementById('productsBody');
 
     if (!data.products || data.products.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7"><div class="empty"><div class="empty-icon">🛍️</div><div class="empty-text">No products yet. Add your first product.</div></div></td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7"><div class="empty"><div class="empty-icon">🛍️</div><div class="empty-text">No products yet.</div></div></td></tr>';
       return;
     }
 
@@ -508,8 +594,8 @@ async function loadProducts() {
         <td>${p.stock}</td>
         <td><span class="badge ${p.active === 'YES' ? 'badge-confirmed' : 'badge-shipped'}">${p.active === 'YES' ? 'Active' : 'Hidden'}</span></td>
         <td>
-          <button class="btn-action" onclick="editProduct(${JSON.stringify(p).replace(/"/g,'&quot;')})">Edit</button>
-          <button class="btn-action btn-delete" onclick="deleteProduct('${p._id}','${p.category}')">Delete</button>
+          <button class="btn-action" onclick='editProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'>Edit</button>
+          <button class="btn-action btn-delete" onclick="deleteProduct('${p._id}')">Delete</button>
         </td>
       </tr>
     `).join('');
@@ -526,8 +612,12 @@ function openProductModal() {
   document.getElementById('pPrice').value = '';
   document.getElementById('pStock').value = '';
   document.getElementById('pCategory').value = '';
-  document.getElementById('pImage').value = '';
-  document.getElementById('imgPreview').style.display = 'none';
+  [1,2,3,4].forEach(n => {
+    document.getElementById('pImage'+n).value = '';
+    document.getElementById('imgPreview'+n).style.display = 'none';
+    document.getElementById('imgText'+n).style.display = 'block';
+    document.getElementById('imgRemove'+n).style.display = 'none';
+  });
   document.getElementById('productModal').classList.add('open');
 }
 
@@ -539,22 +629,39 @@ function editProduct(p) {
   document.getElementById('pPrice').value = p.price;
   document.getElementById('pStock').value = p.stock;
   document.getElementById('pCategory').value = p.category;
-  document.getElementById('pImage').value = p.image1 || '';
-  if (p.image1) {
-    const prev = document.getElementById('imgPreview');
-    prev.src = p.image1;
-    prev.style.display = 'block';
-  }
+
+  const images = [p.image1||'', p.image2||'', p.image3||'', p.image4||''];
+  images.forEach((url, i) => {
+    const n = i + 1;
+    document.getElementById('pImage'+n).value = url;
+    if (url) {
+      const prev = document.getElementById('imgPreview'+n);
+      prev.src = url;
+      prev.style.display = 'block';
+      document.getElementById('imgText'+n).style.display = 'none';
+      document.getElementById('imgRemove'+n).style.display = 'flex';
+    }
+  });
+
   document.getElementById('productModal').classList.add('open');
 }
 
-async function previewImage(input) {
+function removeImage(e, n) {
+  e.stopPropagation();
+  document.getElementById('pImage'+n).value = '';
+  document.getElementById('imgPreview'+n).style.display = 'none';
+  document.getElementById('imgText'+n).style.display = 'block';
+  document.getElementById('imgRemove'+n).style.display = 'none';
+}
+
+async function uploadImage(input, n) {
   const file = input.files[0];
   if (!file) return;
 
-  const prev = document.getElementById('imgPreview');
+  const prev = document.getElementById('imgPreview'+n);
   prev.src = URL.createObjectURL(file);
   prev.style.display = 'block';
+  document.getElementById('imgText'+n).style.display = 'none';
 
   const btn = document.getElementById('saveProductBtn');
   btn.textContent = 'Uploading...';
@@ -566,11 +673,12 @@ async function previewImage(input) {
     fd.append('upload_preset', PRESET);
     fd.append('folder', `breezy/${clientId}`);
 
-    const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`, {
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`, {
       method: 'POST', body: fd
     });
     const data = await res.json();
-    document.getElementById('pImage').value = data.secure_url;
+    document.getElementById('pImage'+n).value = data.secure_url;
+    document.getElementById('imgRemove'+n).style.display = 'flex';
   } catch (err) {
     alert('Image upload failed. Please try again.');
   }
@@ -580,22 +688,25 @@ async function previewImage(input) {
 }
 
 async function saveProduct() {
-  const id       = document.getElementById('editProductId').value;
-  const name     = document.getElementById('pName').value.trim();
-  const desc     = document.getElementById('pDesc').value.trim();
-  const price    = document.getElementById('pPrice').value;
-  const stock    = document.getElementById('pStock').value;
+  const id = document.getElementById('editProductId').value;
+  const name = document.getElementById('pName').value.trim();
+  const desc = document.getElementById('pDesc').value.trim();
+  const price = document.getElementById('pPrice').value;
+  const stock = document.getElementById('pStock').value;
   const category = document.getElementById('pCategory').value.trim();
-  const image    = document.getElementById('pImage').value;
+  const image1 = document.getElementById('pImage1').value;
+  const image2 = document.getElementById('pImage2').value;
+  const image3 = document.getElementById('pImage3').value;
+  const image4 = document.getElementById('pImage4').value;
 
   if (!name || !price || !stock || !category) { alert('Please fill in all required fields'); return; }
 
   const endpoint = id ? `${API}/products/update` : `${API}/products/add`;
-  const body = { client_id: clientId, name, description: desc, price: parseFloat(price), stock: parseInt(stock), category, image1: image, active: 'YES' };
+  const body = { client_id: clientId, name, description: desc, price: parseFloat(price), stock: parseInt(stock), category, image1, image2, image3, image4, active: 'YES' };
   if (id) body.product_id = id;
 
   try {
-    const res  = await fetch(endpoint, {
+    const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: JSON.stringify(body)
@@ -606,13 +717,13 @@ async function saveProduct() {
   } catch (err) { alert('Connection error'); }
 }
 
-async function deleteProduct(id, category) {
+async function deleteProduct(id) {
   if (!confirm('Delete this product?')) return;
   try {
     const res = await fetch(`${API}/products/delete`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ client_id: clientId, product_id: id, category })
+      body: JSON.stringify({ client_id: clientId, product_id: id })
     });
     const data = await res.json();
     if (data.success) loadProducts();
@@ -620,10 +731,10 @@ async function deleteProduct(id, category) {
   } catch (err) { alert('Connection error'); }
 }
 
-// ── CUSTOMERS ──
+// CUSTOMERS
 async function loadCustomers() {
   try {
-    const res  = await fetch(`${API}/customers/list?client_id=${clientId}`, {
+    const res = await fetch(`${API}/customers/list?client_id=${clientId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
@@ -666,30 +777,78 @@ function exportCSV() {
   });
 }
 
-// ── ANALYTICS ──
+// ANALYTICS
 async function loadAnalytics() {
   try {
-    const res  = await fetch(`${API}/orders/list?client_id=${clientId}`, {
+    const res = await fetch(`${API}/orders/list?client_id=${clientId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const data = await res.json();
     const orders = data.orders || [];
 
-    const total    = orders.length;
-    const revenue  = orders.reduce((s, o) => s + (o.total_amount || 0), 0);
-    const reviews  = orders.filter(o => o.complete).length;
+    document.getElementById('statTotal').textContent = orders.length;
+    document.getElementById('statRevenue').textContent = 'KES ' + orders.reduce((s,o) => s + (o.total_amount||0), 0).toLocaleString();
+    document.getElementById('statReviews').textContent = orders.filter(o => o.complete).length;
 
-    document.getElementById('statTotal').textContent    = total;
-    document.getElementById('statRevenue').textContent  = 'KES ' + revenue.toLocaleString();
-    document.getElementById('statReviews').textContent  = reviews;
-
-    const custRes  = await fetch(`${API}/customers/list?client_id=${clientId}`, {
+    const custRes = await fetch(`${API}/customers/list?client_id=${clientId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const custData = await custRes.json();
-    document.getElementById('statCustomers').textContent = (custData.customers || []).length;
+    document.getElementById('statCustomers').textContent = (custData.customers||[]).length;
   } catch (err) {
     console.error('Analytics error:', err);
+  }
+}
+
+// SETTINGS — PASSWORD CHANGE
+async function changePassword() {
+  const current = document.getElementById('currentPw').value;
+  const newPw = document.getElementById('newPw').value;
+  const confirm = document.getElementById('confirmPw').value;
+
+  const errEl = document.getElementById('pwError');
+  const sucEl = document.getElementById('pwSuccess');
+  errEl.style.display = 'none';
+  sucEl.style.display = 'none';
+
+  if (!current || !newPw || !confirm) {
+    errEl.textContent = 'Please fill in all fields';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  if (newPw !== confirm) {
+    errEl.textContent = 'New passwords do not match';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  if (newPw.length < 6) {
+    errEl.textContent = 'New password must be at least 6 characters';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API}/auth/change-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ email: userEmail, current_password: current, new_password: newPw })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      sucEl.style.display = 'block';
+      document.getElementById('currentPw').value = '';
+      document.getElementById('newPw').value = '';
+      document.getElementById('confirmPw').value = '';
+    } else {
+      errEl.textContent = data.error || 'Failed to change password';
+      errEl.style.display = 'block';
+    }
+  } catch (err) {
+    errEl.textContent = 'Connection error. Please try again.';
+    errEl.style.display = 'block';
   }
 }
 
@@ -698,3 +857,4 @@ document.getElementById('loginPassword').addEventListener('keydown', e => {
 });
 </script>
 </body>
+</html>

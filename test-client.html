@@ -1,5 +1,3 @@
-cd /workspaces/BReeZY
-cat > test-client.html << 'EOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +18,7 @@ body{font-family:'Syne',sans-serif;background:#F5F2ED;color:#0A0A0B;min-height:1
 .btn:hover{background:#0D9C82;}
 .powered{margin-top:40px;font-size:12px;color:#6B6860;}
 .powered span{color:#1ABFA0;font-weight:600;}
-.seller-link{margin-top:16px;font-size:12px;color:#6B6860;}
+.seller-link{margin-top:16px;font-size:12px;}
 .seller-link a{color:#1ABFA0;text-decoration:none;font-weight:600;}
 </style>
 </head>
@@ -29,17 +27,16 @@ body{font-family:'Syne',sans-serif;background:#F5F2ED;color:#0A0A0B;min-height:1
 <div class="tagline">Order easy. Breathe easy.</div>
 <div class="card">
   <h2>This could be your store 👋</h2>
-  <p>Browse real products, pay securely, get a confirmation email — all in a conversation. No app, no website needed. Just chat.</p>
+  <p>Browse real products, pay securely, get a confirmation email — all in a conversation. No app needed. Just chat.</p>
   <button class="btn" onclick="openWidget()">Try it yourself →</button>
 </div>
 <div class="powered">Powered by <span>Breezy</span></div>
-<div class="seller-link"><a href="/dashboard.html">Seller login</a></div>
-
+<div class="seller-link"><a href="/dashboard.html">Seller login →</a></div>
 <script>
-window.addEventListener('load',function(){
-  var s=document.createElement('script');
-  s.src='https://www.uchat.com.au/js/widget/3mqg0rm2p5hxf5jh/popup.js';
-  s.onload=function(){console.log('Widget ready');};
+window.UchatCustomData = { client_id: "demo" };
+window.addEventListener('load', function() {
+  var s = document.createElement('script');
+  s.src = 'https://www.uchat.com.au/js/widget/3mqg0rm2p5hxf5jh/popup.js';
   document.head.appendChild(s);
 });
 function openWidget(){
@@ -49,4 +46,3 @@ function openWidget(){
 </script>
 </body>
 </html>
-EOF

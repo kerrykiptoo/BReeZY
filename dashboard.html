@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breezy Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0A0A0B; --paper:#F5F2ED; --surface:#FFFFFF;
+  --teal:#1ABFA0; --teal-d:#0D9C82; --teal-f:rgba(26,191,160,0.08);
+  --teal-b:rgba(26,191,160,0.22); --muted:#6B6860;
+  --border:rgba(10,10,11,0.08); --border-s:rgba(10,10,11,0.15);
+  --danger:#E24B4A; --danger-f:rgba(226,75,74,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Syne',sans-serif;background:var(--paper);color:var(--ink);}
+
+/* ── AUTH ── */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+.auth-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(0,0,0,0.06);}
+.auth-logo{font-family:'Caveat',cursive;font-size:36px;font-weight:700;color:var(--ink);text-align:center;margin-bottom:8px;}
+.auth-logo span{color:var(--teal);}
+.auth-sub{text-align:center;font-size:14px;color:var(--muted);margin-bottom:32px;}
+.form-group{margin-bottom:20px;}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;}
+.form-input{width:100%;padding:12px 16px;border:1.5px solid var(--border-s);border-radius:10px;font-size:14px;font-family:'Syne',sans-serif;color:var(--ink);background:var(--surface);outline:none;transition:border-color 0.2s;}
+.form-input:focus{border-color:var(--teal);}
+.btn-login{width:100%;padding:14px;background:var(--teal);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;transition:background 0.2s;margin-top:8px;}
+.btn-login:hover{background:var(--teal-d);}
+.btn-login:disabled{opacity:0.6;cursor:not-allowed;}
+.auth-error{background:var(--danger-f);border:1px solid rgba(226,75,74,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--danger);margin-bottom:16px;display:none;}
+
+/* ── APP SHELL ── */
+.app{display:none;min-height:100vh;flex-direction:column;}
+
+/* NAV */
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'Caveat',cursive;font-size:26px;font-weight:700;color:var(--ink);}
+.nav-logo span{color:var(--teal);}
+.nav-right{display:flex;align-items:center;gap:16px;}
+.nav-client{font-size:13px;color:var(--muted);}
+.nav-client strong{color:var(--ink);}
+.btn-logout{padding:7px 16px;background:transparent;border:1px solid var(--border-s);border-radius:8px;font-size:12px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;}
+.btn-logout:hover{border-color:var(--danger);color:var(--danger);}
+
+/* TABS */
+.tabs{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;display:flex;gap:0;}
+.tab-btn{padding:16px 24px;font-size:13px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;border:none;background:transparent;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s;margin-bottom:-1px;}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);}
+.tab-btn:hover{color:var(--ink);}
+
+/* CONTENT */
+.content{flex:1;padding:32px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* PAGE HEADER */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
+.page-title{font-size:22px;font-weight:700;color:var(--ink);}
+.btn-primary{padding:10px 20px;background:var(--teal);color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;transition:background 0.2s;}
+.btn-primary:hover{background:var(--teal-d);}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;}
+.stat-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;}
+.stat-value{font-size:28px;font-weight:700;color:var(--ink);}
+.stat-value.teal{color:var(--teal);}
+
+/* TABLE */
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+th{padding:12px 20px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);background:var(--paper);border-bottom:1px solid var(--border);}
+td{padding:14px 20px;font-size:13px;color:var(--ink);border-bottom:1px solid var(--border);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--teal-f);}
+
+/* STATUS BADGES */
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.badge-confirmed{background:rgba(26,191,160,0.1);color:var(--teal-d);}
+.badge-shipped{background:rgba(59,130,246,0.1);color:#1d4ed8;}
+.badge-complete{background:rgba(34,197,94,0.1);color:#15803d;}
+
+/* ACTION BUTTONS */
+.btn-action{padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;border:1px solid var(--border-s);background:transparent;color:var(--ink);transition:all 0.2s;margin-right:4px;}
+.btn-ship{border-color:rgba(59,130,246,0.3);color:#1d4ed8;}
+.btn-ship:hover{background:rgba(59,130,246,0.1);}
+.btn-complete{border-color:rgba(34,197,94,0.3);color:#15803d;}
+.btn-complete:hover{background:rgba(34,197,94,0.1);}
+.btn-delete{border-color:rgba(226,75,74,0.3);color:var(--danger);}
+.btn-delete:hover{background:var(--danger-f);}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border-radius:16px;padding:32px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:24px;color:var(--ink);}
+.modal-footer{display:flex;gap:12px;justify-content:flex-end;margin-top:24px;}
+.btn-cancel{padding:10px 20px;background:transparent;border:1px solid var(--border-s);border-radius:8px;font-size:13px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;color:var(--muted);}
+.btn-save{padding:10px 20px;background:var(--teal);color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;}
+.btn-save:hover{background:var(--teal-d);}
+
+/* IMAGE UPLOAD */
+.img-upload-area{border:2px dashed var(--border-s);border-radius:10px;padding:24px;text-align:center;cursor:pointer;transition:border-color 0.2s;margin-bottom:8px;}
+.img-upload-area:hover{border-color:var(--teal);}
+.img-upload-area input{display:none;}
+.img-preview{width:80px;height:80px;object-fit:cover;border-radius:8px;margin-top:8px;display:none;}
+.img-upload-text{font-size:13px;color:var(--muted);}
+
+/* LOADING */
+.loading{text-align:center;padding:40px;color:var(--muted);font-size:14px;}
+
+/* EMPTY */
+.empty{text-align:center;padding:60px 20px;color:var(--muted);}
+.empty-icon{font-size:40px;margin-bottom:12px;}
+.empty-text{font-size:14px;}
+
+@media(max-width:768px){
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .nav{padding:0 16px;}
+  .tabs{padding:0 16px;overflow-x:auto;}
+  .content{padding:16px;}
+  table{font-size:12px;}
+  th,td{padding:10px 12px;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="auth-wrap" id="authWrap">
+  <div class="auth-card">
+    <div class="auth-logo">BRee<span>Z</span>Y</div>
+    <p class="auth-sub">Sign in to your store dashboard</p>
+    <div class="auth-error" id="authError"></div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-input" id="loginEmail" placeholder="your@email.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" id="loginPassword" placeholder="••••••••">
+    </div>
+    <button class="btn-login" id="loginBtn" onclick="login()">Sign in</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="appShell">
+
+  <nav class="nav">
+    <div class="nav-logo">BRee<span>Z</span>Y</div>
+    <div class="nav-right">
+      <div class="nav-client">Logged in as <strong id="navName"></strong></div>
+      <button class="btn-logout" onclick="logout()">Sign out</button>
+    </div>
+  </nav>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('orders',this)">Orders</button>
+    <button class="tab-btn" onclick="switchTab('products',this)">Products</button>
+    <button class="tab-btn" onclick="switchTab('customers',this)">Customers</button>
+    <button class="tab-btn" onclick="switchTab('analytics',this)">Analytics</button>
+  </div>
+
+  <div class="content">
+
+    <!-- ORDERS TAB -->
+    <div class="tab-panel active" id="tab-orders">
+      <div class="page-header">
+        <div class="page-title">Orders</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Customer</th>
+              <th>Product</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody">
+            <tr><td colspan="7" class="loading">Loading orders...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PRODUCTS TAB -->
+    <div class="tab-panel" id="tab-products">
+      <div class="page-header">
+        <div class="page-title">Products</div>
+        <button class="btn-primary" onclick="openProductModal()">+ Add Product</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price (KES)</th>
+              <th>Stock</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productsBody">
+            <tr><td colspan="7" class="loading">Loading products...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CUSTOMERS TAB -->
+    <div class="tab-panel" id="tab-customers">
+      <div class="page-header">
+        <div class="page-title">Customers</div>
+        <button class="btn-primary" onclick="exportCSV()">Export CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Orders</th>
+              <th>Since</th>
+            </tr>
+          </thead>
+          <tbody id="customersBody">
+            <tr><td colspan="5" class="loading">Loading customers...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ANALYTICS TAB -->
+    <div class="tab-panel" id="tab-analytics">
+      <div class="page-header">
+        <div class="page-title">Analytics</div>
+      </div>
+      <div class="stats-row" id="analyticsStats">
+        <div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value teal" id="statTotal">—</div></div>
+        <div class="stat-card"><div class="stat-label">Revenue (KES)</div><div class="stat-value" id="statRevenue">—</div></div>
+        <div class="stat-card"><div class="stat-label">Customers</div><div class="stat-value" id="statCustomers">—</div></div>
+        <div class="stat-card"><div class="stat-label">Review Opportunities</div><div class="stat-value teal" id="statReviews">—</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SHIP MODAL -->
+<div class="modal-overlay" id="shipModal">
+  <div class="modal">
+    <div class="modal-title">Ship Order</div>
+    <input type="hidden" id="shipOrderRef">
+    <div class="form-group">
+      <label class="form-label">Rider Name</label>
+      <input type="text" class="form-input" id="riderName" placeholder="John Kamau">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Rider Phone</label>
+      <input type="text" class="form-input" id="riderPhone" placeholder="0712345678">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Estimated Delivery</label>
+      <input type="text" class="form-input" id="riderETA" placeholder="Today between 2-5pm">
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('shipModal')">Cancel</button>
+      <button class="btn-save" onclick="confirmShip()">Send & Notify Customer</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <div class="modal-title" id="productModalTitle">Add Product</div>
+    <input type="hidden" id="editProductId">
+    <div class="form-group">
+      <label class="form-label">Product Name</label>
+      <input type="text" class="form-input" id="pName" placeholder="Black Heels">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <input type="text" class="form-input" id="pDesc" placeholder="Classic block heel, comfortable all day">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Price (KES)</label>
+      <input type="number" class="form-input" id="pPrice" placeholder="3500">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Stock</label>
+      <input type="number" class="form-input" id="pStock" placeholder="10">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Category / Niche</label>
+      <input type="text" class="form-input" id="pCategory" placeholder="Heels">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Product Image</label>
+      <div class="img-upload-area" onclick="document.getElementById('imgFile').click()">
+        <input type="file" id="imgFile" accept="image/*" onchange="previewImage(this)">
+        <div class="img-upload-text">Click to upload image</div>
+        <img class="img-preview" id="imgPreview">
+      </div>
+      <input type="hidden" id="pImage" value="">
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('productModal')">Cancel</button>
+      <button class="btn-save" id="saveProductBtn" onclick="saveProduct()">Save Product</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'https://breezy-api-r7jg.onrender.com';
+const CLOUD = 'don9ua5xz';
+const PRESET = 'breezy_products';
+
+let token = localStorage.getItem('breezy_token');
+let clientId = localStorage.getItem('breezy_client_id');
+let userName = localStorage.getItem('breezy_name');
+
+if (token && clientId) showApp();
+
+async function login() {
+  const email    = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const btn      = document.getElementById('loginBtn');
+  const errEl    = document.getElementById('authError');
+
+  if (!email || !password) { showError('Please enter email and password'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Signing in...';
+  errEl.style.display = 'none';
+
+  try {
+    const res  = await fetch(`${API}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      localStorage.setItem('breezy_token',     data.token);
+      localStorage.setItem('breezy_client_id', data.client_id);
+      localStorage.setItem('breezy_name',      data.name);
+      token    = data.token;
+      clientId = data.client_id;
+      userName = data.name;
+      showApp();
+    } else {
+      showError(data.error || 'Invalid credentials');
+    }
+  } catch (err) {
+    showError('Connection error. Please try again.');
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Sign in';
+}
+
+function showError(msg) {
+  const el = document.getElementById('authError');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function showApp() {
+  document.getElementById('authWrap').style.display  = 'none';
+  document.getElementById('appShell').style.display  = 'flex';
+  document.getElementById('navName').textContent = userName || clientId;
+  loadOrders();
+  loadAnalytics();
+}
+
+function logout() {
+  localStorage.clear();
+  token = null; clientId = null; userName = null;
+  document.getElementById('authWrap').style.display  = 'flex';
+  document.getElementById('appShell').style.display  = 'none';
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'orders')    loadOrders();
+  if (name === 'products')  loadProducts();
+  if (name === 'customers') loadCustomers();
+  if (name === 'analytics') loadAnalytics();
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// ── ORDERS ──
+async function loadOrders() {
+  try {
+    const res  = await fetch(`${API}/orders/list?client_id=${clientId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await res.json();
+    const tbody = document.getElementById('ordersBody');
+
+    if (!data.orders || data.orders.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7"><div class="empty"><div class="empty-icon">📦</div><div class="empty-text">No orders yet</div></div></td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = data.orders.map(o => `
+      <tr>
+        <td><code style="font-size:11px">${o.order_reference}</code></td>
+        <td>${o.customer_name}<br><span style="font-size:11px;color:var(--muted)">${o.customer_email}</span></td>
+        <td>${o.product_name} × ${o.quantity}</td>
+        <td>KES ${Number(o.total_amount).toLocaleString()}</td>
+        <td><span class="badge badge-${o.status}">${o.status}</span></td>
+        <td style="font-size:11px">${new Date(o.created_at).toLocaleDateString()}</td>
+        <td>
+          ${!o.shipped ? `<button class="btn-action btn-ship" onclick="openShipModal('${o.order_reference}')">Ship</button>` : ''}
+          ${o.shipped && !o.complete ? `<button class="btn-action btn-complete" onclick="completeOrder('${o.order_reference}', this)">Complete</button>` : ''}
+          ${o.complete ? '<span style="font-size:11px;color:var(--muted)">Done</span>' : ''}
+        </td>
+      </tr>
+    `).join('');
+  } catch (err) {
+    document.getElementById('ordersBody').innerHTML = '<tr><td colspan="7" style="color:red;padding:20px">Error loading orders</td></tr>';
+  }
+}
+
+function openShipModal(orderRef) {
+  document.getElementById('shipOrderRef').value = orderRef;
+  document.getElementById('riderName').value = '';
+  document.getElementById('riderPhone').value = '';
+  document.getElementById('riderETA').value = '';
+  document.getElementById('shipModal').classList.add('open');
+}
+
+async function confirmShip() {
+  const orderRef = document.getElementById('shipOrderRef').value;
+  const riderName  = document.getElementById('riderName').value.trim();
+  const riderPhone = document.getElementById('riderPhone').value.trim();
+  const eta        = document.getElementById('riderETA').value.trim();
+
+  if (!riderName || !riderPhone) { alert('Please enter rider name and phone'); return; }
+
+  try {
+    const res = await fetch(`${API}/orders/ship`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ client_id: clientId, order_reference: orderRef, rider_name: riderName, rider_phone: riderPhone, estimated_delivery: eta })
+    });
+    const data = await res.json();
+    if (data.success) { closeModal('shipModal'); loadOrders(); }
+    else alert('Error: ' + data.error);
+  } catch (err) { alert('Connection error'); }
+}
+
+async function completeOrder(orderRef, btn) {
+  if (!confirm('Mark this order as complete and send review email?')) return;
+  btn.disabled = true;
+  try {
+    const res = await fetch(`${API}/orders/complete`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ client_id: clientId, order_reference: orderRef })
+    });
+    const data = await res.json();
+    if (data.success) loadOrders();
+    else alert('Error: ' + data.error);
+  } catch (err) { alert('Connection error'); }
+}
+
+// ── PRODUCTS ──
+async function loadProducts() {
+  try {
+    const res  = await fetch(`${API}/products/list?client_id=${clientId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await res.json();
+    const tbody = document.getElementById('productsBody');
+
+    if (!data.products || data.products.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7"><div class="empty"><div class="empty-icon">🛍️</div><div class="empty-text">No products yet. Add your first product.</div></div></td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = data.products.map(p => `
+      <tr>
+        <td><img src="${p.image1 || 'https://via.placeholder.com/48'}" style="width:48px;height:48px;object-fit:cover;border-radius:6px;"></td>
+        <td>${p.name}</td>
+        <td>${p.category}</td>
+        <td>KES ${Number(p.price).toLocaleString()}</td>
+        <td>${p.stock}</td>
+        <td><span class="badge ${p.active === 'YES' ? 'badge-confirmed' : 'badge-shipped'}">${p.active === 'YES' ? 'Active' : 'Hidden'}</span></td>
+        <td>
+          <button class="btn-action" onclick="editProduct(${JSON.stringify(p).replace(/"/g,'&quot;')})">Edit</button>
+          <button class="btn-action btn-delete" onclick="deleteProduct('${p._id}','${p.category}')">Delete</button>
+        </td>
+      </tr>
+    `).join('');
+  } catch (err) {
+    document.getElementById('productsBody').innerHTML = '<tr><td colspan="7" style="color:red;padding:20px">Error loading products</td></tr>';
+  }
+}
+
+function openProductModal() {
+  document.getElementById('productModalTitle').textContent = 'Add Product';
+  document.getElementById('editProductId').value = '';
+  document.getElementById('pName').value = '';
+  document.getElementById('pDesc').value = '';
+  document.getElementById('pPrice').value = '';
+  document.getElementById('pStock').value = '';
+  document.getElementById('pCategory').value = '';
+  document.getElementById('pImage').value = '';
+  document.getElementById('imgPreview').style.display = 'none';
+  document.getElementById('productModal').classList.add('open');
+}
+
+function editProduct(p) {
+  document.getElementById('productModalTitle').textContent = 'Edit Product';
+  document.getElementById('editProductId').value = p._id;
+  document.getElementById('pName').value = p.name;
+  document.getElementById('pDesc').value = p.description;
+  document.getElementById('pPrice').value = p.price;
+  document.getElementById('pStock').value = p.stock;
+  document.getElementById('pCategory').value = p.category;
+  document.getElementById('pImage').value = p.image1 || '';
+  if (p.image1) {
+    const prev = document.getElementById('imgPreview');
+    prev.src = p.image1;
+    prev.style.display = 'block';
+  }
+  document.getElementById('productModal').classList.add('open');
+}
+
+async function previewImage(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const prev = document.getElementById('imgPreview');
+  prev.src = URL.createObjectURL(file);
+  prev.style.display = 'block';
+
+  const btn = document.getElementById('saveProductBtn');
+  btn.textContent = 'Uploading...';
+  btn.disabled = true;
+
+  try {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', PRESET);
+    fd.append('folder', `breezy/${clientId}`);
+
+    const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`, {
+      method: 'POST', body: fd
+    });
+    const data = await res.json();
+    document.getElementById('pImage').value = data.secure_url;
+  } catch (err) {
+    alert('Image upload failed. Please try again.');
+  }
+
+  btn.textContent = 'Save Product';
+  btn.disabled = false;
+}
+
+async function saveProduct() {
+  const id       = document.getElementById('editProductId').value;
+  const name     = document.getElementById('pName').value.trim();
+  const desc     = document.getElementById('pDesc').value.trim();
+  const price    = document.getElementById('pPrice').value;
+  const stock    = document.getElementById('pStock').value;
+  const category = document.getElementById('pCategory').value.trim();
+  const image    = document.getElementById('pImage').value;
+
+  if (!name || !price || !stock || !category) { alert('Please fill in all required fields'); return; }
+
+  const endpoint = id ? `${API}/products/update` : `${API}/products/add`;
+  const body = { client_id: clientId, name, description: desc, price: parseFloat(price), stock: parseInt(stock), category, image1: image, active: 'YES' };
+  if (id) body.product_id = id;
+
+  try {
+    const res  = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (data.success) { closeModal('productModal'); loadProducts(); }
+    else alert('Error: ' + data.error);
+  } catch (err) { alert('Connection error'); }
+}
+
+async function deleteProduct(id, category) {
+  if (!confirm('Delete this product?')) return;
+  try {
+    const res = await fetch(`${API}/products/delete`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ client_id: clientId, product_id: id, category })
+    });
+    const data = await res.json();
+    if (data.success) loadProducts();
+    else alert('Error: ' + data.error);
+  } catch (err) { alert('Connection error'); }
+}
+
+// ── CUSTOMERS ──
+async function loadCustomers() {
+  try {
+    const res  = await fetch(`${API}/customers/list?client_id=${clientId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await res.json();
+    const tbody = document.getElementById('customersBody');
+
+    if (!data.customers || data.customers.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5"><div class="empty"><div class="empty-icon">👥</div><div class="empty-text">No customers yet</div></div></td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = data.customers.map(c => `
+      <tr>
+        <td>${c.name}</td>
+        <td>${c.email}</td>
+        <td>${c.phone || '—'}</td>
+        <td>${c.order_count || 1}</td>
+        <td style="font-size:11px">${new Date(c.created_at).toLocaleDateString()}</td>
+      </tr>
+    `).join('');
+  } catch (err) {
+    document.getElementById('customersBody').innerHTML = '<tr><td colspan="5" style="color:red;padding:20px">Error loading customers</td></tr>';
+  }
+}
+
+function exportCSV() {
+  fetch(`${API}/customers/list?client_id=${clientId}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (!data.customers || !data.customers.length) { alert('No customers to export'); return; }
+    const rows = [['Name','Email','Phone','Orders','Since']];
+    data.customers.forEach(c => rows.push([c.name, c.email, c.phone||'', c.order_count||1, new Date(c.created_at).toLocaleDateString()]));
+    const csv = rows.map(r => r.join(',')).join('\n');
+    const blob = new Blob([csv], {type:'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `customers_${clientId}.csv`;
+    a.click();
+  });
+}
+
+// ── ANALYTICS ──
+async function loadAnalytics() {
+  try {
+    const res  = await fetch(`${API}/orders/list?client_id=${clientId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const data = await res.json();
+    const orders = data.orders || [];
+
+    const total    = orders.length;
+    const revenue  = orders.reduce((s, o) => s + (o.total_amount || 0), 0);
+    const reviews  = orders.filter(o => o.complete).length;
+
+    document.getElementById('statTotal').textContent    = total;
+    document.getElementById('statRevenue').textContent  = 'KES ' + revenue.toLocaleString();
+    document.getElementById('statReviews').textContent  = reviews;
+
+    const custRes  = await fetch(`${API}/customers/list?client_id=${clientId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const custData = await custRes.json();
+    document.getElementById('statCustomers').textContent = (custData.customers || []).length;
+  } catch (err) {
+    console.error('Analytics error:', err);
+  }
+}
+
+document.getElementById('loginPassword').addEventListener('keydown', e => {
+  if (e.key === 'Enter') login();
+});
+</script>
+</body>

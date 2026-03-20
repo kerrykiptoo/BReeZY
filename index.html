@@ -643,28 +643,29 @@ body.beezy .footer-bottom{color:rgba(232,228,222,0.18);}
   </div>
   <div class="calc-tabs reveal">
     <button class="calc-tab active" onclick="setCalcMode('trial',this)">14-day trial</button>
-    <button class="calc-tab" onclick="setCalcMode('sixmonth',this)">6 months</button>
+    <button class="calc-tab" onclick="setCalcMode('month1',this)">Month 1</button>
+    <button class="calc-tab" onclick="setCalcMode('month3',this)">Month 3</button>
   </div>
   <div class="calc-wrapper reveal">
     <div class="calc-inputs">
       <div class="calc-input-group">
         <label class="calc-label">Monthly sales right now</label>
         <div class="calc-input-row">
-          <input type="range" class="calc-range" id="sales" min="5" max="200" value="30" oninput="calculate()">
+          <input type="range" class="calc-range" id="sales" min="1" max="200" value="10" oninput="calculate()">
           <div class="calc-value" id="salesVal">30</div>
         </div>
       </div>
       <div class="calc-input-group">
         <label class="calc-label">Average order value (KES)</label>
         <div class="calc-input-row">
-          <input type="range" class="calc-range" id="aov" min="500" max="15000" step="500" value="3000" oninput="calculate()">
+          <input type="range" class="calc-range" id="aov" min="200" max="15000" step="200" value="1500" oninput="calculate()">
           <div class="calc-value" id="aovVal">3K</div>
         </div>
       </div>
       <div class="calc-input-group">
         <label class="calc-label">Instagram followers</label>
         <div class="calc-input-row">
-          <input type="range" class="calc-range" id="followers" min="500" max="50000" step="500" value="5000" oninput="calculate()">
+          <input type="range" class="calc-range" id="followers" min="100" max="50000" step="100" value="1000" oninput="calculate()">
           <div class="calc-value" id="followersVal">5K</div>
         </div>
       </div>
@@ -870,7 +871,7 @@ body.beezy .footer-bottom{color:rgba(232,228,222,0.18);}
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 Breezy Smartshop · Nairobi, Kenya</span>
+    <span>© 2026 Breezy Smartshop · Nairobi, Kenya</span>
     <span>Compliant with Kenya Data Protection Act (ODPC)</span>
   </div>
 </footer>
@@ -938,9 +939,12 @@ function setCalcMode(mode, btn) {
   document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   const h = document.getElementById('calcHeadline');
-  h.innerHTML = mode === 'trial'
-    ? 'What could your store<br>look like in <em>14 days?</em>'
-    : 'What could your store<br>look like in <em>6 months?</em>';
+  const labels = {
+    trial:  'What happens in your<br><em>14-day free trial?</em>',
+    month1: 'What does<br><em>Month 1</em> look like?',
+    month3: 'By Month 3,<br>this is <em>compounding.</em>'
+  };
+  h.innerHTML = labels[mode];
   calculate();
 }
 
@@ -952,53 +956,99 @@ function fmt(n) {
 
 function calculate() {
   const sales = parseInt(document.getElementById('sales').value);
-  const aov = parseInt(document.getElementById('aov').value);
+  const aov   = parseInt(document.getElementById('aov').value);
 
-  document.getElementById('salesVal').textContent = fmt(sales);
-  document.getElementById('aovVal').textContent = fmt(aov);
+  document.getElementById('salesVal').textContent    = fmt(sales);
+  document.getElementById('aovVal').textContent      = fmt(aov);
   document.getElementById('followersVal').textContent = fmt(parseInt(document.getElementById('followers').value));
 
   if (calcMode === 'trial') {
-    const ts = Math.round(sales * 0.5);
-    const tr = Math.round(ts * 0.4);
+    // 14 days = roughly half a month
+    const ts = Math.max(1, Math.round(sales * 0.5));
+    const tr = Math.max(0, Math.round(ts * 0.4));
     const th = Math.max(1, Math.round((ts * 12) / 60));
 
     document.getElementById('rl1').textContent = 'Sales closed in 14 days';
-    document.getElementById('rv1').innerHTML = ts + ' <span>sales</span>';
-    document.getElementById('rn1').textContent = 'Real orders, real Mpesa payouts — within the free trial.';
-    document.getElementById('rl2').textContent = 'Contacts added to your list';
-    document.getElementById('rv2').innerHTML = ts + ' <span>people</span>';
-    document.getElementById('rn2').textContent = 'Names, emails and numbers — reachable anytime new stock arrives.';
-    document.getElementById('rl3').textContent = 'Google review opportunities';
-    document.getElementById('rv3').innerHTML = tr + ' <span>reviews</span>';
-    document.getElementById('rn3').textContent = 'Every delivery triggers a nudge. Your profile starts building in the trial.';
-    document.getElementById('rl4').textContent = 'Hours freed in 14 days';
-    document.getElementById('rv4').innerHTML = th + ' <span>hrs</span>';
-    document.getElementById('rn4').textContent = 'Manual confirmations, payment checks, follow-ups — all automated.';
-    document.getElementById('trialStrong').textContent = 'Start your 14-day free trial';
-    document.getElementById('trialSub').textContent = 'See these numbers on your own page — no subscription until month 2.';
-  } else {
-    let total = 0, m = sales;
-    const months = [];
-    for (let i = 0; i < 6; i++) { months.push(m); total += m; m = Math.round(m * 1.15); }
-    const rev6 = months[5] * aov;
+    document.getElementById('rv1').innerHTML   = ts + ' <span>sales</span>';
+    document.getElementById('rn1').textContent = 'Real orders, real Mpesa payouts — all within the free trial.';
 
-    document.getElementById('rl1').textContent = 'Total sales over 6 months';
-    document.getElementById('rv1').innerHTML = fmt(total) + ' <span>sales</span>';
-    document.getElementById('rn1').textContent = 'Growing month on month as reviews attract more customers.';
     document.getElementById('rl2').textContent = 'Contacts in your list';
-    document.getElementById('rv2').innerHTML = fmt(Math.round(total * 0.85)) + ' <span>people</span>';
-    document.getElementById('rn2').textContent = 'Reachable anytime — new stock, re-engagement, repeat sales.';
-    document.getElementById('rl3').textContent = 'Google reviews generated';
-    document.getElementById('rv3').innerHTML = fmt(Math.round(total * 0.4)) + ' <span>reviews</span>';
-    document.getElementById('rn3').textContent = 'A profile that sells for you — built automatically, one sale at a time.';
-    document.getElementById('rl4').textContent = 'Month 6 monthly revenue';
-    document.getElementById('rv4').innerHTML = 'KES <span>' + fmt(rev6) + '</span>';
-    document.getElementById('rn4').textContent = 'Compound growth from reviews, repeat contacts and higher conversion.';
-    document.getElementById('trialStrong').textContent = 'The trial is where it starts';
-    document.getElementById('trialSub').textContent = 'Every month shown above compounds from day one of the free trial.';
+    document.getElementById('rv2').innerHTML   = ts + ' <span>people</span>';
+    document.getElementById('rn2').textContent = 'Names, emails and numbers — reachable when new stock arrives.';
 
-    updateBars(months);
+    document.getElementById('rl3').textContent = 'Google review opportunities';
+    document.getElementById('rv3').innerHTML   = tr + ' <span>reviews</span>';
+    document.getElementById('rn3').textContent = tr > 0
+      ? 'Every delivery triggers a nudge. Your Google profile starts here.'
+      : 'Even 1 sale triggers a review nudge — your profile starts from day one.';
+
+    document.getElementById('rl4').textContent = 'Hours saved in 14 days';
+    document.getElementById('rv4').innerHTML   = th + ' <span>hrs</span>';
+    document.getElementById('rn4').textContent = 'Manual confirmations, payment checks, follow-ups — gone.';
+
+    document.getElementById('trialStrong').textContent = 'Start your 14-day free trial';
+    document.getElementById('trialSub').textContent    = 'No subscription until month 2. These numbers are yours to keep after the trial ends.';
+
+  } else if (calcMode === 'month1') {
+    // Full first month — trial data carries over, subscription begins
+    const m1sales    = sales;
+    const m1contacts = m1sales + Math.round(sales * 0.5); // trial + month 1
+    const m1reviews  = Math.round(m1contacts * 0.4);
+    const m1revenue  = m1sales * aov;
+    const m1hours    = Math.max(1, Math.round((m1sales * 12) / 60));
+
+    document.getElementById('rl1').textContent = 'Total sales after month 1';
+    document.getElementById('rv1').innerHTML   = fmt(m1contacts) + ' <span>sales</span>';
+    document.getElementById('rn1').textContent = 'Trial sales carry over. Month 1 adds your full monthly volume on top.';
+
+    document.getElementById('rl2').textContent = 'Contacts in your list';
+    document.getElementById('rv2').innerHTML   = fmt(m1contacts) + ' <span>people</span>';
+    document.getElementById('rn2').textContent = 'Every buyer reachable — not just followers who might see a post.';
+
+    document.getElementById('rl3').textContent = 'Google reviews building';
+    document.getElementById('rv3').innerHTML   = m1reviews + ' <span>reviews</span>';
+    document.getElementById('rn3').textContent = 'Coming in automatically after every delivery. No asking needed.';
+
+    document.getElementById('rl4').textContent = 'Monthly revenue';
+    document.getElementById('rv4').innerHTML   = 'KES <span>' + fmt(m1revenue) + '</span>';
+    document.getElementById('rn4').textContent = 'From your current sales volume — before any growth from reviews or repeat customers.';
+
+    document.getElementById('trialStrong').textContent = 'Month 1 is where the foundation sets';
+    document.getElementById('trialSub').textContent    = 'By the end of month 1 you have a list, reviews starting, and a system running itself.';
+
+  } else {
+    // Month 3 — compound effect visible
+    const m3sales    = Math.round(sales * Math.pow(1.15, 2)); // 15% growth x2
+    const totalSales = Math.round(sales * 0.5) + sales + Math.round(sales * 1.15) + m3sales;
+    const m3reviews  = Math.round(totalSales * 0.4);
+    const m3contacts = Math.round(totalSales * 0.9);
+    const m3revenue  = m3sales * aov;
+
+    document.getElementById('rl1').textContent = 'Month 3 monthly sales';
+    document.getElementById('rv1').innerHTML   = fmt(m3sales) + ' <span>sales</span>';
+    document.getElementById('rn1').textContent = 'Growing because reviews are converting new visitors before they even DM you.';
+
+    document.getElementById('rl2').textContent = 'Contacts in your list';
+    document.getElementById('rv2').innerHTML   = fmt(m3contacts) + ' <span>people</span>';
+    document.getElementById('rn2').textContent = 'Every one reachable for your next drop. Free re-engagement, every time.';
+
+    document.getElementById('rl3').textContent = 'Google reviews on your profile';
+    document.getElementById('rv3').innerHTML   = m3reviews + ' <span>reviews</span>';
+    document.getElementById('rn3').textContent = 'A profile that sells for you before a customer even messages. This is the compounding effect.';
+
+    document.getElementById('rl4').textContent = 'Month 3 monthly revenue';
+    document.getElementById('rv4').innerHTML   = 'KES <span>' + fmt(m3revenue) + '</span>';
+    document.getElementById('rn4').textContent = 'Driven by reviews bringing new customers and your list bringing repeat ones.';
+
+    document.getElementById('trialStrong').textContent = 'The trial starts this. Month 3 proves it.';
+    document.getElementById('trialSub').textContent    = 'Free to start. By month 3 the numbers speak for themselves.';
+
+    updateBars([
+      Math.round(sales * 0.5),
+      sales,
+      Math.round(sales * 1.15),
+      m3sales
+    ].concat([0,0]).slice(0,6).map((v,i) => v || Math.round(m3sales * (0.85 + i*0.05))));
   }
 }
 

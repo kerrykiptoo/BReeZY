@@ -13,7 +13,7 @@ html{scroll-behavior:smooth;}
 body{font-family:'DM Sans',Helvetica,Arial,sans-serif;background:var(--ink);color:var(--text);overflow-x:hidden;}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,11,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
 .nav-logo{font-size:13px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--text);}
-.nav-logo span{color:var(--teal);}
+.nav-logo span,.logo-eez{color:var(--teal);}
 .nav-links{display:flex;align-items:center;gap:28px;}
 .nav-links a{font-size:13px;font-weight:400;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
 .nav-links a:hover{color:var(--text);}
@@ -96,6 +96,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;background:var(--teal
 .price-card.featured::before{content:'Most Popular';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--teal);color:var(--ink);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;white-space:nowrap;}
 .price-tier{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text-3);margin-bottom:20px;}
 .price-amount{font-family:'DM Serif Display',Georgia,serif;font-size:38px;color:var(--text);line-height:1;margin-bottom:4px;}
+.price-sub{font-size:11px;font-weight:400;color:var(--teal);margin-bottom:4px;}
 .price-period{font-size:12px;font-weight:300;color:var(--text-3);margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
 .price-features{list-style:none;margin-bottom:32px;}
 .price-features li{padding:9px 0;border-bottom:1px solid var(--border);font-size:12px;font-weight:300;color:var(--text-2);display:flex;align-items:flex-start;gap:8px;line-height:1.5;}
@@ -139,7 +140,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;background:var(--teal
 .btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
 footer{padding:40px 48px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
 .footer-logo{font-size:11px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--text-3);}
-.footer-logo span{color:var(--teal);}
+.footer-logo span,.footer-logo .logo-eez{color:var(--teal);}
 .footer-links{display:flex;gap:24px;flex-wrap:wrap;}
 .footer-links a{font-size:12px;font-weight:300;color:var(--text-3);text-decoration:none;transition:color 0.2s;}
 .footer-links a:hover{color:var(--text-2);}
@@ -169,7 +170,7 @@ footer{padding:40px 48px;border-top:1px solid var(--border);display:flex;align-i
 <body>
 
 <nav>
-  <div class="nav-logo">B R E E<span>Z</span>Y</div>
+  <div class="nav-logo">B R <span class="logo-eez">E E Z</span> Y</div>
   <div class="nav-links">
     <a href="#how">How it works</a>
     <a href="#calculator">Calculator</a>
@@ -233,14 +234,14 @@ footer{padding:40px 48px;border-top:1px solid var(--border);display:flex;align-i
           <div class="proj-stat"><div class="proj-stat-value teal" id="p3orders">130</div><div class="proj-stat-label">orders processed</div></div>
           <div class="proj-stat"><div class="proj-stat-value" id="p3emails">130</div><div class="proj-stat-label">confirmation emails sent</div></div>
           <div class="proj-stat"><div class="proj-stat-value" id="p3reqsent">130</div><div class="proj-stat-label">review requests sent</div></div>
-          <div class="proj-stat"><div class="proj-stat-value teal" id="p3reviews">43</div><div class="proj-stat-label">reviews you'll likely receive</div></div>
+          <div class="proj-stat"><div class="proj-stat-value teal" id="p3reviews">46</div><div class="proj-stat-label">reviews you'll likely receive</div></div>
         </div>
         <div class="proj-card">
           <div class="proj-period">6 months</div>
           <div class="proj-stat"><div class="proj-stat-value teal" id="p6orders">260</div><div class="proj-stat-label">orders processed</div></div>
           <div class="proj-stat"><div class="proj-stat-value" id="p6emails">260</div><div class="proj-stat-label">confirmation emails sent</div></div>
           <div class="proj-stat"><div class="proj-stat-value" id="p6reqsent">260</div><div class="proj-stat-label">review requests sent</div></div>
-          <div class="proj-stat"><div class="proj-stat-value teal" id="p6reviews">86</div><div class="proj-stat-label">reviews you'll likely receive</div></div>
+          <div class="proj-stat"><div class="proj-stat-value teal" id="p6reviews">91</div><div class="proj-stat-label">reviews you'll likely receive</div></div>
         </div>
       </div>
       <div class="calc-cta">
@@ -267,9 +268,9 @@ footer{padding:40px 48px;border-top:1px solid var(--border);display:flex;align-i
       <div class="review-timeline">
         <div class="timeline-row"><div class="timeline-period">14 days</div><div class="timeline-bar-wrap"><div class="timeline-bar" id="bar1" style="width:5%"></div></div><div class="timeline-value" id="rv1">7</div></div>
         <div class="timeline-row"><div class="timeline-period">1 month</div><div class="timeline-bar-wrap"><div class="timeline-bar" id="bar2" style="width:15%"></div></div><div class="timeline-value" id="rv2">15</div></div>
-        <div class="timeline-row"><div class="timeline-period">3 months</div><div class="timeline-bar-wrap"><div class="timeline-bar" id="bar3" style="width:35%"></div></div><div class="timeline-value" id="rv3">43</div></div>
-        <div class="timeline-row"><div class="timeline-period">6 months</div><div class="timeline-bar-wrap"><div class="timeline-bar" id="bar4" style="width:70%"></div></div><div class="timeline-value" id="rv4">86</div></div>
-        <div class="timeline-row"><div class="timeline-period">12 months</div><div class="timeline-bar-wrap"><div class="timeline-bar" id="bar5" style="width:100%"></div></div><div class="timeline-value" id="rv5">173</div></div>
+        <div class="timeline-row"><div class="timeline-period">3 months</div><div class="timeline-bar-wrap"><div class="timeline-bar" id="bar3" style="width:35%"></div></div><div class="timeline-value" id="rv3">46</div></div>
+        <div class="timeline-row"><div class="timeline-period">6 months</div><div class="timeline-bar-wrap"><div class="timeline-bar" id="bar4" style="width:70%"></div></div><div class="timeline-value" id="rv4">91</div></div>
+        <div class="timeline-row"><div class="timeline-period">12 months</div><div class="timeline-bar-wrap"><div class="timeline-bar" id="bar5" style="width:100%"></div></div><div class="timeline-value" id="rv5">182</div></div>
       </div>
       <p style="font-size:11px;font-weight:300;color:var(--text-3);margin-top:14px;line-height:1.6;">Based on 35% review conversion rate for post-purchase follow-up. Actual results vary.</p>
     </div>
@@ -293,18 +294,20 @@ footer{padding:40px 48px;border-top:1px solid var(--border);display:flex;align-i
   <div class="pricing-inner">
     <p class="section-label">Pricing</p>
     <h2 class="section-title">Simple tiers.<br/><em>No surprises.</em></h2>
-    <p class="section-sub" style="margin-top:8px;">Start free. Pay only when it's working for you.</p>
+    <p class="section-sub" style="margin-top:8px;">14-day free trial on all plans. First month covers setup — no separate fee.</p>
     <div class="pricing-grid">
+
       <div class="price-card">
         <div class="price-tier">Basic</div>
-        <div class="price-amount">2,000</div>
-        <div class="price-period">KES / month · after free trial</div>
+        <div class="price-amount">3,000</div>
+        <div class="price-sub">first month · includes setup</div>
+        <div class="price-period">then KES 2,000/month</div>
         <ul class="price-features">
           <li>Conversational store on shopbreezy.co.ke</li>
           <li>Unlimited orders</li>
           <li>Paystack payments — direct to you</li>
           <li>Order notification email to you</li>
-          <li>Up to 2 product categories</li>
+          <li>Up to 3 product categories</li>
           <li class="muted">Seller dashboard</li>
           <li class="muted">Automatic customer emails</li>
           <li class="muted">Review requests</li>
@@ -312,58 +315,65 @@ footer{padding:40px 48px;border-top:1px solid var(--border);display:flex;align-i
         </ul>
         <a href="#" onclick="openWidget();return false;" class="btn-price">Start free trial</a>
       </div>
+
       <div class="price-card">
         <div class="price-tier">Starter</div>
-        <div class="price-amount">4,000</div>
-        <div class="price-period">KES / month · after free trial</div>
+        <div class="price-amount">5,000</div>
+        <div class="price-sub">first month · includes setup</div>
+        <div class="price-period">then KES 4,000/month</div>
         <ul class="price-features">
           <li>Everything in Basic</li>
           <li>Full seller dashboard</li>
           <li>Automatic order &amp; delivery emails</li>
           <li>Review requests on every order</li>
           <li>Reviews on your Breezy page</li>
-          <li>Up to 5 product categories</li>
+          <li>Up to 6 product categories</li>
           <li class="muted">Web widget on own domain</li>
           <li class="muted">Instagram automation</li>
           <li class="muted">Google review redirect</li>
         </ul>
         <a href="#" onclick="openWidget();return false;" class="btn-price">Start free trial</a>
       </div>
+
       <div class="price-card featured">
         <div class="price-tier">Growth</div>
-        <div class="price-amount">7,000</div>
-        <div class="price-period">KES / month</div>
+        <div class="price-amount">8,000</div>
+        <div class="price-sub">first month · includes setup</div>
+        <div class="price-period">then KES 7,000/month</div>
         <ul class="price-features">
           <li>Everything in Starter</li>
           <li>Your own domain connected</li>
           <li>Web widget on your site</li>
-          <li>Instagram — first 14 days free</li>
-          <li>Google review redirect</li>
           <li>Branded emails — your store name</li>
-          <li>Up to 10 product categories</li>
+          <li>Google review redirect</li>
+          <li>Up to 12 product categories</li>
+          <li>Instagram add-on available</li>
           <li>Priority support</li>
           <li class="muted">White label</li>
         </ul>
         <a href="#" onclick="openWidget();return false;" class="btn-price primary">Get started</a>
       </div>
+
       <div class="price-card">
         <div class="price-tier">Pro</div>
-        <div class="price-amount">12,000</div>
-        <div class="price-period">KES / month</div>
+        <div class="price-amount">15,000</div>
+        <div class="price-sub">first month · includes setup</div>
+        <div class="price-period">then KES 13,000/month</div>
         <ul class="price-features">
           <li>Everything in Growth</li>
+          <li>Instagram included</li>
           <li>Full white label</li>
           <li>Custom email domain</li>
           <li>Unlimited categories</li>
           <li>CSV bulk product import</li>
           <li>Promo email broadcasts</li>
-          <li>Custom bot personality</li>
           <li>Dedicated support</li>
         </ul>
         <a href="https://wa.me/254762826978" class="btn-price">Talk to us</a>
       </div>
+
     </div>
-    <p class="pricing-note">Doing serious volume? <a href="https://wa.me/254762826978">Let's talk custom pricing →</a></p>
+    <p class="pricing-note">Instagram add-on for Growth clients — KES 4,500 first month · KES 3,500/month &nbsp;·&nbsp; <a href="https://wa.me/254762826978">Custom pricing for high volume →</a></p>
   </div>
 </div>
 
@@ -371,16 +381,17 @@ footer{padding:40px 48px;border-top:1px solid var(--border);display:flex;align-i
   <div class="instagram-inner">
     <div class="insta-big">3h</div>
     <p class="insta-label">Daily Instagram usage in Kenya</p>
-    <h3 class="insta-title" style="font-family:'DM Serif Display',Georgia,serif;">Your customers are already there.<br/>Meet them where they scroll.</h3>
-    <p class="insta-sub">A customer comments on your post. Breezy sends an automatic DM. They browse your catalogue, choose and pay — without ever leaving Instagram.</p>
+    <h3 class="insta-title" style="font-family:'DM Serif Display',Georgia,serif;">What you just tried on the widget?<br/>Your customers get that — in their DMs.</h3>
+    <p class="insta-sub">The same browse, choose and pay experience lives inside Instagram. A customer comments on your post — Breezy sends them an automatic DM. They shop right there, without leaving the app. No link in bio. No redirection. Just a conversation that ends in a sale.</p>
     <div class="insta-flow">
       <span class="flow-step">Customer comments</span><span class="flow-arrow">→</span>
-      <span class="flow-step">Auto DM sent</span><span class="flow-arrow">→</span>
-      <span class="flow-step">They browse</span><span class="flow-arrow">→</span>
-      <span class="flow-step">They pay</span>
+      <span class="flow-step">Auto DM opens</span><span class="flow-arrow">→</span>
+      <span class="flow-step">They browse &amp; pay</span><span class="flow-arrow">→</span>
+      <span class="flow-step">You get paid</span>
     </div>
-    <p style="font-size:13px;font-weight:300;color:var(--text-3);margin-bottom:20px;">You wake up to orders. No manual DMs. No missed comments.</p>
-    <span class="insta-badge">Included in Growth · First 14 days free</span>
+    <p style="font-size:13px;font-weight:300;color:var(--text-3);margin-bottom:8px;">No one left out. No comment ignored. No sale missed.</p>
+    <p style="font-size:13px;font-weight:300;color:var(--text-2);margin-bottom:28px;">Want to see it live? <a href="https://www.instagram.com/shopbreezy.co.ke" target="_blank" style="color:var(--teal);text-decoration:none;font-weight:500;">Follow us on Instagram →</a> — the demo runs there too.</p>
+    <span class="insta-badge">Add-on from Growth · Included in Pro</span>
   </div>
 </div>
 
@@ -388,13 +399,13 @@ footer{padding:40px 48px;border-top:1px solid var(--border);display:flex;align-i
   <div class="faq-inner">
     <p class="section-label" style="text-align:center">Questions</p>
     <h2 class="section-title" style="text-align:center;margin-bottom:48px">The honest answers.</h2>
-    <div class="faq-item"><div class="faq-q">Do I need a website?<span class="faq-icon">+</span></div><div class="faq-a">No. Your store lives at shopbreezy.co.ke/yourstore — a clean link you share on Instagram, WhatsApp, or anywhere. If you already have a domain, connect it on Growth plan.</div></div>
+    <div class="faq-item"><div class="faq-q">Do I need a website?<span class="faq-icon">+</span></div><div class="faq-a">No. Your store lives at shopbreezy.co.ke/yourstore — a clean link you share on Instagram, WhatsApp, or anywhere. If you already have a domain, connect it on Growth plan and the experience becomes fully yours.</div></div>
     <div class="faq-item"><div class="faq-q">Do my customers need to download anything?<span class="faq-icon">+</span></div><div class="faq-a">Nothing. They tap your link and the conversation opens in the browser. Browse, choose and pay with M-Pesa or card. No app, no account, no friction.</div></div>
-    <div class="faq-item"><div class="faq-q">Where does the money go?<span class="faq-icon">+</span></div><div class="faq-a">Directly to your Paystack account. Breezy never touches your money. You connect your own Paystack secret key in the dashboard — every payment settles instantly.</div></div>
-    <div class="faq-item"><div class="faq-q">What does the free trial include?<span class="faq-icon">+</span></div><div class="faq-a">Everything in the Starter plan — full store, real payments, dashboard, automatic emails and review requests. 14 days, completely free. No card required.</div></div>
-    <div class="faq-item"><div class="faq-q">How long does setup take?<span class="faq-icon">+</span></div><div class="faq-a">Tap Register in the widget, we call you within 24 hours, your store goes live same day. Most sellers are up and running within a few hours of the call.</div></div>
-    <div class="faq-item"><div class="faq-q">What if I have a lot of products?<span class="faq-icon">+</span></div><div class="faq-a">You add products through the dashboard — most sellers with under 50 products are done in under an hour. For larger catalogues, CSV bulk import is available on Pro.</div></div>
-    <div class="faq-item"><div class="faq-q">Can I cancel anytime?<span class="faq-icon">+</span></div><div class="faq-a">Yes. No contracts. Your customer list and order history are exportable anytime. If Breezy isn't working for you, you stop.</div></div>
+    <div class="faq-item"><div class="faq-q">Where does the money go?<span class="faq-icon">+</span></div><div class="faq-a">Directly to your Paystack account. Breezy never touches your money. You connect your own Paystack secret key in the dashboard — every payment settles to your account instantly.</div></div>
+    <div class="faq-item"><div class="faq-q">What does the free trial include?<span class="faq-icon">+</span></div><div class="faq-a">Everything in the Starter plan — full store, real payments, dashboard, automatic emails and review requests. 14 days, completely free. No card required to start.</div></div>
+    <div class="faq-item"><div class="faq-q">How long does setup take?<span class="faq-icon">+</span></div><div class="faq-a">Tap Register in the widget, we call you within 24 hours, your store goes live the same day. Most sellers are up and running within a few hours of the call.</div></div>
+    <div class="faq-item"><div class="faq-q">What if I have a lot of products?<span class="faq-icon">+</span></div><div class="faq-a">You add products through your dashboard — most sellers with under 50 products are done in under an hour. For larger catalogues, CSV bulk import is available on Pro, or we can handle it for a one-time fee.</div></div>
+    <div class="faq-item"><div class="faq-q">Can I cancel anytime?<span class="faq-icon">+</span></div><div class="faq-a">Yes. No contracts. Your customer list and order history are exportable anytime. If Breezy isn't working for you, you stop. Simple.</div></div>
   </div>
 </div>
 
@@ -410,7 +421,7 @@ footer{padding:40px 48px;border-top:1px solid var(--border);display:flex;align-i
 </div>
 
 <footer>
-  <div class="footer-logo">B R E E<span>Z</span>Y</div>
+  <div class="footer-logo">B R <span class="logo-eez">E E Z</span> Y</div>
   <div class="footer-links">
     <a href="#how">How it works</a>
     <a href="#calculator">Calculator</a>

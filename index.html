@@ -525,20 +525,8 @@ footer{padding:36px 48px;border-top:1px solid var(--border);display:flex;align-i
 
 <script>
 function openWidget(){
-  if(window.UchatWidget && window.UchatWidget.open){
-    window.UchatWidget.open();
-  } else {
-    // Widget not ready yet — wait and retry
-    let attempts = 0;
-    const interval = setInterval(function(){
-      attempts++;
-      if(window.UchatWidget && window.UchatWidget.open){
-        window.UchatWidget.open();
-        clearInterval(interval);
-      }
-      if(attempts > 20) clearInterval(interval);
-    }, 300);
-  }
+  const btn = document.querySelector('button.bot-widget-bubble:not(.bot--close)');
+  if(btn) btn.click();
 }
 
 // CALCULATOR

@@ -573,8 +573,9 @@ async function loadStore(id) {
 async function loadProducts(id) {
   const g = document.getElementById('grid');
   try {
-    const r  = await fetch(`${API}/products/list?client_id=${id}`);
-    const ps = (await r.json());
+    const res  = await fetch(`${API}/products/list?client_id=${id}`);
+    const data = await res.json();
+    const ps   = data.products || data;
     const prods = (Array.isArray(ps)?ps:[]).filter(p=>p.active==='YES'||p.active===true);
     if (!prods.length) {
       g.innerHTML = '<div class="empty"><h3>Products coming soon</h3><p>This store is setting up. Check back shortly.</p></div>';

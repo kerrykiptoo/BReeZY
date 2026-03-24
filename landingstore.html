@@ -537,7 +537,7 @@ function cgNav(uid, dir, e) {
 
 /* CARD */
 function card(p, sid) {
-  const link = botLink(sid, p._id);
+  const link = botLink(sid, p.product_id || p._id);
   const imgs = [p.image1, p.image2, p.image3, p.image4].filter(Boolean);
   const cat  = (p.category||'').toLowerCase();
   const uid  = (p._id || p.product_id || '').toString().replace(/[^a-z0-9]/gi,'');

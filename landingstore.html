@@ -353,6 +353,32 @@
     .bottom{margin:0 18px 60px;padding:28px 22px;flex-direction:column;align-items:flex-start;}
     footer{padding:26px 18px;}
   }
+
+  /* GALLERY */
+  .card-gallery{position:relative;width:100%;height:100%;}
+  .cg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s;}
+  .cg-img.active{opacity:1;}
+  .cg-arr{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:28px;height:28px;border-radius:50%;
+    background:rgba(0,0,0,0.45);backdrop-filter:blur(4px);
+    border:none;color:#fff;font-size:18px;line-height:1;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    opacity:0;transition:opacity .2s;z-index:5;padding:0;
+  }
+  .card:hover .cg-arr{opacity:1;}
+  .cg-prev{left:8px;}
+  .cg-next{right:8px;}
+  .cg-dots{
+    position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+    display:flex;gap:4px;z-index:5;
+  }
+  .cg-dot{
+    width:5px;height:5px;border-radius:50%;
+    background:rgba(255,255,255,0.45);transition:background .2s,transform .2s;
+  }
+  .cg-dot.active{background:#fff;transform:scale(1.3);}
+
 </style>
 </head>
 <body>
@@ -494,30 +520,60 @@ const emo = {heels:'👠',shoes:'👟',sneakers:'👟',bags:'👜',clothing:'�
   accessories:'💍',home:'🏠',food:'🍽️',sports:'⚽'};
 const getEmo = c => { if(!c) return '🛍️'; const k=c.toLowerCase(); for(const[a,b] of Object.entries(emo)) if(k.includes(a)) return b; return '🛍️'; };
 
+/* GALLERY NAV */
+function cgNav(uid, dir, e) {
+  e.preventDefault(); e.stopPropagation();
+  const wrap = document.getElementById('cg-' + uid);
+  if (!wrap) return;
+  const imgs = wrap.querySelectorAll('.cg-img');
+  const dots = wrap.querySelectorAll('.cg-dot');
+  let cur = Array.from(imgs).findIndex(i => i.classList.contains('active'));
+  imgs[cur].classList.remove('active');
+  if (dots[cur]) dots[cur].classList.remove('active');
+  cur = (cur + dir + imgs.length) % imgs.length;
+  imgs[cur].classList.add('active');
+  if (dots[cur]) dots[cur].classList.add('active');
+}
+
 /* CARD */
 function card(p, sid) {
   const link = botLink(sid, p._id);
-  const img  = p.image1 || p.image2 || p.image3 || p.image4 || '';
+  const imgs = [p.image1, p.image2, p.image3, p.image4].filter(Boolean);
   const cat  = (p.category||'').toLowerCase();
-  return `
-  <div class="card rv" data-cat="${cat}">
-    <div class="card-img">
-      ${img ? `<img src="${img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'">` : ''}
-      <div class="card-img-ph" style="${img?'display:none':''}">${getEmo(p.category)}</div>
-      ${p.category?`<div class="cat-tag">${p.category}</div>`:''}
-    </div>
-    <div class="card-body">
-      <div class="card-name">${p.name}</div>
-      <div class="card-desc">${p.description||''}</div>
-      <div class="card-foot">
-        <div>
-          <div class="card-price">${fmt(p.price)}</div>
-          ${p.stock!==undefined?`<div class="card-stock">${p.stock} in stock</div>`:''}
-        </div>
-        <a href="${link}" target="_blank" class="buy">Buy →</a>
-      </div>
-    </div>
-  </div>`;
+  const uid  = (p._id || p.product_id || '').toString().replace(/[^a-z0-9]/gi,'');
+
+  let imgHtml;
+  if (imgs.length) {
+    let inner = imgs.map((src,i) =>
+      '<img class="cg-img' + (i===0?' active':'') + '" src="' + src + '" alt="' + p.name.replace(/"/g,'&quot;') + '" loading="lazy">'
+    ).join('');
+    if (imgs.length > 1) {
+      inner += '<button class="cg-arr cg-prev" onclick="cgNav(\'' + uid + '\',-1,event)">&#8249;</button>'
+             + '<button class="cg-arr cg-next" onclick="cgNav(\'' + uid + '\',1,event)">&#8250;</button>'
+             + '<div class="cg-dots">'
+             + imgs.map((_,i) => '<span class="cg-dot' + (i===0?' active':'') + '"></span>').join('')
+             + '</div>';
+    }
+    imgHtml = '<div class="card-gallery" id="cg-' + uid + '">' + inner + '</div>';
+  } else {
+    imgHtml = '<div class="card-img-ph">' + getEmo(p.category) + '</div>';
+  }
+
+  return '<div class="card rv" data-cat="' + cat + '">'
+    + '<div class="card-img" style="position:relative;overflow:hidden;height:195px;background:var(--surface2);">'
+    + imgHtml
+    + (p.category ? '<div class="cat-tag">' + p.category + '</div>' : '')
+    + '</div>'
+    + '<div class="card-body">'
+    + '<div class="card-name">' + p.name + '</div>'
+    + '<div class="card-desc">' + (p.description||'') + '</div>'
+    + '<div class="card-foot">'
+    + '<div>'
+    + '<div class="card-price">' + fmt(p.price) + '</div>'
+    + (p.stock !== undefined ? '<div class="card-stock">' + p.stock + ' in stock</div>' : '')
+    + '</div>'
+    + '<a href="' + link + '" class="buy">Buy &#8594;</a>'
+    + '</div></div></div>';
 }
 
 /* FILTER */

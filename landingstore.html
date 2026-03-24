@@ -497,7 +497,7 @@ const getEmo = c => { if(!c) return '🛍️'; const k=c.toLowerCase(); for(cons
 /* CARD */
 function card(p, sid) {
   const link = botLink(sid, p._id);
-  const img  = p.images?.[0];
+  const img  = p.image1 || p.image2 || p.image3 || p.image4 || '';
   const cat  = (p.category||'').toLowerCase();
   return `
   <div class="card rv" data-cat="${cat}">
@@ -542,9 +542,10 @@ function filter(cat) {
 /* STORE */
 async function loadStore(id) {
   try {
-    const r = await fetch(`${API}/stores`);
-    const list = await r.json();
-    const s = Array.isArray(list) ? list.find(x=>x.client_id===id||x._id===id) : list;
+    const r = await fetch(`${API}/stores/list`);
+    const data = await r.json();
+    const list = data.stores || [];
+    const s = list.find(x=>x.client_id===id);
     if (!s) return;
     document.title = `${s.store_name} — Breezy`;
     document.getElementById('pill-txt').textContent   = `${s.store_name} · Open`;
@@ -554,7 +555,7 @@ async function loadStore(id) {
     document.getElementById('nav-store').style.display = 'block';
     document.getElementById('prods-h').textContent   = `Everything at ${s.store_name}`;
     if (s.store_description) document.getElementById('hero-sub').textContent = s.store_description;
-    const phone = s.whatsapp ? s.whatsapp.replace(/\D/g,'') : '254762826978';
+    const phone = s.whatsapp || '254762826978';
     document.getElementById('wa-link').href = `https://wa.me/${phone}`;
     const el = document.getElementById('store-logo');
     if (s.store_logo) {
@@ -572,9 +573,9 @@ async function loadStore(id) {
 async function loadProducts(id) {
   const g = document.getElementById('grid');
   try {
-    const r  = await fetch(`${API}/products?client_id=${id}`);
+    const r  = await fetch(`${API}/products/list?client_id=${id}`);
     const ps = (await r.json());
-    const prods = (Array.isArray(ps)?ps:[]).filter(p=>p.active!==false);
+    const prods = (Array.isArray(ps)?ps:[]).filter(p=>p.active==='YES'||p.active===true);
     if (!prods.length) {
       g.innerHTML = '<div class="empty"><h3>Products coming soon</h3><p>This store is setting up. Check back shortly.</p></div>';
       return;

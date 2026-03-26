@@ -342,73 +342,65 @@
   /* ANIM */
   @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-  /* MODAL */
-  .modal{
-    display:none;
-    position:fixed;
-    top:0;left:0;right:0;bottom:0;
-    z-index:1000;
-    background:rgba(0,0,0,0.85);
-    backdrop-filter:blur(8px);
-    align-items:center;
-    justify-content:center;
-    padding:20px;
+  /* RESPONSIVE */
+  @media(max-width:780px){
+    nav{padding:0 18px;}
+    .hero{padding-left:18px;padding-right:18px;}
+    hr.div{margin:0 18px;}
+    .sec,.prods-sec{padding-left:18px;padding-right:18px;}
+    .steps{grid-template-columns:1fr;}
+    .prods-sec{padding-bottom:56px;}
+    .bottom{margin:0 18px 60px;padding:28px 22px;flex-direction:column;align-items:flex-start;}
+    footer{padding:26px 18px;}
   }
-  .modal.active{display:flex;}
-  .modal-content{
-    width:100%;
-    max-width:480px;
-    height:85vh;
-    max-height:700px;
-    background:var(--bg);
-    border-radius:28px;
-    border:1px solid var(--border2);
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-    position:relative;
-    animation:modalUp .3s ease;
+
+  /* GALLERY */
+  .card-gallery{position:relative;width:100%;height:100%;}
+  .cg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s;}
+  .cg-img.active{opacity:1;}
+  .cg-arr{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:28px;height:28px;border-radius:50%;
+    background:rgba(0,0,0,0.45);backdrop-filter:blur(4px);
+    border:none;color:#fff;font-size:18px;line-height:1;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    opacity:0;transition:opacity .2s;z-index:5;padding:0;
   }
-  @keyframes modalUp{
-    from{opacity:0;transform:translateY(20px);}
-    to{opacity:1;transform:translateY(0);}
+  .card:hover .cg-arr{opacity:1;}
+  .cg-prev{left:8px;}
+  .cg-next{right:8px;}
+  .cg-dots{
+    position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+    display:flex;gap:4px;z-index:5;
   }
-  .modal-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:16px 20px;
-    border-bottom:1px solid var(--border);
-    background:var(--bg);
+  .cg-dot{
+    width:5px;height:5px;border-radius:50%;
+    background:rgba(255,255,255,0.45);transition:background .2s,transform .2s;
   }
-  .modal-header h3{
+  .cg-dot.active{background:#fff;transform:scale(1.3);}
+
+
+  /* HERO STORE NAME */
+  h1.hero-h1{
     font-family:var(--font-display);
-    font-size:18px;
-    font-weight:600;
+    font-size:clamp(48px,8vw,96px);
+    font-weight:700;line-height:1.0;letter-spacing:-0.02em;
+    margin-bottom:10px;max-width:820px;
+    opacity:0;animation:up .8s .2s forwards;
     color:var(--text);
   }
-  .modal-close{
-    width:32px;height:32px;
-    border-radius:50%;
-    background:var(--surface2);
-    border:1px solid var(--border2);
-    color:var(--text2);
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:18px;
-    transition:all .2s;
+  .hero-tagline{
+    font-size:13px;color:var(--accent);
+    letter-spacing:.15em;text-transform:uppercase;
+    font-weight:500;margin-bottom:10px;
+    opacity:0;animation:up .6s .3s forwards;
   }
-  .modal-close:hover{
-    border-color:var(--accent);
-    color:var(--accent);
-  }
-  .modal-iframe{
-    flex:1;
-    width:100%;
-    border:none;
-    background:white;
+  .hero-store-desc{
+    font-size:15px;color:var(--text2);
+    max-width:440px;margin:0 auto 36px;
+    line-height:1.75;
+    opacity:0;animation:up .6s .35s forwards;
+    min-height:0;
   }
 
   /* WHATSAPP NAV BUTTON */
@@ -450,65 +442,6 @@
   }
   .float-shop:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(14,207,170,0.35);}
 
-  /* HERO STORE NAME */
-  h1.hero-h1{
-    font-family:var(--font-display);
-    font-size:clamp(48px,8vw,96px);
-    font-weight:700;line-height:1.0;letter-spacing:-0.02em;
-    margin-bottom:10px;max-width:820px;
-    opacity:0;animation:up .8s .2s forwards;
-    color:var(--text);
-  }
-  .hero-tagline{
-    font-size:13px;color:var(--accent);
-    letter-spacing:.15em;text-transform:uppercase;
-    font-weight:500;margin-bottom:10px;
-    opacity:0;animation:up .6s .3s forwards;
-  }
-  .hero-store-desc{
-    font-size:15px;color:var(--text2);
-    max-width:440px;margin:0 auto 36px;
-    line-height:1.75;
-    opacity:0;animation:up .6s .35s forwards;
-    min-height:0;
-  }
-
-  @media(max-width:780px){
-    nav{padding:0 18px;}
-    .hero{padding-left:18px;padding-right:18px;}
-    hr.div{margin:0 18px;}
-    .sec,.prods-sec{padding-left:18px;padding-right:18px;}
-    .steps{grid-template-columns:1fr;}
-    .prods-sec{padding-bottom:56px;}
-    .bottom{margin:0 18px 60px;padding:28px 22px;flex-direction:column;align-items:flex-start;}
-    footer{padding:26px 18px;}
-    .modal-content{max-width:95%;height:80vh;}
-  }
-
-  /* GALLERY */
-  .card-gallery{position:relative;width:100%;height:100%;}
-  .cg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s;}
-  .cg-img.active{opacity:1;}
-  .cg-arr{
-    position:absolute;top:50%;transform:translateY(-50%);
-    width:28px;height:28px;border-radius:50%;
-    background:rgba(0,0,0,0.45);backdrop-filter:blur(4px);
-    border:none;color:#fff;font-size:18px;line-height:1;
-    cursor:pointer;display:flex;align-items:center;justify-content:center;
-    opacity:0;transition:opacity .2s;z-index:5;padding:0;
-  }
-  .card:hover .cg-arr{opacity:1;}
-  .cg-prev{left:8px;}
-  .cg-next{right:8px;}
-  .cg-dots{
-    position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
-    display:flex;gap:4px;z-index:5;
-  }
-  .cg-dot{
-    width:5px;height:5px;border-radius:50%;
-    background:rgba(255,255,255,0.45);transition:background .2s,transform .2s;
-  }
-  .cg-dot.active{background:#fff;transform:scale(1.3);}
 </style>
 </head>
 <body>
@@ -563,7 +496,7 @@
     <div class="step rv">
       <div class="step-n">02</div>
       <div class="step-t">Tap Buy on any product</div>
-      <div class="step-d">A chat opens right here with your item pre-loaded — images, price, everything ready. Confirm and go.</div>
+      <div class="step-d">A chat opens with your item already loaded — images, price, everything ready. Confirm and go.</div>
     </div>
     <div class="step rv">
       <div class="step-n">03</div>
@@ -616,17 +549,6 @@
   </div>
 </footer>
 
-<!-- MODAL -->
-<div class="modal" id="chat-modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3>Chat with seller</h3>
-      <button class="modal-close" id="modal-close">✕</button>
-    </div>
-    <iframe class="modal-iframe" id="chat-iframe" src="about:blank" title="Chat with seller"></iframe>
-  </div>
-</div>
-
 <script>
 const API = 'https://breezy-api-r7jg.onrender.com';
 const UCHAT = 'https://www.uchat.com.au/p/web/3mqg0rm2p5hxf5jh/full?ref=wf239377w145577';
@@ -639,37 +561,6 @@ const setTheme = t => { html.dataset.theme=t; tb.textContent=t==='dark'?'☀':'�
 setTheme(theme);
 tb.onclick = () => setTheme(theme==='dark'?'light':'dark');
 
-/* MODAL */
-const modal = document.getElementById('chat-modal');
-const modalIframe = document.getElementById('chat-iframe');
-const modalClose = document.getElementById('modal-close');
-
-function openModal(url) {
-  modalIframe.src = url;
-  modal.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  modal.classList.remove('active');
-  setTimeout(() => {
-    modalIframe.src = 'about:blank';
-  }, 300);
-  document.body.style.overflow = '';
-}
-
-modalClose.onclick = closeModal;
-modal.onclick = (e) => {
-  if (e.target === modal) closeModal();
-};
-
-/* ESC key to close */
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && modal.classList.contains('active')) {
-    closeModal();
-  }
-});
-
 /* STORE ID */
 function storeId() {
   const p = location.pathname.replace(/^\/+|\/+$/g,'');
@@ -677,7 +568,7 @@ function storeId() {
   return new URLSearchParams(location.search).get('store') || 'demo';
 }
 
-/* BOT LINK - creates the uchat URL with context */
+/* BOT LINK */
 function botLink(sid, pid) {
   const d = pid ? {store_id:sid,product_id:pid} : {store_id:sid};
   return `${UCHAT}--${btoa(JSON.stringify(d))}`;
@@ -706,9 +597,9 @@ function cgNav(uid, dir, e) {
   if (dots[cur]) dots[cur].classList.add('active');
 }
 
-/* CARD - buy buttons now call openModal with chat link */
+/* CARD */
 function card(p, sid) {
-  const chatUrl = botLink(sid, p.product_id || p._id);
+  const link = botLink(sid, p.product_id || p._id);
   const imgs = [p.image1, p.image2, p.image3, p.image4].filter(Boolean);
   const cat  = (p.category||'').toLowerCase();
   const uid  = (p._id || p.product_id || '').toString().replace(/[^a-z0-9]/gi,'');
@@ -743,7 +634,7 @@ function card(p, sid) {
     + '<div class="card-price">' + fmt(p.price) + '</div>'
     + (p.stock !== undefined ? '<div class="card-stock">' + p.stock + ' in stock</div>' : '')
     + '</div>'
-    + '<button class="buy" data-chat-url="' + chatUrl + '">Buy &#8594;</button>'
+    + '<a href="' + link + '" class="buy">Buy &#8594;</a>'
     + '</div></div></div>';
 }
 
@@ -785,12 +676,7 @@ async function loadStore(id) {
     const phone = s.whatsapp || '254762826978';
     document.getElementById('nav-wa-top').href  = `https://wa.me/${phone}`;
     document.getElementById('float-wa').href    = `https://wa.me/${phone}`;
-    // Shop now button in floating bar opens modal with general store chat
-    const shopNowLink = botLink(id);
-    document.getElementById('float-shop').onclick = (e) => {
-      e.preventDefault();
-      openModal(shopNowLink);
-    };
+    document.getElementById('float-shop').href  = botLink(id);
     const el = document.getElementById('store-logo');
     if (s.store_logo) {
       el.outerHTML = `<img class="store-logo-img" id="store-logo" src="${s.store_logo}" alt="${s.store_name}">`;
@@ -817,16 +703,6 @@ async function loadProducts(id) {
     }
     buildFilters(prods);
     g.innerHTML = prods.map(p=>card(p,id)).join('');
-    
-    // Attach click handlers to all buy buttons
-    document.querySelectorAll('.buy').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const url = btn.getAttribute('data-chat-url');
-        if (url) openModal(url);
-      });
-    });
-    
     requestAnimationFrame(reveal);
   } catch(e) {
     g.innerHTML = '<div class="empty"><h3>Couldn\'t load products</h3><p>Refresh to try again.</p></div>';
@@ -851,7 +727,7 @@ Promise.all([loadStore(SID), loadProducts(SID)]).then(()=>setTimeout(reveal,160)
   <a href="https://wa.me/254762826978" class="float-wa" id="float-wa" target="_blank" rel="noopener" title="Ask seller on WhatsApp">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
-  <a href="#" class="float-shop" id="float-shop">
+  <a href="#" class="float-shop" id="float-shop" target="_blank">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
     Shop now
   </a>

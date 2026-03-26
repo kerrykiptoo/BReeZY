@@ -80,8 +80,6 @@
 
   .nav-r{display:flex;align-items:center;gap:14px;}
 
-  .nav-store{font-size:12px;color:var(--text2);display:none;letter-spacing:0.05em;}
-
   .toggle{
     width:36px;height:36px;border-radius:50%;
     border:1px solid var(--border2);background:var(--surface2);
@@ -149,12 +147,6 @@
   }
   h1.hero-h1 em{font-style:italic;color:var(--accent);}
 
-  .hero-sub{
-    font-size:15px;color:var(--text2);
-    max-width:440px;margin:0 auto 42px;line-height:1.8;
-    opacity:0;animation:up .6s .4s forwards;
-  }
-
   .hero-btns{
     display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
     opacity:0;animation:up .6s .5s forwards;
@@ -171,17 +163,6 @@
   }
   .btn-f:hover{transform:translateY(-2px);opacity:.9;}
 
-  .btn-o{
-    display:inline-flex;align-items:center;gap:8px;
-    background:transparent;color:var(--text);
-    border:1px solid var(--border2);border-radius:100px;
-    padding:13px 28px;font-family:var(--font-body);
-    font-size:12px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;
-    cursor:pointer;text-decoration:none;
-    transition:border-color .2s,color .2s,transform .2s;
-  }
-  .btn-o:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
-
   .hero-meta{
     margin-top:30px;font-size:11px;color:var(--text3);
     letter-spacing:0.12em;text-transform:uppercase;
@@ -189,6 +170,19 @@
   }
   .hero-meta span{margin:0 6px;}
 
+  .hero-tagline{
+    font-size:13px;color:var(--accent);
+    letter-spacing:.15em;text-transform:uppercase;
+    font-weight:500;margin-bottom:10px;
+    opacity:0;animation:up .6s .3s forwards;
+  }
+  .hero-store-desc{
+    font-size:15px;color:var(--text2);
+    max-width:480px;margin:0 auto 36px;
+    line-height:1.75;
+    opacity:0;animation:up .6s .35s forwards;
+    min-height:0;
+  }
 
   /* DIVIDER */
   hr.div{border:none;border-top:1px solid var(--border);margin:0 36px;}
@@ -312,7 +306,7 @@
     pointer-events:none;
   }
   .bottom h3{font-family:var(--font-display);font-size:26px;font-weight:600;margin-bottom:8px;line-height:1.25;}
-  .bottom p{font-size:14px;color:var(--text2);max-width:340px;line-height:1.75;}
+  .bottom p{font-size:14px;color:var(--text2);max-width:360px;line-height:1.75;}
 
   .bsteps{display:flex;gap:18px;flex-wrap:wrap;flex-shrink:0;}
   .bstep{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:var(--text2);text-align:center;min-width:56px;letter-spacing:.03em;}
@@ -381,29 +375,6 @@
   }
   .float-shop:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(14,207,170,0.35);}
 
-  /* HERO STORE NAME */
-  h1.hero-h1{
-    font-family:var(--font-display);
-    font-size:clamp(48px,8vw,96px);
-    font-weight:700;line-height:1.0;letter-spacing:-0.02em;
-    margin-bottom:10px;max-width:820px;
-    opacity:0;animation:up .8s .2s forwards;
-    color:var(--text);
-  }
-  .hero-tagline{
-    font-size:13px;color:var(--accent);
-    letter-spacing:.15em;text-transform:uppercase;
-    font-weight:500;margin-bottom:10px;
-    opacity:0;animation:up .6s .3s forwards;
-  }
-  .hero-store-desc{
-    font-size:15px;color:var(--text2);
-    max-width:440px;margin:0 auto 36px;
-    line-height:1.75;
-    opacity:0;animation:up .6s .35s forwards;
-    min-height:0;
-  }
-
   @media(max-width:780px){
     nav{padding:0 18px;}
     .hero{padding-left:18px;padding-right:18px;}
@@ -468,14 +439,14 @@
   </div>
 
   <h1 class="hero-h1" id="hero-store-name">—</h1>
-  <p class="hero-tagline">Browse. Pick. Order.</p>
+  <p class="hero-tagline">Browse. Order. Relax.</p>
   <p class="hero-store-desc" id="hero-store-desc"></p>
 
   <div class="hero-btns">
     <a href="#products" class="btn-f">Browse products →</a>
   </div>
 
-  <div class="hero-meta">No app<span>·</span>No account<span>·</span>M-Pesa or card</div>
+  <div class="hero-meta">No app<span>·</span>No account<span>·</span>Secure payments</div>
 
 </section>
 
@@ -483,22 +454,22 @@
 
 <section class="sec">
   <div class="eyebrow rv">How it works</div>
-  <h2 class="sec-h rv">Simple shopping, fast delivery.</h2>
+  <h2 class="sec-h rv">Simple. Secure. Delivered.</h2>
   <div class="steps">
     <div class="step rv">
       <div class="step-n">01</div>
       <div class="step-t">Browse the catalogue</div>
-      <div class="step-d">Scroll, filter by category, find what you want. No account, no app to install.</div>
+      <div class="step-d">Find what you want. No account, no app — just what catches your eye.</div>
     </div>
     <div class="step rv">
       <div class="step-n">02</div>
-      <div class="step-t">Select what you want</div>
-      <div class="step-d">Tap Buy on any item — you'll be taken to a quick order page with your item ready.</div>
+      <div class="step-t">Order with confidence</div>
+      <div class="step-d">Tap Buy — we'll guide you through a quick, secure order. You'll get a confirmation email with everything you need.</div>
     </div>
     <div class="step rv">
       <div class="step-n">03</div>
-      <div class="step-t">Pay &amp; get it delivered</div>
-      <div class="step-d">Pay securely via M-Pesa or card. The seller handles delivery, updates come instantly.</div>
+      <div class="step-t">Track & receive</div>
+      <div class="step-d">Pay with M-Pesa or card. We'll send rider details via email when your order is out for delivery. After delivery, share your experience with a review.</div>
     </div>
   </div>
 </section>
@@ -526,14 +497,14 @@
 
 <div class="bottom rv">
   <div>
-    <h3>Ready? Order in seconds.</h3>
-    <p>Tap Buy on any product and complete your order — no forms, no checkout pages, just confirm and pay.</p>
+    <h3>Ready to order?</h3>
+    <p>Tap Buy. Complete your order in seconds. We'll guide you from confirmation to delivery — and follow up to hear how it went.</p>
   </div>
   <div class="bsteps">
     <div class="bstep"><div class="bstep-i">👆</div>Tap Buy</div>
-    <div class="bstep"><div class="bstep-i">📝</div>Order details</div>
-    <div class="bstep"><div class="bstep-i">📱</div>Pay M-Pesa</div>
-    <div class="bstep"><div class="bstep-i">📦</div>Delivered</div>
+    <div class="bstep"><div class="bstep-i">📧</div>Get confirmation</div>
+    <div class="bstep"><div class="bstep-i">🚚</div>Track rider</div>
+    <div class="bstep"><div class="bstep-i">⭐</div>Share review</div>
   </div>
 </div>
 
@@ -594,7 +565,7 @@ function cgNav(uid, dir, e) {
   if (dots[cur]) dots[cur].classList.add('active');
 }
 
-/* CARD - buy buttons now open in same tab */
+/* CARD */
 function card(p, sid) {
   const orderUrl = botLink(sid, p.product_id || p._id);
   const imgs = [p.image1, p.image2, p.image3, p.image4].filter(Boolean);
@@ -663,17 +634,18 @@ async function loadStore(id) {
     const s = list.find(x=>x.client_id===id);
     if (!s) return;
     document.title = `${s.store_name} — Breezy`;
-    document.getElementById('pill-txt').textContent      = `${s.store_name} · Open`;
+    document.getElementById('pill-txt').textContent      = `${s.store_name} · Open for orders`;
     document.getElementById('store-label').textContent  = s.store_name.toUpperCase();
     document.getElementById('hero-store-name').textContent = s.store_name;
     document.getElementById('prods-h').textContent      = `Everything at ${s.store_name}`;
     if (s.store_description) {
       document.getElementById('hero-store-desc').textContent = s.store_description;
+    } else {
+      document.getElementById('hero-store-desc').textContent = 'Browse the catalogue, pick what you love. Your order is guided every step of the way — from confirmation to dispatch to your door.';
     }
     const phone = s.whatsapp || '254762826978';
     document.getElementById('nav-wa-top').href  = `https://wa.me/${phone}`;
     document.getElementById('float-wa').href    = `https://wa.me/${phone}`;
-    // Shop now button opens in same tab
     const shopNowLink = botLink(id);
     document.getElementById('float-shop').href = shopNowLink;
     document.getElementById('float-shop').setAttribute('target', '_self');
@@ -685,7 +657,7 @@ async function loadStore(id) {
       el.className   = 'store-logo-ph';
     }
   } catch(e) {
-    document.getElementById('pill-txt').textContent = 'Store';
+    document.getElementById('pill-txt').textContent = 'Store open';
   }
 }
 

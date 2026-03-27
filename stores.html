@@ -201,10 +201,7 @@ const API = 'https://breezy-api-r7jg.onrender.com';
 let allStores = [];
 let activeCategory = 'all';
 
-function openWidget(){
-  if(window.UchatWidget)window.UchatWidget.open();
-  else setTimeout(()=>{if(window.UchatWidget)window.UchatWidget.open();},800);
-}
+
 
 async function loadStores(){
   try{

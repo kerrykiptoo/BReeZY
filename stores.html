@@ -145,7 +145,7 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;align-i
     <a href="/">Home</a>
     <a href="/stores.html" style="color:var(--text)">Stores</a>
     <a href="/dashboard.html">Seller login</a>
-    <a href="https://shopbreezy.co.ke/?store=demo" class="nav-cta">Try demo</a>
+    <a href="https://shopbreezy.co.ke/landingstore.html?store=demo" class="nav-cta">Try demo</a>
   </div>
 </nav>
 
@@ -311,9 +311,9 @@ function renderStores(){
     const fulfilment = s.fulfilment_rate > 0 ? `${s.fulfilment_rate}%` : '—';
     const delivery = s.avg_delivery_days > 0 ? `${s.avg_delivery_days}d` : '—';
     const reviews = s.review_count || 0;
-    // Use the long link format with ?store=
+    // Use landingstore.html with ?store= parameter
     const storeId = s.client_id || s.store_code || s._id;
-    const shopUrl = `https://shopbreezy.co.ke/?store=${encodeURIComponent(storeId)}`;
+    const shopUrl = `https://shopbreezy.co.ke/landingstore.html?store=${encodeURIComponent(storeId)}`;
 
     return `<div class="store-card">
       ${logo}
@@ -357,7 +357,7 @@ function showSuggestions(searchTerm){
   const suggestedGrid = document.getElementById('suggestedGrid');
   suggestedGrid.innerHTML = suggested.map(s => {
     const storeId = s.client_id || s.store_code || s._id;
-    const storeUrl = `https://shopbreezy.co.ke/?store=${encodeURIComponent(storeId)}`;
+    const storeUrl = `https://shopbreezy.co.ke/landingstore.html?store=${encodeURIComponent(storeId)}`;
     return `
     <a href="${storeUrl}" class="suggested-card">
       <div class="suggested-card-name">${escapeHtml(s.store_name)}</div>

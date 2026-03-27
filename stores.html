@@ -93,7 +93,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 .suggested-section{max-width:1100px;margin:0 auto;padding:0 48px 60px;}
 .suggested-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px;}
 .suggested-title{font-family:'DM Serif Display',Georgia,serif;font-size:24px;font-weight:400;color:var(--text);}
-.suggested-link{font-size:12px;color:var(--teal);text-decoration:none;transition:color 0.2s;}
+.suggested-link{font-size:12px;color:var(--teal);text-decoration:none;transition:color 0.2s;cursor:pointer;}
 .suggested-link:hover{color:var(--teal-d);}
 .suggested-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
 .suggested-card{background:var(--surface);border:1px solid var(--border);border-radius:2px;padding:16px;transition:all 0.2s;cursor:pointer;text-decoration:none;display:block;}
@@ -145,7 +145,7 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;align-i
     <a href="/">Home</a>
     <a href="/stores.html" style="color:var(--text)">Stores</a>
     <a href="/dashboard.html">Seller login</a>
-    <a href="https://shopbreezy.co.ke/demo" class="nav-cta">Try demo</a>
+    <a href="https://shopbreezy.co.ke/?store=demo" class="nav-cta">Try demo</a>
   </div>
 </nav>
 
@@ -311,13 +311,15 @@ function renderStores(){
     const fulfilment = s.fulfilment_rate > 0 ? `${s.fulfilment_rate}%` : '—';
     const delivery = s.avg_delivery_days > 0 ? `${s.avg_delivery_days}d` : '—';
     const reviews = s.review_count || 0;
-    const shopUrl = `https://shopbreezy.co.ke/${s.client_id}`;
+    // Use the long link format with ?store=
+    const storeId = s.client_id || s.store_code || s._id;
+    const shopUrl = `https://shopbreezy.co.ke/?store=${encodeURIComponent(storeId)}`;
 
     return `<div class="store-card">
       ${logo}
       <div class="store-card-body">
         <div class="store-card-top">
-          <div class="store-card-name">${escapeHtml(s.store_name||s.client_id)}</div>
+          <div class="store-card-name">${escapeHtml(s.store_name||storeId)}</div>
           <span class="store-card-plan">${escapeHtml(s.plan||'starter')}</span>
         </div>
         <div class="store-card-desc">${escapeHtml(s.store_description||'No description yet.')}</div>
@@ -353,12 +355,16 @@ function showSuggestions(searchTerm){
   
   document.getElementById('suggestedSection').style.display = 'block';
   const suggestedGrid = document.getElementById('suggestedGrid');
-  suggestedGrid.innerHTML = suggested.map(s => `
-    <a href="https://shopbreezy.co.ke/${s.client_id}" class="suggested-card">
+  suggestedGrid.innerHTML = suggested.map(s => {
+    const storeId = s.client_id || s.store_code || s._id;
+    const storeUrl = `https://shopbreezy.co.ke/?store=${encodeURIComponent(storeId)}`;
+    return `
+    <a href="${storeUrl}" class="suggested-card">
       <div class="suggested-card-name">${escapeHtml(s.store_name)}</div>
       <div class="suggested-card-cat">${(s.store_categories||[])[0] || 'Store'}</div>
     </a>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function escapeHtml(str){

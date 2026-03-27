@@ -5,13 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stores — Breezy</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-<script async defer src="https://www.uchat.com.au/js/widget/3mqg0rm2p5hxf5jh/popup.js"></script>
 <style>
 :root{
-  --ink:#0A0A0B;--surface:#111113;--surface2:#18181B;
-  --border:rgba(255,255,255,0.06);--border-s:rgba(255,255,255,0.10);
-  --text:#FFFFFF;--text-2:rgba(255,255,255,0.55);--text-3:rgba(255,255,255,0.25);
-  --teal:#1ABFA0;--teal-d:#0D9C82;--teal-f:rgba(26,191,160,0.08);--teal-b:rgba(26,191,160,0.18);
+  --ink:#0A0A0B;
+  --surface:#111113;
+  --surface2:#18181B;
+  --border:rgba(255,255,255,0.06);
+  --border-s:rgba(255,255,255,0.10);
+  --text:#FFFFFF;
+  --text-2:rgba(255,255,255,0.55);
+  --text-3:rgba(255,255,255,0.25);
+  --teal:#1ABFA0;
+  --teal-d:#0D9C82;
+  --teal-f:rgba(26,191,160,0.08);
+  --teal-b:rgba(26,191,160,0.18);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -24,7 +31,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 .nav-links{display:flex;align-items:center;gap:24px;}
 .nav-links a{font-size:13px;font-weight:400;color:var(--text-2);text-decoration:none;transition:color 0.2s;}
 .nav-links a:hover{color:var(--text);}
-.nav-cta{padding:9px 20px;background:var(--teal);color:var(--ink)!important;font-weight:600!important;font-size:11px!important;letter-spacing:2px;text-transform:uppercase;}
+.nav-cta{padding:9px 20px;background:var(--teal);color:var(--ink)!important;font-weight:600!important;font-size:11px!important;letter-spacing:2px;text-transform:uppercase;border-radius:2px;}
 
 /* HERO */
 .stores-hero{padding:120px 48px 48px;text-align:center;position:relative;overflow:hidden;}
@@ -57,15 +64,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 .stores-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
 
 /* STORE CARD */
-.store-card{background:var(--surface);border:1px solid var(--border);border-radius:2px;overflow:hidden;transition:border-color 0.2s;display:flex;flex-direction:column;}
-.store-card:hover{border-color:var(--border-s);}
+.store-card{background:var(--surface);border:1px solid var(--border);border-radius:2px;overflow:hidden;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;}
+.store-card:hover{transform:translateY(-2px);border-color:var(--teal-b);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
 .store-card-logo{width:100%;height:140px;object-fit:cover;display:block;background:var(--surface2);}
 .store-card-logo-placeholder{width:100%;height:140px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:40px;opacity:0.15;}
 .store-card-body{padding:20px;flex:1;display:flex;flex-direction:column;}
 .store-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px;}
 .store-card-name{font-family:'DM Serif Display',Georgia,serif;font-size:18px;font-weight:400;color:var(--text);line-height:1.2;}
 .store-card-plan{padding:2px 8px;background:var(--teal-f);border:1px solid var(--teal-b);border-radius:100px;font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--teal);flex-shrink:0;}
-.store-card-desc{font-size:12px;font-weight:300;color:var(--text-2);line-height:1.6;margin-bottom:12px;}
+.store-card-desc{font-size:12px;font-weight:300;color:var(--text-2);line-height:1.6;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .store-card-cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
 .cat-tag{padding:3px 10px;background:rgba(255,255,255,0.04);border:1px solid var(--border-s);border-radius:100px;font-size:10px;font-weight:400;color:var(--text-3);}
 .store-card-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:2px;margin-bottom:16px;}
@@ -73,19 +80,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:64px;d
 .stat-item-value{font-family:'DM Serif Display',Georgia,serif;font-size:18px;color:var(--teal);line-height:1;}
 .stat-item-label{font-size:9px;font-weight:500;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-top:3px;}
 .store-card-footer{margin-top:auto;display:flex;align-items:center;gap:10px;}
-.store-code-wrap{flex:1;display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--surface2);border:1px solid var(--border-s);border-radius:2px;}
-.store-code-label{font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);}
-.store-code-value{font-size:12px;font-weight:600;color:var(--text);letter-spacing:1px;font-family:monospace;}
-.copy-btn{background:transparent;border:none;cursor:pointer;font-size:13px;opacity:0.5;transition:opacity 0.2s;padding:2px;}
-.copy-btn:hover{opacity:1;}
-.shop-btn{padding:9px 16px;background:var(--teal);color:var(--ink);border:none;border-radius:2px;font-size:10px;font-weight:700;font-family:'DM Sans',sans-serif;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background 0.2s;white-space:nowrap;text-decoration:none;display:inline-block;}
-.shop-btn:hover{background:var(--teal-d);}
+.shop-btn{flex:1;padding:10px 16px;background:var(--teal);color:var(--ink);border:none;border-radius:2px;font-size:11px;font-weight:700;font-family:'DM Sans',sans-serif;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;}
+.shop-btn:hover{background:var(--teal-d);transform:translateX(2px);}
 
 /* EMPTY / LOADING */
 .stores-empty{text-align:center;padding:80px 20px;grid-column:1/-1;}
-.stores-empty-icon{font-size:40px;opacity:0.2;margin-bottom:12px;}
+.stores-empty-icon{font-size:48px;opacity:0.2;margin-bottom:16px;}
 .stores-empty-text{font-size:14px;font-weight:300;color:var(--text-3);}
 .stores-loading{text-align:center;padding:80px 20px;grid-column:1/-1;color:var(--text-3);font-size:13px;letter-spacing:1px;}
+
+/* SUGGESTED STORES SECTION */
+.suggested-section{max-width:1100px;margin:0 auto;padding:0 48px 60px;}
+.suggested-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px;}
+.suggested-title{font-family:'DM Serif Display',Georgia,serif;font-size:24px;font-weight:400;color:var(--text);}
+.suggested-link{font-size:12px;color:var(--teal);text-decoration:none;transition:color 0.2s;}
+.suggested-link:hover{color:var(--teal-d);}
+.suggested-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.suggested-card{background:var(--surface);border:1px solid var(--border);border-radius:2px;padding:16px;transition:all 0.2s;cursor:pointer;text-decoration:none;display:block;}
+.suggested-card:hover{transform:translateY(-2px);border-color:var(--teal-b);}
+.suggested-card-name{font-family:'DM Serif Display',Georgia,serif;font-size:16px;color:var(--text);margin-bottom:6px;}
+.suggested-card-cat{font-size:10px;color:var(--text-3);letter-spacing:0.5px;}
 
 /* HOW TO USE */
 .how-section{background:var(--surface);border-top:1px solid var(--border);padding:60px 48px;}
@@ -106,6 +120,7 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;align-i
 
 @media(max-width:900px){
   .stores-grid{grid-template-columns:1fr 1fr;}
+  .suggested-grid{grid-template-columns:repeat(2,1fr);}
   .how-inner{grid-template-columns:1fr;}
 }
 @media(max-width:600px){
@@ -114,7 +129,9 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;align-i
   .stores-hero{padding:100px 20px 32px;}
   .filter-bar{padding:0 20px 28px;}
   .stores-section{padding:0 20px 60px;}
+  .suggested-section{padding:0 20px 40px;}
   .stores-grid{grid-template-columns:1fr;}
+  .suggested-grid{grid-template-columns:1fr;}
   .how-section{padding:40px 20px;}
   footer{padding:24px 20px;flex-direction:column;text-align:center;}
 }
@@ -128,20 +145,20 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;align-i
     <a href="/">Home</a>
     <a href="/stores.html" style="color:var(--text)">Stores</a>
     <a href="/dashboard.html">Seller login</a>
-    <a href="#" onclick="openWidget();return false;" class="nav-cta">Try demo</a>
+    <a href="https://shopbreezy.co.ke/demo" class="nav-cta">Try demo</a>
   </div>
 </nav>
 
 <div class="stores-hero">
   <div class="hero-label">Browse stores</div>
-  <h1 class="hero-title">Find what you need.<br/><em>Buy in a conversation.</em></h1>
-  <p class="hero-sub">Every store on Breezy lets you browse, choose and pay without filling a form or leaving a chat. Pick a store and start.</p>
+  <h1 class="hero-title">Find what you need.<br/><em>Shop with confidence.</em></h1>
+  <p class="hero-sub">Every store on Breezy is verified. Browse products, check reviews, and order directly — no apps, no accounts.</p>
 </div>
 
 <div class="filter-bar">
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
-    <input type="text" id="searchInput" placeholder="Search stores..." oninput="filterStores()">
+    <input type="text" id="searchInput" placeholder="Search by name, category, or description..." oninput="filterStores()">
   </div>
   <div class="filter-pills" id="categoryPills">
     <button class="pill active" data-cat="all" onclick="setCat('all',this)">All stores</button>
@@ -163,25 +180,33 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;align-i
   </div>
 </div>
 
+<div class="suggested-section" id="suggestedSection" style="display:none;">
+  <div class="suggested-header">
+    <h2 class="suggested-title">✨ You might also like</h2>
+    <a href="#" class="suggested-link" onclick="clearFilters();return false;">View all →</a>
+  </div>
+  <div class="suggested-grid" id="suggestedGrid"></div>
+</div>
+
 <div class="how-section">
   <div class="how-inner">
     <div>
       <div class="how-step-num">01</div>
       <div class="how-step-line"></div>
       <div class="how-step-title">Find a store</div>
-      <div class="how-step-desc">Browse all stores here or filter by category. Each store shows reviews, fulfilment rate and average delivery time.</div>
+      <div class="how-step-desc">Browse all stores or filter by category. Each store shows reviews, fulfilment rate and average delivery time.</div>
     </div>
     <div>
       <div class="how-step-num">02</div>
       <div class="how-step-line"></div>
-      <div class="how-step-title">Tap Shop now or copy the code</div>
-      <div class="how-step-desc">Tap Shop now to go directly to that store's chat. Or copy the store code and enter it in the Breezy widget to browse from here.</div>
+      <div class="how-step-title">Browse products</div>
+      <div class="how-step-desc">Visit any store to see their full catalogue. No account needed — just browse and pick what you want.</div>
     </div>
     <div>
       <div class="how-step-num">03</div>
       <div class="how-step-line"></div>
-      <div class="how-step-title">Browse, choose and pay</div>
-      <div class="how-step-desc">The whole experience happens in a conversation — no app, no account, no forms. Pay with M-Pesa or card. Done in minutes.</div>
+      <div class="how-step-title">Order in seconds</div>
+      <div class="how-step-desc">Tap "Buy" on any product. Complete your order with M-Pesa or card. Get confirmation and tracking via email.</div>
     </div>
   </div>
 </div>
@@ -192,6 +217,7 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;align-i
     <a href="/">Home</a>
     <a href="/dashboard.html">Seller login</a>
     <a href="https://wa.me/254762826978">WhatsApp</a>
+    <a href="/privacy.html">Privacy</a>
   </div>
   <div class="footer-copy">© 2026 Breezy · Nairobi, Kenya</div>
 </footer>
@@ -200,8 +226,6 @@ footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;align-i
 const API = 'https://breezy-api-r7jg.onrender.com';
 let allStores = [];
 let activeCategory = 'all';
-
-
 
 async function loadStores(){
   try{
@@ -220,7 +244,7 @@ function buildCategoryPills(){
   allStores.forEach(s => (s.store_categories||[]).forEach(c => allCats.add(c)));
   const pills = document.getElementById('categoryPills');
   pills.innerHTML = `<button class="pill active" data-cat="all" onclick="setCat('all',this)">All stores</button>`;
-  allCats.forEach(cat => {
+  [...allCats].sort().forEach(cat => {
     const btn = document.createElement('button');
     btn.className = 'pill';
     btn.setAttribute('data-cat', cat);
@@ -234,6 +258,15 @@ function setCat(cat, btn){
   activeCategory = cat;
   document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
+  renderStores();
+}
+
+function clearFilters(){
+  document.getElementById('searchInput').value = '';
+  activeCategory = 'all';
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  document.querySelector('.pill[data-cat="all"]').classList.add('active');
+  document.getElementById('sortSelect').value = 'reviews';
   renderStores();
 }
 
@@ -254,23 +287,26 @@ function renderStores(){
     return matchCat && matchSearch;
   });
 
-  if(sort === 'reviews') filtered.sort((a,b) => b.review_count - a.review_count);
-  else if(sort === 'orders') filtered.sort((a,b) => b.total_orders - a.total_orders);
-  else if(sort === 'fulfilment') filtered.sort((a,b) => b.fulfilment_rate - a.fulfilment_rate);
+  if(sort === 'reviews') filtered.sort((a,b) => (b.review_count||0) - (a.review_count||0));
+  else if(sort === 'orders') filtered.sort((a,b) => (b.total_orders||0) - (a.total_orders||0));
+  else if(sort === 'fulfilment') filtered.sort((a,b) => (b.fulfilment_rate||0) - (a.fulfilment_rate||0));
 
   const count = document.getElementById('storesCount');
   count.textContent = filtered.length === 0 ? '' : `${filtered.length} store${filtered.length === 1 ? '' : 's'}`;
 
   const grid = document.getElementById('storesGrid');
   if(!filtered.length){
-    grid.innerHTML = `<div class="stores-empty"><div class="stores-empty-icon">🔍</div><div class="stores-empty-text">No stores found${search ? ` for "${search}"` : ''}.</div></div>`;
+    grid.innerHTML = `<div class="stores-empty"><div class="stores-empty-icon">🔍</div><div class="stores-empty-text">No stores found${search ? ` for "${search}"` : ''}. Try a different search or category.</div></div>`;
+    showSuggestions(search);
     return;
   }
 
+  document.getElementById('suggestedSection').style.display = 'none';
+  
   grid.innerHTML = filtered.map(s => {
-    const cats = (s.store_categories||[]).slice(0,4).map(c => `<span class="cat-tag">${c}</span>`).join('');
+    const cats = (s.store_categories||[]).slice(0,4).map(c => `<span class="cat-tag">${escapeHtml(c)}</span>`).join('');
     const logo = s.store_logo
-      ? `<img class="store-card-logo" src="${s.store_logo}" alt="${s.store_name}">`
+      ? `<img class="store-card-logo" src="${s.store_logo}" alt="${escapeHtml(s.store_name)}" loading="lazy">`
       : `<div class="store-card-logo-placeholder">🏪</div>`;
     const fulfilment = s.fulfilment_rate > 0 ? `${s.fulfilment_rate}%` : '—';
     const delivery = s.avg_delivery_days > 0 ? `${s.avg_delivery_days}d` : '—';
@@ -281,10 +317,10 @@ function renderStores(){
       ${logo}
       <div class="store-card-body">
         <div class="store-card-top">
-          <div class="store-card-name">${s.store_name||s.client_id}</div>
-          <span class="store-card-plan">${s.plan||'starter'}</span>
+          <div class="store-card-name">${escapeHtml(s.store_name||s.client_id)}</div>
+          <span class="store-card-plan">${escapeHtml(s.plan||'starter')}</span>
         </div>
-        <div class="store-card-desc">${s.store_description||'No description yet.'}</div>
+        <div class="store-card-desc">${escapeHtml(s.store_description||'No description yet.')}</div>
         <div class="store-card-cats">${cats}</div>
         <div class="store-card-stats">
           <div class="stat-item"><div class="stat-item-value">${reviews}</div><div class="stat-item-label">Reviews</div></div>
@@ -292,27 +328,47 @@ function renderStores(){
           <div class="stat-item"><div class="stat-item-value">${delivery}</div><div class="stat-item-label">Avg delivery</div></div>
         </div>
         <div class="store-card-footer">
-          <div class="store-code-wrap">
-            <span class="store-code-label">Code</span>
-            <span class="store-code-value" id="code-${s.store_code}">${s.store_code||'—'}</span>
-            <button class="copy-btn" onclick="copyCode('${s.store_code}')" title="Copy code">📋</button>
-          </div>
-          <a href="${shopUrl}" target="_blank" class="shop-btn">Shop now →</a>
+          <a href="${shopUrl}" class="shop-btn">Browse store →</a>
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-function copyCode(code){
-  if(!code)return;
-  navigator.clipboard.writeText(code)
-    .then(()=>{
-      // Brief visual feedback
-      const el = document.getElementById(`code-${code}`);
-      if(el){ const orig = el.textContent; el.textContent = 'Copied!'; el.style.color = 'var(--teal)'; setTimeout(()=>{ el.textContent = orig; el.style.color = ''; }, 1500); }
-    })
-    .catch(()=>alert(`Store code: ${code}`));
+function showSuggestions(searchTerm){
+  if(!searchTerm) {
+    document.getElementById('suggestedSection').style.display = 'none';
+    return;
+  }
+  
+  const suggested = allStores
+    .filter(s => !(activeCategory === 'all' ? false : !(s.store_categories||[]).includes(activeCategory)))
+    .filter(s => !s.store_name.toLowerCase().includes(searchTerm))
+    .slice(0,4);
+  
+  if(suggested.length === 0){
+    document.getElementById('suggestedSection').style.display = 'none';
+    return;
+  }
+  
+  document.getElementById('suggestedSection').style.display = 'block';
+  const suggestedGrid = document.getElementById('suggestedGrid');
+  suggestedGrid.innerHTML = suggested.map(s => `
+    <a href="https://shopbreezy.co.ke/${s.client_id}" class="suggested-card">
+      <div class="suggested-card-name">${escapeHtml(s.store_name)}</div>
+      <div class="suggested-card-cat">${(s.store_categories||[])[0] || 'Store'}</div>
+    </a>
+  `).join('');
+}
+
+function escapeHtml(str){
+  if(!str) return '';
+  return str.replace(/[&<>]/g, function(m){
+    if(m === '&') return '&amp;';
+    if(m === '<') return '&lt;';
+    if(m === '>') return '&gt;';
+    return m;
+  });
 }
 
 loadStores();

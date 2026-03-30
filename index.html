@@ -3,1499 +3,995 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arrivé — Infrastructure you own. Growth you control.</title>
+<title>Breezy — Your store. Your dashboard. Your customers.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --white: #F9F8F6;
-  --off-white: #F2F0EC;
-  --grey-100: #E9E6E0;
-  --grey-300: #C4BFB6;
-  --grey-500: #8F8A83;
-  --grey-700: #4A4741;
-  --ink: #1C1A17;
-  --accent: #B87350;
-  --accent-light: #EDE0D6;
-  --accent-dark: #96593A;
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Instrument Sans', system-ui, sans-serif;
+  --accent: #0ecfaa;
+  --accent2: #0ab090;
+  --adim: rgba(14,207,170,0.10);
+  --aborder: rgba(14,207,170,0.25);
+  --bg: #090909;
+  --s1: #111111;
+  --s2: #181818;
+  --s3: #202020;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.11);
+  --text: #f0ebe5;
+  --t2: #888;
+  --t3: #505050;
+  --font-d: 'Cormorant Garamond', serif;
+  --font-b: 'DM Sans', sans-serif;
+  --ease: cubic-bezier(0.4,0,0.2,1);
 }
 
-html { scroll-behavior: smooth; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
 
-body {
-  background: var(--white);
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-weight: 300;
-  line-height: 1.6;
-  overflow-x: hidden;
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-b);font-weight:300;
+  line-height:1.6;overflow-x:hidden;
+}
+
+/* ── GRAIN ── */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:999;opacity:.5;
 }
 
 /* ── NAV ── */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.4rem 5rem;
-  transition: background 0.4s, border-color 0.4s;
-  border-bottom: 1px solid transparent;
-}
-nav.scrolled {
-  background: rgba(249,248,246,0.95);
-  backdrop-filter: blur(16px);
-  border-color: var(--grey-100);
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:58px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;
+  background:rgba(9,9,9,0.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
 }
 
-.logo {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--ink);
-  text-decoration: none;
+.logo{
+  font-family:var(--font-b);font-size:13px;font-weight:500;
+  letter-spacing:.24em;text-transform:uppercase;
+  color:var(--text);text-decoration:none;display:flex;
 }
-.logo span { color: var(--accent); }
+.logo .a{color:var(--accent);}
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 2.5rem;
-  align-items: center;
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-links a{
+  font-size:13px;color:var(--t2);text-decoration:none;
+  letter-spacing:.04em;transition:color .2s;
 }
-nav ul a {
-  font-size: 0.82rem;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  color: var(--grey-700);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-nav ul a:hover { color: var(--ink); }
+.nav-links a:hover{color:var(--text);}
 
-.nav-cta {
-  background: var(--ink) !important;
-  color: var(--white) !important;
-  padding: 0.55rem 1.3rem !important;
-  border-radius: 2px;
-  letter-spacing: 0.04em !important;
-  transition: background 0.2s !important;
+.nav-cta{
+  background:var(--accent);color:#090909;
+  border:none;border-radius:100px;
+  padding:9px 22px;font-family:var(--font-b);
+  font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;text-decoration:none;
+  transition:transform .2s,opacity .2s;
 }
-.nav-cta:hover { background: var(--accent) !important; }
+.nav-cta:hover{transform:scale(1.03);opacity:.9;}
 
 /* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 8rem 2rem 6rem;
-  position: relative;
-  overflow: hidden;
+.hero{
+  min-height:100vh;padding-top:58px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:120px 24px 80px;
+  position:relative;overflow:hidden;
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(ellipse, rgba(184,115,80,0.07) 0%, transparent 70%);
-  pointer-events: none;
+.hero-orb{
+  position:absolute;width:900px;height:900px;border-radius:50%;
+  background:radial-gradient(circle,rgba(14,207,170,0.04) 0%,transparent 60%);
+  top:50%;left:50%;transform:translate(-50%,-55%);pointer-events:none;
 }
 
-.hero-eyebrow {
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 2rem;
-  opacity: 0;
-  animation: fadeUp 0.7s 0.1s forwards;
+.hero-orb2{
+  position:absolute;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(14,207,170,0.06) 0%,transparent 70%);
+  bottom:-100px;right:-100px;pointer-events:none;
 }
 
-.hero-headline {
-  font-family: var(--font-display);
-  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  max-width: 780px;
-  margin-bottom: 1.6rem;
-  opacity: 0;
-  animation: fadeUp 0.7s 0.25s forwards;
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--aborder);background:var(--adim);
+  border-radius:100px;padding:6px 16px 6px 10px;
+  font-size:12px;color:var(--accent);font-weight:500;letter-spacing:.05em;
+  margin-bottom:36px;
+  opacity:0;animation:up .6s .1s forwards;
+}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 2.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+h1{
+  font-family:var(--font-d);
+  font-size:clamp(52px,7.5vw,96px);
+  font-weight:700;line-height:1.0;letter-spacing:-.02em;
+  margin-bottom:24px;max-width:860px;
+  opacity:0;animation:up .8s .2s forwards;
+}
+h1 em{font-style:italic;color:var(--accent);}
+
+.hero-sub{
+  font-size:17px;color:var(--t2);max-width:540px;
+  margin:0 auto 48px;line-height:1.8;
+  opacity:0;animation:up .6s .35s forwards;
 }
 
-.hero-headline .word {
-  display: inline-block;
-  position: relative;
-}
-.hero-headline .word::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s;
-}
-.hero-headline:hover .word::after { transform: scaleX(1); }
-
-.hero-sub {
-  font-size: 1.05rem;
-  font-weight: 300;
-  color: var(--grey-500);
-  max-width: 540px;
-  margin-bottom: 2.5rem;
-  line-height: 1.65;
-  opacity: 0;
-  animation: fadeUp 0.7s 0.4s forwards;
+.hero-actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  opacity:0;animation:up .6s .45s forwards;
 }
 
-.hero-cta-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  opacity: 0;
-  animation: fadeUp 0.7s 0.55s forwards;
+.btn-primary{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--accent);color:#090909;
+  border:none;border-radius:100px;
+  padding:15px 32px;font-family:var(--font-b);
+  font-size:13px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+  cursor:pointer;text-decoration:none;
+  box-shadow:0 0 40px rgba(14,207,170,0.2);
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 48px rgba(14,207,170,0.3);}
+
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:9px;
+  background:transparent;color:var(--text);
+  border:1px solid var(--border2);border-radius:100px;
+  padding:15px 32px;font-family:var(--font-b);
+  font-size:13px;font-weight:300;letter-spacing:.07em;text-transform:uppercase;
+  cursor:pointer;text-decoration:none;
+  transition:border-color .2s,color .2s,transform .2s;
+}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
+
+.hero-note{
+  margin-top:24px;font-size:11px;color:var(--t3);
+  letter-spacing:.12em;text-transform:uppercase;
+  opacity:0;animation:up .5s .55s forwards;
+}
+.hero-note span{margin:0 8px;}
+
+/* ── MARQUEE ── */
+.marquee-wrap{
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:14px 0;overflow:hidden;margin-top:80px;
+  opacity:0;animation:up .5s .65s forwards;
+}
+.marquee{display:flex;gap:48px;animation:scroll 25s linear infinite;width:max-content;}
+.marquee-item{
+  display:flex;align-items:center;gap:10px;
+  font-size:12px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;
+  white-space:nowrap;
+}
+.marquee-item .dot{width:4px;height:4px;border-radius:50%;background:var(--accent);}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── WHAT YOU GET SECTION ── */
+.gains{
+  padding:100px 40px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  border-top:1px solid var(--border);
 }
 
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: var(--accent);
-  color: var(--white);
-  padding: 0.9rem 2.2rem;
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.2s, transform 0.15s;
-}
-.btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
-.btn-primary svg { transition: transform 0.2s; }
-.btn-primary:hover svg { transform: translateX(3px); }
-
-.hero-anchors {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
-.anchor-item {
-  font-size: 0.75rem;
-  color: var(--grey-500);
-  letter-spacing: 0.05em;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-.anchor-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--accent);
-  flex-shrink: 0;
+.gains-left .eyebrow{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);font-weight:500;margin-bottom:16px;
 }
 
-.hero-scroll {
-  position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  opacity: 0;
-  animation: fadeIn 1s 1.2s forwards;
-}
-.scroll-line {
-  width: 1px;
-  height: 40px;
-  background: linear-gradient(to bottom, var(--grey-300), transparent);
-  animation: scrollPulse 2s ease-in-out infinite;
-}
-.scroll-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--grey-300);
+.gains-left h2{
+  font-family:var(--font-d);
+  font-size:clamp(36px,4vw,54px);font-weight:600;
+  line-height:1.12;letter-spacing:-.01em;margin-bottom:20px;
 }
 
-/* ── SIDE BY SIDE ── */
-.compare-section {
-  padding: 7rem 5rem;
-  background: var(--off-white);
-}
-.compare-inner { max-width: 1000px; margin: 0 auto; }
+.gains-left p{font-size:15px;color:var(--t2);line-height:1.8;max-width:420px;}
 
-.section-tag {
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.8rem;
-}
+.gains-right{display:flex;flex-direction:column;gap:2px;}
 
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
-  font-weight: 500;
-  line-height: 1.2;
-  color: var(--ink);
-  max-width: 500px;
-  margin-bottom: 4rem;
+.gain-card{
+  background:var(--s1);border:1px solid var(--border);
+  border-radius:14px;padding:28px 28px;
+  transition:background .2s,border-color .2s;
+  cursor:default;
 }
-.section-title em { font-style: italic; color: var(--accent); }
+.gain-card:hover{background:var(--s2);border-color:var(--border2);}
 
-.compare-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5px;
-  background: var(--grey-100);
-  border: 1.5px solid var(--grey-100);
-  border-radius: 4px;
-  overflow: hidden;
+.gain-q{
+  font-size:15px;font-weight:500;margin-bottom:8px;color:var(--text);
+  display:flex;align-items:flex-start;gap:12px;
 }
-
-.compare-col { background: var(--off-white); }
-
-.compare-header {
-  padding: 1.2rem 2rem;
-  border-bottom: 1.5px solid var(--grey-100);
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-.compare-header-label {
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.col-before .compare-header { background: var(--white); }
-.col-before .compare-header-label { color: var(--grey-500); }
-.col-after .compare-header { background: var(--accent-light); }
-.col-after .compare-header-label { color: var(--accent-dark); }
-
-.compare-header-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-}
-.col-before .compare-header-dot { background: var(--grey-300); }
-.col-after .compare-header-dot { background: var(--accent); }
-
-.compare-row {
-  display: contents;
-}
-
-.compare-cell {
-  padding: 1.2rem 2rem;
-  border-bottom: 1px solid var(--grey-100);
-  font-size: 0.85rem;
-  line-height: 1.5;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.7rem;
-}
-.compare-cell:last-child { border-bottom: none; }
-
-.col-before .compare-cell { color: var(--grey-500); background: var(--white); }
-.col-after .compare-cell { color: var(--grey-700); background: var(--off-white); }
-
-.cell-icon { flex-shrink: 0; margin-top: 1px; font-size: 0.8rem; }
-.col-before .cell-icon { color: var(--grey-300); }
-.col-after .cell-icon { color: var(--accent); }
-
-/* ── HOW IT WORKS ── */
-.steps-section { padding: 7rem 5rem; }
-.steps-inner { max-width: 1000px; margin: 0 auto; }
-
-.steps-grid {
-  margin-top: 4rem;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  position: relative;
-}
-
-.steps-grid::after {
-  content: '';
-  position: absolute;
-  top: 1.4rem;
-  left: 12.5%;
-  right: 12.5%;
-  height: 1px;
-  background: var(--grey-100);
-}
-
-.step { padding-right: 2rem; }
-
-.step-num {
-  width: 2.8rem;
-  height: 2.8rem;
-  border-radius: 50%;
-  border: 1.5px solid var(--grey-100);
-  background: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
-  position: relative;
-  z-index: 1;
-}
-
-.step-title {
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.01em;
-}
-
-.step-desc {
-  font-size: 0.8rem;
-  color: var(--grey-500);
-  line-height: 1.7;
-}
-
-/* ── FEATURES ── */
-.features-section {
-  padding: 7rem 5rem;
-  background: var(--off-white);
-}
-.features-inner { max-width: 1000px; margin: 0 auto; }
-
-.features-grid {
-  margin-top: 4rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5px;
-  background: var(--grey-100);
-  border: 1.5px solid var(--grey-100);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.feature-card {
-  background: var(--off-white);
-  padding: 2.2rem;
-  transition: background 0.3s;
-}
-.feature-card:hover { background: var(--white); }
-
-.feature-replaces {
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--grey-300);
-  margin-bottom: 0.5rem;
-}
-
-.feature-title {
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-}
-
-.feature-desc {
-  font-size: 0.8rem;
-  color: var(--grey-500);
-  line-height: 1.7;
-}
-
-/* ── SETUP TIME SECTION ── */
-.setup-section {
-  padding: 5rem 5rem;
-  background: var(--white);
-  border-top: 1px solid var(--grey-100);
-  border-bottom: 1px solid var(--grey-100);
-}
-.setup-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
-}
-.setup-badge {
-  display: inline-block;
-  background: var(--accent-light);
-  color: var(--accent-dark);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 0.3rem 0.9rem;
-  border-radius: 20px;
-  margin-bottom: 1.5rem;
-}
-.setup-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 1rem;
-}
-.setup-title em { color: var(--accent); font-style: italic; }
-.setup-desc {
-  font-size: 1rem;
-  color: var(--grey-500);
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.7;
-}
-
-/* ── CALCULATOR ANCHOR ── */
-.calc-anchor-section {
-  padding: 5rem 5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1000px;
-  margin: 0 auto;
-  border-top: 1px solid var(--grey-100);
-}
-
-.calc-anchor-text {
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 2.2vw, 2rem);
-  font-weight: 500;
-  color: var(--ink);
-  max-width: 480px;
-  line-height: 1.3;
-}
-.calc-anchor-text em { font-style: italic; color: var(--accent); }
-
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  border: 1.5px solid var(--ink);
-  color: var(--ink);
-  padding: 0.85rem 2rem;
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  border-radius: 2px;
-  text-decoration: none;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background 0.2s, color 0.2s;
-}
-.btn-outline:hover { background: var(--ink); color: var(--white); }
-.btn-outline svg { transition: transform 0.2s; }
-.btn-outline:hover svg { transform: translateX(3px); }
+.gain-q .check{color:var(--accent);font-size:16px;line-height:1;flex-shrink:0;}
+.gain-a{font-size:13px;color:var(--t2);line-height:1.7;padding-left:28px;}
 
 /* ── CALCULATOR ── */
-.calc-section {
-  padding: 7rem 5rem;
-  background: var(--ink);
-}
-.calc-inner {
-  max-width: 1000px;
-  margin: 0 auto;
+.calc-section{
+  padding:100px 40px;
+  border-top:1px solid var(--border);
 }
 
-.calc-section .section-tag { color: var(--accent); }
-.calc-section .section-title { color: var(--white); }
-
-.calc-body {
-  margin-top: 4rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
+.calc-wrap{
+  max-width:900px;margin:0 auto;
 }
 
-.calc-inputs { }
+.calc-head{text-align:center;margin-bottom:56px;}
+.calc-head .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:14px;}
+.calc-head h2{font-family:var(--font-d);font-size:clamp(34px,4vw,52px);font-weight:600;line-height:1.12;letter-spacing:-.01em;}
 
-.calc-label {
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--grey-300);
-  margin-bottom: 0.8rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.calc-controls{
+  background:var(--s1);border:1px solid var(--border);
+  border-radius:20px;padding:40px;margin-bottom:4px;
 }
 
-.calc-label-val {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  color: var(--white);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
+.calc-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:32px;
+  margin-bottom:32px;
 }
 
-.slider-wrap {
-  margin-bottom: 2.5rem;
+.calc-field label{
+  display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--t2);margin-bottom:12px;font-weight:500;
 }
 
-input[type="range"] {
-  width: 100%;
-  height: 2px;
-  -webkit-appearance: none;
-  appearance: none;
-  background: var(--grey-700);
-  border-radius: 1px;
-  outline: none;
-  cursor: pointer;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: 2px solid var(--ink);
-  box-shadow: 0 0 0 3px rgba(184,115,80,0.2);
-  transition: box-shadow 0.2s;
-}
-input[type="range"]::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 0 5px rgba(184,115,80,0.25);
+.calc-slider-wrap{position:relative;}
+
+.calc-val{
+  font-family:var(--font-d);font-size:32px;font-weight:600;
+  color:var(--accent);margin-bottom:10px;line-height:1;
 }
 
-.calc-assumptions {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255,255,255,0.08);
+input[type=range]{
+  width:100%;height:3px;
+  background:var(--s3);border-radius:2px;
+  appearance:none;-webkit-appearance:none;outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  appearance:none;width:18px;height:18px;
+  border-radius:50%;background:var(--accent);
+  border:3px solid var(--bg);
+  box-shadow:0 0 12px rgba(14,207,170,0.4);
+  transition:transform .15s;
+}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);}
+
+.range-labels{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--t3);}
+
+.tier-select{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+}
+.tier-opt{
+  padding:12px 8px;border-radius:10px;
+  border:1px solid var(--border2);background:transparent;
+  color:var(--t2);font-family:var(--font-b);
+  font-size:12px;font-weight:400;letter-spacing:.04em;
+  cursor:pointer;text-align:center;transition:all .2s;
+}
+.tier-opt.active{border-color:var(--accent);color:var(--accent);background:var(--adim);}
+
+/* RESULTS */
+.calc-results{
+  background:var(--s2);border:1px solid var(--border);
+  border-radius:20px;padding:40px;
 }
 
-.calc-assumptions-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--grey-500);
-  margin-bottom: 0.8rem;
+.results-tabs{display:flex;gap:4px;margin-bottom:32px;}
+.rtab{
+  padding:8px 20px;border-radius:100px;
+  border:1px solid var(--border2);background:transparent;
+  color:var(--t2);font-family:var(--font-b);
+  font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  cursor:pointer;transition:all .2s;
+}
+.rtab.active{border-color:var(--accent);color:var(--accent);background:var(--adim);}
+
+.results-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  margin-bottom:28px;
 }
 
-.calc-assumptions ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+.result-card{
+  background:var(--s3);border:1px solid var(--border);
+  border-radius:14px;padding:20px;
+  transition:border-color .2s;
+}
+.result-card:hover{border-color:var(--border2);}
+
+.result-val{
+  font-family:var(--font-d);font-size:30px;font-weight:700;
+  color:var(--text);line-height:1;margin-bottom:6px;
+}
+.result-val.accent{color:var(--accent);}
+.result-label{font-size:12px;color:var(--t2);line-height:1.5;}
+
+.calc-insight{
+  background:var(--adim);border:1px solid var(--aborder);
+  border-radius:12px;padding:18px 22px;
+  font-size:14px;color:var(--text);line-height:1.7;
+}
+.calc-insight strong{color:var(--accent);}
+
+/* ── HOW IT WORKS ── */
+.how{padding:100px 40px;border-top:1px solid var(--border);}
+
+.how-head{margin-bottom:56px;}
+.how-head .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:14px;}
+.how-head h2{font-family:var(--font-d);font-size:clamp(34px,4vw,52px);font-weight:600;line-height:1.12;letter-spacing:-.01em;max-width:480px;}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.step{
+  background:var(--s1);padding:36px 32px;
+  border:1px solid var(--border);border-radius:4px;
+  transition:background .2s;position:relative;overflow:hidden;
+}
+.step:first-child{border-radius:14px 4px 4px 14px;}
+.step:last-child{border-radius:4px 14px 14px 4px;}
+.step:hover{background:var(--s2);}
+
+.step::before{
+  content:attr(data-n);
+  position:absolute;top:-10px;right:16px;
+  font-family:var(--font-d);font-size:96px;font-weight:700;
+  color:rgba(14,207,170,0.04);line-height:1;pointer-events:none;
 }
 
-.calc-assumptions li {
-  font-size: 0.75rem;
-  color: var(--grey-500);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+.step-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:var(--adim);border:1px solid var(--aborder);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin-bottom:22px;
 }
-.calc-assumptions li::before {
-  content: '';
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--grey-700);
-  flex-shrink: 0;
-}
+.step-t{font-size:16px;font-weight:500;margin-bottom:9px;}
+.step-d{font-size:13px;color:var(--t2);line-height:1.75;}
 
-/* Output panel */
-.calc-outputs {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 4px;
-  overflow: hidden;
+/* ── TEST YOUR STORE (FIRST CUSTOMER MOMENT) ── */
+.moment{
+  padding:0 40px 100px;
 }
+.moment-inner{
+  background:var(--s1);border:1px solid var(--border);
+  border-radius:24px;padding:56px;
+  display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;
+  position:relative;overflow:hidden;
+}
+.moment-inner::before{
+  content:'';position:absolute;right:-80px;top:-80px;
+  width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(14,207,170,0.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+.moment-left .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:16px;}
+.moment-left h2{font-family:var(--font-d);font-size:clamp(32px,3.5vw,46px);font-weight:600;line-height:1.15;letter-spacing:-.01em;margin-bottom:16px;}
+.moment-left p{font-size:15px;color:var(--t2);line-height:1.8;margin-bottom:28px;}
 
-.output-block {
-  background: rgba(255,255,255,0.03);
-  padding: 1.5rem 1.8rem;
-  transition: background 0.3s;
+.moment-steps{display:flex;flex-direction:column;gap:14px;}
+.moment-step{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 18px;background:var(--s2);border:1px solid var(--border);
+  border-radius:12px;
 }
-.output-block:hover { background: rgba(255,255,255,0.055); }
+.moment-step-i{
+  width:32px;height:32px;border-radius:9px;
+  background:var(--adim);border:1px solid var(--aborder);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;
+}
+.moment-step-t{font-size:13px;font-weight:500;margin-bottom:3px;}
+.moment-step-d{font-size:12px;color:var(--t2);line-height:1.6;}
 
-.output-period {
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--grey-500);
-  margin-bottom: 0.4rem;
+/* Mock dashboard preview */
+.dash-mock{
+  background:var(--s2);border:1px solid var(--border2);
+  border-radius:16px;overflow:hidden;
 }
-
-.output-label {
-  font-size: 0.78rem;
-  color: var(--grey-300);
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
+.dash-mock-bar{
+  background:var(--s3);padding:12px 18px;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--border);
 }
-
-.output-value {
-  font-family: var(--font-display);
-  font-size: 1.9rem;
-  font-weight: 400;
-  color: var(--white);
-  line-height: 1;
-  transition: all 0.3s;
+.dash-mock-dot{width:10px;height:10px;border-radius:50%;}
+.dash-mock-url{
+  flex:1;background:var(--s2);border-radius:6px;
+  padding:5px 12px;font-size:11px;color:var(--t3);
+  letter-spacing:.04em;
 }
-
-.output-value.accent { color: var(--accent); }
-
-.output-sub {
-  font-size: 0.72rem;
-  color: var(--grey-500);
-  margin-top: 0.3rem;
+.dash-mock-body{padding:20px;}
+.dash-mock-title{font-size:12px;color:var(--t2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;}
+.customer-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;background:var(--s3);border-radius:10px;
+  border:1px solid var(--border);margin-bottom:8px;
 }
-
-.output-divider {
-  height: 1px;
-  background: rgba(255,255,255,0.04);
+.customer-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--adim);border:1px solid var(--aborder);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
 }
-
-.output-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: rgba(255,255,255,0.06);
+.customer-info{flex:1;padding:0 12px;}
+.customer-name{font-size:13px;font-weight:500;}
+.customer-meta{font-size:11px;color:var(--t2);}
+.customer-tag{
+  font-size:10px;padding:3px 10px;border-radius:100px;
+  background:var(--adim);border:1px solid var(--aborder);
+  color:var(--accent);letter-spacing:.05em;text-transform:uppercase;
 }
-.output-row .output-block { border-radius: 0; }
-
-/* Tabs for calculator */
-.calc-tabs {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 1.5rem;
-  background: rgba(255,255,255,0.04);
-  padding: 6px;
-  border-radius: 40px;
-  width: fit-content;
-}
-.calc-tab {
-  padding: 0.5rem 1.2rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: transparent;
-  border: none;
-  color: var(--grey-500);
-  cursor: pointer;
-  border-radius: 40px;
-  transition: all 0.2s;
-  font-family: var(--font-body);
-  font-weight: 500;
-}
-.calc-tab.active {
-  background: var(--accent);
-  color: var(--white);
-}
-
-/* Review line */
-.review-line-section {
-  padding: 5rem 5rem;
-  background: var(--ink);
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-.review-line-inner {
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.review-quote {
-  font-family: var(--font-display);
-  font-size: clamp(1.3rem, 2vw, 1.8rem);
-  font-style: italic;
-  font-weight: 400;
-  color: rgba(255,255,255,0.85);
-  line-height: 1.55;
-  margin-bottom: 1rem;
-}
-
-.review-quote em { color: var(--accent); font-style: normal; }
-
-.review-attr {
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--grey-500);
-}
+.customer-tag.you{background:rgba(255,200,50,0.1);border-color:rgba(255,200,50,0.3);color:#ffc832;}
 
 /* ── PRICING ── */
-.pricing-section { padding: 7rem 5rem; }
-.pricing-inner { max-width: 1000px; margin: 0 auto; }
+.pricing{padding:100px 40px;border-top:1px solid var(--border);}
+.pricing-head{text-align:center;margin-bottom:56px;}
+.pricing-head .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:14px;}
+.pricing-head h2{font-family:var(--font-d);font-size:clamp(34px,4vw,52px);font-weight:600;line-height:1.12;letter-spacing:-.01em;margin-bottom:12px;}
+.pricing-head p{font-size:15px;color:var(--t2);max-width:460px;margin:0 auto;}
 
-.pricing-grid {
-  margin-top: 4rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.plan {
-  border: 1.5px solid var(--grey-100);
-  border-radius: 4px;
-  padding: 2.2rem;
-  position: relative;
-  transition: border-color 0.3s, transform 0.3s;
-}
-.plan:hover { border-color: var(--accent); transform: translateY(-3px); }
-.plan.featured {
-  border-color: var(--accent);
-  background: var(--accent-light);
+.pricing-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:12px;max-width:1000px;margin:0 auto;
 }
 
-.plan-badge {
-  position: absolute;
-  top: -0.7rem;
-  left: 1.5rem;
-  background: var(--accent);
-  color: var(--white);
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 0.2rem 0.65rem;
-  border-radius: 2px;
+.price-card{
+  background:var(--s1);border:1px solid var(--border);
+  border-radius:20px;padding:36px 32px;
+  display:flex;flex-direction:column;
+  transition:border-color .2s,transform .2s;
+  position:relative;overflow:hidden;
+}
+.price-card:hover{transform:translateY(-4px);border-color:var(--border2);}
+.price-card.featured{border-color:var(--aborder);background:var(--s2);}
+.price-card.featured::before{
+  content:'Most popular';
+  position:absolute;top:20px;right:20px;
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);background:var(--adim);
+  border:1px solid var(--aborder);border-radius:100px;
+  padding:3px 10px;font-weight:500;
 }
 
-.plan-tier {
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--grey-500);
-  margin-bottom: 1rem;
+.price-tier{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);font-weight:500;margin-bottom:8px;}
+.price-who{font-family:var(--font-d);font-size:22px;font-weight:600;margin-bottom:20px;line-height:1.2;}
+.price-amount{
+  display:flex;align-items:baseline;gap:6px;
+  margin-bottom:6px;
 }
+.price-kes{font-size:14px;color:var(--t2);}
+.price-num{font-family:var(--font-d);font-size:44px;font-weight:700;line-height:1;color:var(--text);}
+.price-period{font-size:13px;color:var(--t2);}
+.price-trial{font-size:12px;color:var(--accent);margin-bottom:28px;font-weight:500;}
 
-.plan-price {
-  font-family: var(--font-display);
-  font-size: 2.2rem;
-  font-weight: 500;
-  color: var(--ink);
-  line-height: 1;
-  margin-bottom: 0.2rem;
-}
-.plan-price sub {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  font-weight: 300;
-  color: var(--grey-500);
-  vertical-align: baseline;
-}
+.price-divider{height:1px;background:var(--border);margin:0 0 24px;}
 
-.plan-first-month {
-  font-size: 0.72rem;
-  color: var(--accent);
-  margin-bottom: 1rem;
+.price-features{flex:1;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.price-feat{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;color:var(--t2);line-height:1.5;
 }
+.feat-dot{
+  width:16px;height:16px;border-radius:50%;
+  background:var(--adim);border:1px solid var(--aborder);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:2px;font-size:9px;color:var(--accent);
+}
+.feat-dot.dim{background:var(--s3);border-color:var(--border);color:var(--t3);}
 
-.plan-units {
-  font-size: 0.78rem;
-  color: var(--grey-700);
-  padding-bottom: 1.2rem;
-  margin-bottom: 1.2rem;
-  border-bottom: 1px solid var(--grey-100);
+.price-cta{
+  width:100%;padding:13px;border-radius:100px;
+  font-family:var(--font-b);font-size:12px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+  text-align:center;text-decoration:none;display:block;
+  transition:transform .2s,opacity .2s;
 }
-
-.plan-features {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-}
-.plan-features li {
-  font-size: 0.78rem;
-  color: var(--grey-700);
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-  line-height: 1.4;
-}
-.plan-features li::before {
-  content: '—';
-  color: var(--accent);
-  flex-shrink: 0;
-  font-size: 0.7rem;
-}
-
-.plan-upgrade-note {
-  font-size: 0.72rem;
-  color: var(--grey-500);
-  font-style: italic;
-  margin-bottom: 1.2rem;
-  line-height: 1.5;
-}
-
-.plan-cta {
-  display: block;
-  text-align: center;
-  padding: 0.75rem;
-  border: 1.5px solid var(--ink);
-  border-radius: 2px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--ink);
-  text-decoration: none;
-  letter-spacing: 0.03em;
-  transition: background 0.2s, color 0.2s;
-}
-.plan-cta:hover { background: var(--ink); color: var(--white); }
-.plan.featured .plan-cta {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--white);
-}
-.plan.featured .plan-cta:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
-
-.pricing-extra {
-  margin-top: 2rem;
-  padding: 1.5rem 2rem;
-  background: var(--off-white);
-  border-radius: 3px;
-  border: 1px solid var(--grey-100);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-}
-.pricing-extra-text {
-  font-size: 0.82rem;
-  color: var(--grey-700);
-  line-height: 1.6;
-}
-.pricing-extra-text strong { color: var(--ink); }
-.pricing-trial {
-  font-size: 0.75rem;
-  color: var(--grey-500);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
+.price-cta.filled{background:var(--accent);color:#090909;border:none;}
+.price-cta.outline{background:transparent;color:var(--text);border:1px solid var(--border2);}
+.price-cta:hover{transform:scale(1.02);opacity:.9;}
 
 /* ── FINAL CTA ── */
-.final-cta {
-  padding: 8rem 5rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+.final{
+  padding:120px 40px;
+  text-align:center;
+  border-top:1px solid var(--border);
+  position:relative;overflow:hidden;
 }
-.final-cta::before {
-  content: '';
-  position: absolute;
-  bottom: -10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 400px;
-  background: radial-gradient(ellipse, rgba(184,115,80,0.06) 0%, transparent 70%);
-  pointer-events: none;
+.final::before{
+  content:'';position:absolute;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(14,207,170,0.06) 0%,transparent 65%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;
 }
-
-.final-headline {
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4vw, 3.8rem);
-  font-weight: 500;
-  line-height: 1.15;
-  color: var(--ink);
-  max-width: 600px;
-  margin: 0 auto 1.5rem;
+.final h2{
+  font-family:var(--font-d);
+  font-size:clamp(44px,6vw,80px);
+  font-weight:700;line-height:1.05;letter-spacing:-.02em;
+  margin-bottom:20px;
 }
-.final-headline em { font-style: italic; color: var(--accent); }
-
-.final-sub {
-  font-size: 0.95rem;
-  color: var(--grey-500);
-  max-width: 420px;
-  margin: 0 auto 2.5rem;
-  line-height: 1.7;
-}
-
-.final-note {
-  font-size: 0.72rem;
-  color: var(--grey-300);
-  margin-top: 0.8rem;
-}
+.final h2 em{font-style:italic;color:var(--accent);}
+.final p{font-size:16px;color:var(--t2);max-width:480px;margin:0 auto 44px;line-height:1.8;}
+.final-note{margin-top:20px;font-size:12px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;}
+.final-note span{margin:0 8px;}
 
 /* ── FOOTER ── */
-footer {
-  background: var(--off-white);
-  border-top: 1px solid var(--grey-100);
-  padding: 2.5rem 5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+footer{
+  padding:32px 40px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
 }
-.footer-logo {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--ink);
-}
-.footer-logo span { color: var(--accent); }
+.f-left{font-size:12px;color:var(--t3);}
+.f-links{display:flex;gap:24px;}
+.f-links a{font-size:11px;color:var(--t3);text-decoration:none;letter-spacing:.07em;text-transform:uppercase;transition:color .2s;}
+.f-links a:hover{color:var(--text);}
 
-.footer-links {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-}
-.footer-links a {
-  font-size: 0.75rem;
-  color: var(--grey-500);
-  text-decoration: none;
-  letter-spacing: 0.04em;
-  transition: color 0.2s;
-}
-.footer-links a:hover { color: var(--ink); }
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s var(--ease),transform .6s var(--ease);}
+.rv.in{opacity:1;transform:none;}
+.rv2{opacity:0;transform:translateY(22px);transition:opacity .6s .15s var(--ease),transform .6s .15s var(--ease);}
+.rv2.in{opacity:1;transform:none;}
+.rv3{opacity:0;transform:translateY(22px);transition:opacity .6s .3s var(--ease),transform .6s .3s var(--ease);}
+.rv3.in{opacity:1;transform:none;}
 
-.footer-copy {
-  font-size: 0.7rem;
-  color: var(--grey-300);
-}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes scrollPulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.65s, transform 0.65s;
-}
-.reveal.visible { opacity: 1; transform: none; }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
 /* ── RESPONSIVE ── */
-@media (max-width: 960px) {
-  nav { padding: 1.2rem 1.5rem; }
-  nav ul { display: none; }
-
-  .hero { padding: 7rem 1.5rem 5rem; }
-  .compare-section, .steps-section, .features-section,
-  .setup-section, .calc-anchor-section, .pricing-section, .final-cta { padding: 5rem 1.5rem; }
-  .calc-section, .review-line-section { padding: 5rem 1.5rem; }
-  footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1.5rem; text-align: center; }
-  .footer-links { flex-wrap: wrap; justify-content: center; }
-
-  .compare-grid { grid-template-columns: 1fr; }
-  .col-before { display: none; }
-
-  .steps-grid { grid-template-columns: 1fr 1fr; }
-  .steps-grid::after { display: none; }
-
-  .features-grid { grid-template-columns: 1fr; }
-  .calc-body { grid-template-columns: 1fr; gap: 3rem; }
-  .output-row { grid-template-columns: 1fr; }
-  .pricing-grid { grid-template-columns: 1fr; max-width: 380px; }
-  .calc-anchor-section { flex-direction: column; gap: 2rem; text-align: center; }
-  .pricing-extra { flex-direction: column; gap: 0.8rem; }
-  .calc-tabs { margin-bottom: 1.5rem; }
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .gains{grid-template-columns:1fr;gap:48px;padding:72px 20px;}
+  .calc-section,.how,.pricing,.final{padding-left:20px;padding-right:20px;}
+  .calc-row{grid-template-columns:1fr;}
+  .results-grid{grid-template-columns:1fr 1fr;}
+  .steps{grid-template-columns:1fr;gap:8px;}
+  .step:first-child,.step:last-child{border-radius:14px;}
+  .moment{padding:0 20px 72px;}
+  .moment-inner{grid-template-columns:1fr;gap:40px;padding:36px 28px;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .final{padding:80px 20px;}
+  footer{padding:28px 20px;}
 }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav id="nav">
-  <a href="#" class="logo">Arriv<span>é</span></a>
-  <ul>
-    <li><a href="#how">How it works</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#calculator" class="nav-cta">Run the numbers</a></li>
-  </ul>
+<nav>
+  <a href="/" class="logo">B&nbsp;<span class="a">R&nbsp;E&nbsp;E</span>&nbsp;Z&nbsp;Y</a>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="https://shopbreezy.co.ke/stores.html">Browse stores</a>
+    <a href="https://shopbreezy.co.ke/dashboard.html">Seller login</a>
+  </div>
+  <a href="#register" class="nav-cta" id="nav-register">Start free →</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <p class="hero-eyebrow">For short-stay hosts in Kenya</p>
-  <h1 class="hero-headline">
-    Infrastructure <span class="word">you own.</span><br>Growth you control.
-  </h1>
-  <p class="hero-sub">
-    Professional booking pages, automated guest communication, a guest database that builds itself. The tools big hotels use — made for hosts who want to grow.
-  </p>
-  <div class="hero-cta-wrap">
-    <a href="#" class="btn-primary" id="hero-register">
-      Start your 14-day trial
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-    <div class="hero-anchors">
-      <span class="anchor-item"><span class="anchor-dot"></span>No commission</span>
-      <span class="anchor-item"><span class="anchor-dot"></span>No developer needed</span>
-      <span class="anchor-item"><span class="anchor-dot"></span>Yours to own</span>
-    </div>
+  <div class="hero-orb"></div>
+  <div class="hero-orb2"></div>
+
+  <div class="badge">
+    <span class="badge-dot"></span>
+    14-day free trial · No card needed
   </div>
-  <div class="hero-scroll">
-    <span class="scroll-label">Scroll</span>
-    <div class="scroll-line"></div>
+
+  <h1>Your store. Your dashboard.<br>Your <em>customers.</em></h1>
+
+  <p class="hero-sub">
+    Get a professional online store, a dashboard to manage everything, and automated tools that handle orders, emails, and reviews — all working for you.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#register" class="btn-primary" id="hero-register">
+      Start your free 14 days
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#how" class="btn-ghost">See how it works</a>
+  </div>
+
+  <p class="hero-note">Live in seconds<span>·</span>No code<span>·</span>No design skills needed</p>
+
+  <div class="marquee-wrap">
+    <div class="marquee" id="marquee">
+      <span class="marquee-item"><span class="dot"></span>Automated order confirmation</span>
+      <span class="marquee-item"><span class="dot"></span>Guided customer checkout</span>
+      <span class="marquee-item"><span class="dot"></span>M-Pesa &amp; card payments</span>
+      <span class="marquee-item"><span class="dot"></span>Automated review requests</span>
+      <span class="marquee-item"><span class="dot"></span>Customer database</span>
+      <span class="marquee-item"><span class="dot"></span>Shipping notifications</span>
+      <span class="marquee-item"><span class="dot"></span>Your store live in seconds</span>
+      <span class="marquee-item"><span class="dot"></span>Automated order confirmation</span>
+      <span class="marquee-item"><span class="dot"></span>Guided customer checkout</span>
+      <span class="marquee-item"><span class="dot"></span>M-Pesa &amp; card payments</span>
+      <span class="marquee-item"><span class="dot"></span>Automated review requests</span>
+      <span class="marquee-item"><span class="dot"></span>Customer database</span>
+      <span class="marquee-item"><span class="dot"></span>Shipping notifications</span>
+      <span class="marquee-item"><span class="dot"></span>Your store live in seconds</span>
+    </div>
   </div>
 </section>
 
-<!-- SIDE BY SIDE -->
-<section class="compare-section" id="compare">
-  <div class="compare-inner">
-    <p class="section-tag reveal">The difference</p>
-    <h2 class="section-title reveal">What hosting looks like <em>with a system behind it</em></h2>
+<!-- WHAT YOU GET (formerly PAIN) -->
+<section class="gains">
+  <div class="gains-left rv">
+    <div class="eyebrow">What you get</div>
+    <h2>Everything you need to run your business professionally.</h2>
+    <p>No more manual follow-ups, scattered orders, or missed opportunities. Breezy gives you the tools to focus on what matters — growing your business.</p>
+  </div>
+  <div class="gains-right rv2">
+    <div class="gain-card">
+      <div class="gain-q"><span class="check">✓</span> Orders handled automatically</div>
+      <div class="gain-a">Customers go through guided checkout. You just get the order and ship.</div>
+    </div>
+    <div class="gain-card" style="margin-top:8px">
+      <div class="gain-q"><span class="check">✓</span> Payments processed automatically</div>
+      <div class="gain-a">Paystack or M-Pesa links generate and send on every order. No manual follow-ups.</div>
+    </div>
+    <div class="gain-card" style="margin-top:8px">
+      <div class="gain-q"><span class="check">✓</span> Reviews collected automatically</div>
+      <div class="gain-a">A review request goes out the moment an order completes. Build trust without asking twice.</div>
+    </div>
+    <div class="gain-card" style="margin-top:8px">
+      <div class="gain-q"><span class="check">✓</span> Customer database built for you</div>
+      <div class="gain-a">Every buyer is saved automatically — name, phone, order history, review status. All in one place.</div>
+    </div>
+  </div>
+</section>
 
-    <div class="compare-grid reveal">
-      <div class="compare-col col-before">
-        <div class="compare-header">
-          <div class="compare-header-dot"></div>
-          <span class="compare-header-label">Most hosts today</span>
+<!-- CALCULATOR -->
+<section class="calc-section" id="calculator">
+  <div class="calc-wrap">
+    <div class="calc-head rv">
+      <div class="eyebrow">See the numbers</div>
+      <h2>See what Breezy does for your business</h2>
+    </div>
+
+    <div class="calc-controls rv2">
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>Orders per week</label>
+          <div class="calc-val" id="orders-val">15</div>
+          <div class="calc-slider-wrap">
+            <input type="range" min="2" max="100" value="15" id="orders-slider">
+            <div class="range-labels"><span>2</span><span>50</span><span>100</span></div>
+          </div>
         </div>
-        <div class="compare-cell"><span class="cell-icon">·</span>Booking confirmed over WhatsApp</div>
-        <div class="compare-cell"><span class="cell-icon">·</span>Payment chased on WhatsApp for days</div>
-        <div class="compare-cell"><span class="cell-icon">·</span>Guest checks out, no follow-up</div>
-        <div class="compare-cell"><span class="cell-icon">·</span>10 bookings, no guest records</div>
-        <div class="compare-cell"><span class="cell-icon">·</span>Availability tracked in their head</div>
-        <div class="compare-cell"><span class="cell-icon">·</span>Professional website? Months of work.</div>
-      </div>
-      <div class="compare-col col-after">
-        <div class="compare-header">
-          <div class="compare-header-dot"></div>
-          <span class="compare-header-label">Arrivé hosts</span>
+        <div class="calc-field">
+          <label>Average order value</label>
+          <div class="calc-val" id="aov-val">KES 1,800</div>
+          <div class="calc-slider-wrap">
+            <input type="range" min="300" max="15000" step="100" value="1800" id="aov-slider">
+            <div class="range-labels"><span>300</span><span>7,500</span><span>15k</span></div>
+          </div>
         </div>
-        <div class="compare-cell"><span class="cell-icon">✓</span>Guest gets a branded confirmation email automatically</div>
-        <div class="compare-cell"><span class="cell-icon">✓</span>Deposit paid before check-in via M-Pesa, no chasing</div>
-        <div class="compare-cell"><span class="cell-icon">✓</span>Review nudge sent at checkout, automatically</div>
-        <div class="compare-cell"><span class="cell-icon">✓</span>10 bookings, 10 guest profiles building over time</div>
-        <div class="compare-cell"><span class="cell-icon">✓</span>Dashboard shows bookings, availability, everything</div>
-        <div class="compare-cell"><span class="cell-icon">✓</span>Property page live and taking bookings today</div>
       </div>
+      <div class="calc-field">
+        <label>Your plan</label>
+        <div class="tier-select">
+          <button class="tier-opt active" data-tier="starter" data-price="2500">Starter · KES 2,500</button>
+          <button class="tier-opt" data-tier="growth" data-price="5000">Growth · KES 5,000</button>
+          <button class="tier-opt" data-tier="pro" data-price="10000">Pro · KES 10,000</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-results rv3">
+      <div class="results-tabs">
+        <button class="rtab active" data-period="14">14 days</button>
+        <button class="rtab" data-period="90">3 months</button>
+        <button class="rtab" data-period="180">6 months</button>
+      </div>
+
+      <div class="results-grid" id="results-grid">
+        <!-- filled by JS -->
+      </div>
+
+      <div class="calc-insight" id="calc-insight"></div>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="steps-section" id="how">
-  <div class="steps-inner">
-    <p class="section-tag reveal">Simple by design</p>
-    <h2 class="section-title reveal">Up and running <em>today</em></h2>
-
-    <div class="steps-grid">
-      <div class="step reveal">
-        <div class="step-num">1</div>
-        <div class="step-title">Register your property</div>
-        <div class="step-desc">Tell us about your property, how many units you have, and your Paystack account. Takes under 20 minutes.</div>
-      </div>
-      <div class="step reveal reveal-delay-1">
-        <div class="step-num">2</div>
-        <div class="step-title">Add your units</div>
-        <div class="step-desc">Upload photos, set nightly rates, and configure your units from your dashboard. Everything in one place.</div>
-      </div>
-      <div class="step reveal reveal-delay-2">
-        <div class="step-num">3</div>
-        <div class="step-title">Share your link</div>
-        <div class="step-desc">You get a property page and a booking link. Share it anywhere — Instagram bio, WhatsApp, repeat guests.</div>
-      </div>
-      <div class="step reveal reveal-delay-3">
-        <div class="step-num">4</div>
-        <div class="step-title">Guests book, you get paid</div>
-        <div class="step-desc">Guests pick dates, choose a unit, and pay a deposit. You get notified. Everything else is automatic.</div>
-      </div>
+<section class="how" id="how">
+  <div class="how-head rv">
+    <div class="eyebrow">How it works</div>
+    <h2>Get your store live. Start selling.</h2>
+  </div>
+  <div class="steps">
+    <div class="step rv" data-n="01">
+      <div class="step-icon">⚡</div>
+      <div class="step-t">Sign up — your store is ready</div>
+      <div class="step-d">Enter your store name, email, and what you sell. Your store page, dashboard, and checkout are live immediately. No design skills, no coding.</div>
+    </div>
+    <div class="step rv2" data-n="02">
+      <div class="step-icon">📦</div>
+      <div class="step-t">Add products, connect payments</div>
+      <div class="step-d">Upload your products from the dashboard — images, prices, categories. Connect your Paystack or M-Pesa keys once. Payments go directly to you on every sale.</div>
+    </div>
+    <div class="step rv3" data-n="03">
+      <div class="step-icon">🤖</div>
+      <div class="step-t">Share your link. We handle the rest.</div>
+      <div class="step-d">Send customers to your store link. They browse, tap Buy, complete checkout. You get the order. We send confirmation emails, tracking updates, and review requests — automatically.</div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section class="features-section" id="features">
-  <div class="features-inner">
-    <p class="section-tag reveal">What you're getting</p>
-    <h2 class="section-title reveal">Everything you need to run <em>a professional short-stay business</em></h2>
-
-    <div class="features-grid">
-      <div class="feature-card reveal">
-        <div class="feature-replaces">Replaces: manual WhatsApp coordination</div>
-        <div class="feature-title">Booking system</div>
-        <div class="feature-desc">Guests pick dates, browse your units, and complete a booking without calling or messaging you first.</div>
+<!-- TEST YOUR STORE (formerly FIRST CUSTOMER MOMENT) -->
+<div class="moment">
+  <div class="moment-inner">
+    <div class="moment-left rv">
+      <div class="eyebrow">Test before you go live</div>
+      <h2>Experience exactly what your customers will see.</h2>
+      <p>We add you as a test customer the moment you register. Place a test order, send yourself rider details, see the confirmation email, and even receive a review request — all before anyone else shops with you. It's your chance to get everything right.</p>
+      <a href="#register" class="btn-primary" style="width:fit-content;font-size:12px;padding:12px 26px;" id="moment-register">Start your free trial →</a>
+    </div>
+    <div class="moment-right rv2">
+      <div class="moment-steps" style="margin-bottom:16px;">
+        <div class="moment-step">
+          <div class="moment-step-i">👀</div>
+          <div>
+            <div class="moment-step-t">See what your customers see</div>
+            <div class="moment-step-d">Your name, email, and phone appear in your customer list — exactly how a real buyer appears after checkout.</div>
+          </div>
+        </div>
+        <div class="moment-step">
+          <div class="moment-step-i">🚚</div>
+          <div>
+            <div class="moment-step-t">Test shipping notifications</div>
+            <div class="moment-step-d">Mark a test order as shipped, add rider details, and watch the tracking email land in your inbox.</div>
+          </div>
+        </div>
+        <div class="moment-step">
+          <div class="moment-step-i">⭐</div>
+          <div>
+            <div class="moment-step-t">Experience the review flow</div>
+            <div class="moment-step-d">Complete the order. Within minutes, you'll receive the same review request your customers will get after every purchase.</div>
+          </div>
+        </div>
       </div>
-      <div class="feature-card reveal reveal-delay-1">
-        <div class="feature-replaces">Replaces: bank transfers and chasing</div>
-        <div class="feature-title">M-Pesa deposit collection</div>
-        <div class="feature-desc">Deposits go straight to your Paystack account before check-in. No transfers. No trust issues. No waiting.</div>
-      </div>
-      <div class="feature-card reveal reveal-delay-2">
-        <div class="feature-replaces">Replaces: screenshots and memory</div>
-        <div class="feature-title">Guest records</div>
-        <div class="feature-desc">Every guest, every booking, every payment — logged automatically and searchable from your dashboard.</div>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-replaces">Replaces: nothing — most hosts don't have this</div>
-        <div class="feature-title">Branded email confirmations</div>
-        <div class="feature-desc">Guests receive a confirmation email automatically. You get notified too. Professional from the very first booking.</div>
-      </div>
-      <div class="feature-card reveal reveal-delay-1">
-        <div class="feature-replaces">Replaces: hoping they post something</div>
-        <div class="feature-title">Automated review nudges</div>
-        <div class="feature-desc">At checkout, guests receive a review request automatically. Build your reputation without lifting a finger.</div>
-      </div>
-      <div class="feature-card reveal reveal-delay-2">
-        <div class="feature-replaces">Replaces: spreadsheets, if they even have those</div>
-        <div class="feature-title">Host dashboard</div>
-        <div class="feature-desc">Check-ins, check-outs, availability, revenue, guest history. Everything in one place, always up to date.</div>
+      <div class="dash-mock">
+        <div class="dash-mock-bar">
+          <div class="dash-mock-dot" style="background:#ff5f57"></div>
+          <div class="dash-mock-dot" style="background:#febc2e;margin-left:4px"></div>
+          <div class="dash-mock-dot" style="background:#28c840;margin-left:4px"></div>
+          <div class="dash-mock-url">shopbreezy.co.ke/dashboard.html</div>
+        </div>
+        <div class="dash-mock-body">
+          <div class="dash-mock-title">Customers · 1</div>
+          <div class="customer-row">
+            <div class="customer-avatar">😊</div>
+            <div class="customer-info">
+              <div class="customer-name" id="mock-name">You</div>
+              <div class="customer-meta">Just registered · 1 test order</div>
+            </div>
+            <div class="customer-tag you">Test account</div>
+          </div>
+          <div style="font-size:11px;color:var(--t3);text-align:center;margin-top:12px;letter-spacing:.05em;">
+            Your real customers appear here automatically
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</section>
-
-<!-- SETUP TIME SECTION -->
-<section class="setup-section">
-  <div class="setup-inner reveal">
-    <div class="setup-badge">Live in under an hour</div>
-    <h2 class="setup-title">Your property page is <em>ready before you finish your coffee</em></h2>
-    <p class="setup-desc">No developers. No back-and-forth. Add your units, set your rates, and your booking link is live. If you have less than 50 units, it's less than an hour's work. After that, the system runs itself.</p>
-  </div>
-</section>
-
-<!-- CALCULATOR ANCHOR -->
-<div class="calc-anchor-section">
-  <h3 class="calc-anchor-text reveal">Curious what your property could look like in <em>6 months?</em></h3>
-  <a href="#calculator" class="btn-outline reveal">
-    Run the numbers
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </a>
 </div>
 
-<!-- CALCULATOR -->
-<section class="calc-section" id="calculator">
-  <div class="calc-inner">
-    <p class="section-tag">See the numbers</p>
-    <h2 class="section-title">What Arrivé does <em>for your business</em></h2>
-
-    <div class="calc-body">
-      <!-- Inputs -->
-      <div class="calc-inputs">
-        <div class="slider-wrap">
-          <div class="calc-label">
-            Number of units
-            <span class="calc-label-val" id="units-val">3</span>
-          </div>
-          <input type="range" id="units" min="1" max="20" value="3">
-        </div>
-
-        <div class="slider-wrap">
-          <div class="calc-label">
-            Your average nightly rate (KES)
-            <span class="calc-label-val" id="rate-val">5,000</span>
-          </div>
-          <input type="range" id="nightly-rate" min="1000" max="15000" step="500" value="5000">
-        </div>
-
-        <div class="slider-wrap">
-          <div class="calc-label">
-            Monthly bookings
-            <span class="calc-label-val" id="bookings-val">8</span>
-          </div>
-          <input type="range" id="bookings" min="1" max="50" value="8">
-        </div>
-
-        <div class="calc-assumptions">
-          <div class="calc-assumptions-label">Assumptions used</div>
-          <ul>
-            <li>Average stay: 2 nights</li>
-            <li>Reviews from 30% of guests</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Outputs -->
-      <div class="calc-outputs">
-        <div class="calc-tabs">
-          <button class="calc-tab active" data-period="14">14 days</button>
-          <button class="calc-tab" data-period="90">3 months</button>
-          <button class="calc-tab" data-period="180">6 months</button>
-        </div>
-
-        <div class="output-block">
-          <div class="output-period">Bookings handled</div>
-          <div class="output-value" id="out-bookings">0</div>
-        </div>
-
-        <div class="output-row">
-          <div class="output-block">
-            <div class="output-period">Guest records built</div>
-            <div class="output-value" id="out-guests">0</div>
-          </div>
-          <div class="output-block">
-            <div class="output-period">Review nudges sent</div>
-            <div class="output-value" id="out-nudges">0</div>
-          </div>
-        </div>
-
-        <div class="output-row">
-          <div class="output-block">
-            <div class="output-period">Reviews likely collected</div>
-            <div class="output-value accent" id="out-reviews">0</div>
-            <div class="output-sub">based on 30% of guests</div>
-          </div>
-          <div class="output-block">
-            <div class="output-period">Revenue processed</div>
-            <div class="output-value accent" id="out-revenue">KES 0</div>
-          </div>
-        </div>
-
-        <div class="output-block" style="background: rgba(184,115,80,0.08);">
-          <div class="output-label" id="out-insight"></div>
-          <div class="output-sub" style="margin-top: 0.8rem;">Start your 14-day free trial →</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- REVIEW LINE -->
-<section class="review-line-section">
-  <div class="review-line-inner">
-    <p class="review-quote">
-      "If even one review comes in, your customers are already seeing a <em>more professional version</em> of your business."
-    </p>
-    <p class="review-attr">The Arrivé principle</p>
-  </div>
-</section>
-
 <!-- PRICING -->
-<section class="pricing-section" id="pricing">
-  <div class="pricing-inner">
-    <p class="section-tag reveal">Straightforward pricing</p>
-    <h2 class="section-title reveal">Flat monthly fee. <em>Zero commission.</em></h2>
+<section class="pricing" id="pricing">
+  <div class="pricing-head rv">
+    <div class="eyebrow">Pricing</div>
+    <h2>Start free. Stay because your business grows.</h2>
+    <p>14 days free on any plan. No card needed. Cancel anytime — though most don't.</p>
+  </div>
 
-    <div class="pricing-grid">
-      <div class="plan reveal">
-        <div class="plan-tier">Starter</div>
-        <div class="plan-price">KES 4,000 <sub>/ mo</sub></div>
-        <div class="plan-first-month">First month KES 5,000 — includes setup</div>
-        <div class="plan-units">Up to 5 units · Extra units at KES 800/unit</div>
-        <ul class="plan-features">
-          <li>Property page guests can book from</li>
-          <li>M-Pesa deposit collection</li>
-          <li>Booking confirmations by email</li>
-          <li>Guest records and history</li>
-          <li>Automated review nudges</li>
-          <li>Host dashboard</li>
-        </ul>
-        <p class="plan-upgrade-note">Add 5 extra units and you're at KES 8,000 — Growth gives you 10 units plus more for KES 10,000.</p>
-        <a href="#" class="plan-cta pricing-cta">Get started</a>
+  <div class="pricing-grid">
+    <div class="price-card rv">
+      <div class="price-tier">Starter</div>
+      <div class="price-who">Perfect for getting organized from day one.</div>
+      <div class="price-amount">
+        <span class="price-kes">KES</span>
+        <span class="price-num">2,500</span>
+        <span class="price-period">/month</span>
       </div>
-
-      <div class="plan featured reveal reveal-delay-1">
-        <div class="plan-badge">Most popular</div>
-        <div class="plan-tier">Growth</div>
-        <div class="plan-price">KES 10,000 <sub>/ mo</sub></div>
-        <div class="plan-first-month">First month KES 12,000 — includes setup</div>
-        <div class="plan-units">Up to 10 units · Extra units at KES 800/unit</div>
-        <ul class="plan-features">
-          <li>Everything in Starter</li>
-          <li>Your own sender identity on emails</li>
-          <li>Analytics and occupancy reports</li>
-          <li>Guest CSV export</li>
-          <li>Instagram DM bookings</li>
-          <li>Priority support</li>
-        </ul>
-        <p class="plan-upgrade-note">Running 10+ units seriously? Pro adds TikTok and multi-channel closing for a small step up.</p>
-        <a href="#" class="plan-cta pricing-cta">Get started</a>
+      <div class="price-trial">Free for 14 days →</div>
+      <div class="price-divider"></div>
+      <div class="price-features">
+        <div class="price-feat"><div class="feat-dot">✓</div>Your store live in seconds</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Guided checkout for customers</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Automated order emails</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Automated review requests</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Customer database</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Reviews collected and displayed</div>
+        <div class="price-feat"><div class="feat-dot dim">–</div><span style="color:var(--t3)">Own domain</span></div>
+        <div class="price-feat"><div class="feat-dot dim">–</div><span style="color:var(--t3)">Branded emails</span></div>
       </div>
-
-      <div class="plan reveal reveal-delay-2">
-        <div class="plan-tier">Pro</div>
-        <div class="plan-price">KES 15,000 <sub>/ mo</sub></div>
-        <div class="plan-first-month">First month KES 17,000 — includes setup</div>
-        <div class="plan-units">15+ units · Extra units at KES 800/unit</div>
-        <ul class="plan-features">
-          <li>Everything in Growth</li>
-          <li>TikTok comment-to-DM bookings</li>
-          <li>Multi-channel booking closing</li>
-          <li>Early access to new channels</li>
-          <li>Dedicated account support</li>
-        </ul>
-        <p class="plan-upgrade-note">One post, one viral moment — and your booking link is already in every comment reply.</p>
-        <a href="#" class="plan-cta pricing-cta">Get started</a>
-      </div>
+      <a href="#register" class="price-cta outline" id="starter-cta">Start free →</a>
     </div>
 
-    <div class="pricing-extra reveal">
-      <p class="pricing-extra-text">
-        <strong>14-day free trial.</strong> No card needed to start. If you're on the fence, run your numbers on the calculator above — and see what your business looks like with a real system behind it.
-      </p>
-      <span class="pricing-trial">Cancel anytime · No lock-in</span>
+    <div class="price-card featured rv2">
+      <div class="price-tier">Growth</div>
+      <div class="price-who">Your own domain. Your brand. No Breezy branding.</div>
+      <div class="price-amount">
+        <span class="price-kes">KES</span>
+        <span class="price-num">5,000</span>
+        <span class="price-period">/month</span>
+      </div>
+      <div class="price-trial">Free for 14 days →</div>
+      <div class="price-divider"></div>
+      <div class="price-features">
+        <div class="price-feat"><div class="feat-dot">✓</div>Everything in Starter</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Your own domain connected</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Professional emails from your domain</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Reviews route to Google</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Fully white-labeled</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Priority WhatsApp support</div>
+        <div class="price-feat"><div class="feat-dot dim">–</div><span style="color:var(--t3)">Instagram add-on (KES 2,500/mo)</span></div>
+      </div>
+      <a href="#register" class="price-cta filled" id="growth-cta">Start free →</a>
+    </div>
+
+    <div class="price-card rv3">
+      <div class="price-tier">Pro</div>
+      <div class="price-who">For established sellers. Full automation, Instagram DMs included.</div>
+      <div class="price-amount">
+        <span class="price-kes">KES</span>
+        <span class="price-num">10,000</span>
+        <span class="price-period">/month</span>
+      </div>
+      <div class="price-trial">Free for 14 days →</div>
+      <div class="price-divider"></div>
+      <div class="price-features">
+        <div class="price-feat"><div class="feat-dot">✓</div>Everything in Growth</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Instagram DMs included</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Comment-to-DM capture</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>AI-personalised emails per order</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Nothing mentions Breezy</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Multi-user dashboard</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Dedicated onboarding call</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Direct support line</div>
+      </div>
+      <a href="#register" class="price-cta outline" id="pro-cta">Start free →</a>
     </div>
   </div>
 </section>
 
 <!-- FINAL CTA -->
-<section class="final-cta">
-  <h2 class="final-headline reveal">Ready to own <em>your infrastructure?</em></h2>
-  <p class="final-sub reveal">Your property page can be live in under an hour. Your 14-day trial starts now.</p>
-  <a href="#" class="btn-primary reveal" id="final-register">
-    Start your 14-day trial
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<section class="final" id="register">
+  <h2>Ready to <em>take control?</em></h2>
+  <p>Register now. Your store, dashboard, and checkout go live immediately — no waiting, no setup fees.</p>
+  <a href="#" class="btn-primary" id="final-register" style="font-size:14px;padding:17px 38px;">
+    Start your free 14 days
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
-  <p class="final-note reveal">Free 14-day trial · No card required · Cancel anytime</p>
+  <p class="final-note">No card needed<span>·</span>Live in seconds<span>·</span>Cancel anytime</p>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Arriv<span>é</span></div>
-  <ul class="footer-links">
-    <li><a href="#how">How it works</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#">Properties</a></li>
-    <li><a href="#">Privacy</a></li>
-    <li><a href="#">Contact</a></li>
-  </ul>
-  <p class="footer-copy">© 2026 Arrivé · Nairobi, Kenya</p>
+  <div class="f-left">© 2026 Breezy · Nairobi, Kenya</div>
+  <div class="f-links">
+    <a href="https://shopbreezy.co.ke/stores.html">Browse stores</a>
+    <a href="https://shopbreezy.co.ke/privacy.html">Privacy</a>
+    <a href="https://wa.me/254762826978">Help</a>
+    <a href="https://shopbreezy.co.ke/dashboard.html">Seller login</a>
+  </div>
 </footer>
 
 <script>
-  // WhatsApp registration URL
-  const WHATSAPP_URL = 'https://wa.me/254762826978?text=Hi%2C%20I%27d%20like%20to%20start%20my%2014-day%20free%20trial%20with%20Arriv%C3%A9';
+// ── REGISTRATION URL (update with your actual registration bot link) ─────────
+// Replace this with your actual uChat registration URL
+const REGISTER_URL = 'https://wa.me/254762826978?text=I%20want%20to%20start%20my%2014-day%20free%20trial';
 
-  // All CTAs go to WhatsApp
-  document.querySelectorAll('.nav-cta, .btn-primary, .plan-cta, .pricing-cta, #hero-register, #final-register, .calc-tab + .output-block .output-sub').forEach(el => {
-    if (el && el.tagName !== 'BUTTON') {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.open(WHATSAPP_URL, '_blank');
-      });
-    }
+// All registration buttons open the same URL
+document.querySelectorAll('[id$="register"], [id$="-cta"]').forEach(el => {
+  el.addEventListener('click', e => {
+    e.preventDefault();
+    window.open(REGISTER_URL, '_blank', 'width=420,height=620,left=200,top=100');
   });
+});
 
-  // Also handle the insight block click
-  const insightBlock = document.querySelector('.output-block[style*="rgba(184,115,80,0.08)"]');
-  if (insightBlock) {
-    insightBlock.style.cursor = 'pointer';
-    insightBlock.addEventListener('click', () => {
-      window.open(WHATSAPP_URL, '_blank');
-    });
+// ── CALCULATOR ───────────────────────────────────────────────────────────────
+let orders  = 15;
+let aov     = 1800;
+let tierPrice = 2500;
+let period  = 14;
+
+// realistic rates
+const EMAIL_RATE    = 0.92; // ~4 emails per order cycle
+const REVIEW_SENT_RATE = 1.0;  // every completed order gets a review nudge
+const REVIEW_COLLECT_RATE = 0.30; // realistic 30% of those actually leave a review
+const COMPLETE_RATE = 0.78; // 78% of orders complete successfully
+
+const ordersSlider = document.getElementById('orders-slider');
+const aovSlider    = document.getElementById('aov-slider');
+
+function fmt(n) { return Number(Math.round(n)).toLocaleString('en-KE'); }
+function fmtKes(n) { return 'KES ' + fmt(n); }
+
+function calc() {
+  const days       = period;
+  const weeks      = days / 7;
+  const totalOrders = Math.round(orders * weeks * COMPLETE_RATE);
+  const emails     = Math.round(totalOrders * 4 * EMAIL_RATE);
+  const reviewsSent = totalOrders; // one nudge per completed order
+  const reviewsCollected = Math.round(totalOrders * REVIEW_COLLECT_RATE);
+  const revenue    = Math.round(totalOrders * aov);
+  const cost       = period >= 14 ? 0 : Math.round(tierPrice * (days / 30)); // trial is free
+  const months     = days / 30;
+  const monthlyCost = period > 14 ? Math.round(tierPrice * months) : 0;
+
+  document.getElementById('results-grid').innerHTML = `
+    <div class="result-card">
+      <div class="result-val">${fmt(totalOrders)}</div>
+      <div class="result-label">Orders processed<br>automatically</div>
+    </div>
+    <div class="result-card">
+      <div class="result-val">${fmt(emails)}</div>
+      <div class="result-label">Emails sent to<br>your customers</div>
+    </div>
+    <div class="result-card">
+      <div class="result-val accent">${fmt(reviewsSent)}</div>
+      <div class="result-label">Review nudges sent<br><span style="color:var(--t2);font-size:11px">${fmt(reviewsCollected)} likely collected (30%)</span></div>
+    </div>
+    <div class="result-card">
+      <div class="result-val">${fmtKes(revenue)}</div>
+      <div class="result-label">Revenue through<br>the system</div>
+    </div>
+  `;
+
+  let insight = '';
+  if (period === 14) {
+    insight = `<strong>In your free trial alone</strong>, Breezy handles ${fmt(totalOrders)} orders and sends ${fmt(emails)} emails on your behalf — sending ${fmt(reviewsSent)} review nudges — realistically ${fmt(reviewsCollected)} will leave one, but the potential is all ${fmt(reviewsSent)}. You pay nothing. If even one review comes in, your customers are already seeing a more professional version of your business.`;
+  } else if (period === 90) {
+    insight = `After 3 months, you have <strong>${fmt(reviewsCollected)} real reviews collected</strong> from ${fmt(reviewsSent)} nudges sent and a database of ${fmt(totalOrders)} customers you can reach anytime. Your total cost is ${fmtKes(monthlyCost)} — against ${fmtKes(revenue)} in revenue processed. That's ${(monthlyCost/revenue*100).toFixed(1)}% of your revenue running your entire operation.`;
+  } else {
+    insight = `At 6 months, <strong>${fmt(reviewsCollected)} verified reviews</strong> from ${fmt(reviewsSent)} nudges — and ${fmt(totalOrders)} fulfilled orders in your dashboard. Cost: ${fmtKes(monthlyCost)}. Revenue: ${fmtKes(revenue)}. Breezy costs you ${(monthlyCost/revenue*100).toFixed(1)}% of what it processes. A part-time VA costs more and does less.`;
   }
+  document.getElementById('calc-insight').innerHTML = insight;
+}
 
-  // Nav scroll
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  });
-
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-  reveals.forEach(el => observer.observe(el));
-
-  // Calculator
-  const AVG_NIGHTS = 2;
-  const REVIEW_RATE = 0.30;
-  let currentPeriod = 14; // days
-
-  function fmt(n) {
-    return Math.round(n).toLocaleString('en-KE');
-  }
-
-  function fmtKes(n) {
-    return 'KES ' + fmt(n);
-  }
-
-  function calc() {
-    const units = parseInt(document.getElementById('units').value);
-    const nightlyRate = parseInt(document.getElementById('nightly-rate').value);
-    const monthlyBookings = parseInt(document.getElementById('bookings').value);
-
-    document.getElementById('units-val').textContent = units;
-    document.getElementById('rate-val').textContent = nightlyRate.toLocaleString('en-KE');
-    document.getElementById('bookings-val').textContent = monthlyBookings;
-
-    const weeks = currentPeriod / 7;
-    const totalBookings = Math.round(monthlyBookings * (currentPeriod / 30));
-    const revenue = totalBookings * nightlyRate * AVG_NIGHTS;
-    const guests = totalBookings;
-    const nudges = totalBookings;
-    const reviews = Math.round(totalBookings * REVIEW_RATE);
-
-    animateVal('out-bookings', totalBookings);
-    animateVal('out-guests', guests);
-    animateVal('out-nudges', nudges);
-    animateVal('out-reviews', reviews);
-    animateVal('out-revenue', fmtKes(revenue));
-
-    let insight = '';
-    if (currentPeriod === 14) {
-      insight = `In your free trial alone, Arrivé handles ${totalBookings} bookings, adds ${guests} guests to your database, and sends ${nudges} review nudges — automatically. You pay nothing. If even one review comes in, your customers are already seeing a more professional version of your business.`;
-    } else if (currentPeriod === 90) {
-      insight = `After 3 months, you have ${guests} guest records, ${reviews} reviews collected from ${nudges} nudges sent, and ${totalBookings} bookings handled. Your guests see your professionalism from the very first message. That's what builds repeat business.`;
-    } else {
-      insight = `At 6 months: ${guests} guests in your database, ${reviews} verified reviews, ${totalBookings} bookings handled automatically. Your business runs itself. Your reputation grows while you focus on hosting.`;
-    }
-    
-    document.getElementById('out-insight').textContent = insight;
-  }
-
-  function animateVal(id, newVal) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.style.opacity = '0.4';
-    el.style.transform = 'translateY(4px)';
-    setTimeout(() => {
-      el.textContent = newVal;
-      el.style.transition = 'opacity 0.25s, transform 0.25s';
-      el.style.opacity = '1';
-      el.style.transform = 'none';
-    }, 120);
-  }
-
-  // Tab switching
-  document.querySelectorAll('.calc-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      currentPeriod = parseInt(tab.dataset.period);
-      calc();
-    });
-  });
-
-  // Input listeners
-  document.getElementById('units').addEventListener('input', calc);
-  document.getElementById('nightly-rate').addEventListener('input', calc);
-  document.getElementById('bookings').addEventListener('input', calc);
+ordersSlider.oninput = e => {
+  orders = +e.target.value;
+  document.getElementById('orders-val').textContent = orders;
   calc();
+};
+
+aovSlider.oninput = e => {
+  aov = +e.target.value;
+  document.getElementById('aov-val').textContent = 'KES ' + fmt(aov);
+  calc();
+};
+
+document.querySelectorAll('.tier-opt').forEach(b => {
+  b.onclick = () => {
+    document.querySelectorAll('.tier-opt').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    tierPrice = +b.dataset.price;
+    calc();
+  };
+});
+
+document.querySelectorAll('.rtab').forEach(b => {
+  b.onclick = () => {
+    document.querySelectorAll('.rtab').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    period = +b.dataset.period;
+    calc();
+  };
+});
+
+calc();
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────────────────────
+function reveal() {
+  document.querySelectorAll('.rv,.rv2,.rv3').forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 48) el.classList.add('in');
+  });
+}
+window.addEventListener('scroll', reveal, { passive: true });
+setTimeout(reveal, 100);
 </script>
 </body>
 </html>

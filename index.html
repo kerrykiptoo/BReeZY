@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Breezy — Your store. Your dashboard. Your customers.</title>
+<title>Breezy — Sell like a big business from day one</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
@@ -117,7 +117,7 @@ h1{
 h1 em{font-style:italic;color:var(--accent);}
 
 .hero-sub{
-  font-size:17px;color:var(--t2);max-width:540px;
+  font-size:17px;color:var(--t2);max-width:500px;
   margin:0 auto 48px;line-height:1.8;
   opacity:0;animation:up .6s .35s forwards;
 }
@@ -172,43 +172,44 @@ h1 em{font-style:italic;color:var(--accent);}
 .marquee-item .dot{width:4px;height:4px;border-radius:50%;background:var(--accent);}
 @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* ── WHAT YOU GET SECTION ── */
-.gains{
+/* ── PAIN SECTION ── */
+.pain{
   padding:100px 40px;
   display:grid;grid-template-columns:1fr 1fr;
   gap:80px;align-items:center;
   border-top:1px solid var(--border);
 }
 
-.gains-left .eyebrow{
+.pain-left .eyebrow{
   font-size:11px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--accent);font-weight:500;margin-bottom:16px;
 }
 
-.gains-left h2{
+.pain-left h2{
   font-family:var(--font-d);
   font-size:clamp(36px,4vw,54px);font-weight:600;
   line-height:1.12;letter-spacing:-.01em;margin-bottom:20px;
 }
 
-.gains-left p{font-size:15px;color:var(--t2);line-height:1.8;max-width:420px;}
+.pain-left p{font-size:15px;color:var(--t2);line-height:1.8;max-width:420px;}
 
-.gains-right{display:flex;flex-direction:column;gap:2px;}
+.pain-right{display:flex;flex-direction:column;gap:2px;}
 
-.gain-card{
+.pain-card{
   background:var(--s1);border:1px solid var(--border);
   border-radius:14px;padding:28px 28px;
   transition:background .2s,border-color .2s;
   cursor:default;
 }
-.gain-card:hover{background:var(--s2);border-color:var(--border2);}
+.pain-card:hover{background:var(--s2);border-color:var(--border2);}
 
-.gain-q{
-  font-size:15px;font-weight:500;margin-bottom:8px;color:var(--text);
+.pain-q{
+  font-size:15px;font-weight:400;margin-bottom:8px;color:var(--text);
   display:flex;align-items:flex-start;gap:12px;
 }
-.gain-q .check{color:var(--accent);font-size:16px;line-height:1;flex-shrink:0;}
-.gain-a{font-size:13px;color:var(--t2);line-height:1.7;padding-left:28px;}
+.pain-q .x{color:var(--t3);font-size:18px;line-height:1;flex-shrink:0;}
+.pain-q .check{color:var(--accent);font-size:16px;line-height:1;flex-shrink:0;}
+.pain-a{font-size:13px;color:var(--t2);line-height:1.7;padding-left:28px;}
 
 /* ── CALCULATOR ── */
 .calc-section{
@@ -349,7 +350,7 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);}
 .step-t{font-size:16px;font-weight:500;margin-bottom:9px;}
 .step-d{font-size:13px;color:var(--t2);line-height:1.75;}
 
-/* ── TEST YOUR STORE (FIRST CUSTOMER MOMENT) ── */
+/* ── FIRST CUSTOMER MOMENT ── */
 .moment{
   padding:0 40px 100px;
 }
@@ -511,7 +512,7 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);}
   margin-bottom:20px;
 }
 .final h2 em{font-style:italic;color:var(--accent);}
-.final p{font-size:16px;color:var(--t2);max-width:480px;margin:0 auto 44px;line-height:1.8;}
+.final p{font-size:16px;color:var(--t2);max-width:440px;margin:0 auto 44px;line-height:1.8;}
 .final-note{margin-top:20px;font-size:12px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;}
 .final-note span{margin:0 8px;}
 
@@ -541,7 +542,7 @@ footer{
 @media(max-width:900px){
   nav{padding:0 20px;}
   .nav-links{display:none;}
-  .gains{grid-template-columns:1fr;gap:48px;padding:72px 20px;}
+  .pain{grid-template-columns:1fr;gap:48px;padding:72px 20px;}
   .calc-section,.how,.pricing,.final{padding-left:20px;padding-right:20px;}
   .calc-row{grid-template-columns:1fr;}
   .results-grid{grid-template-columns:1fr 1fr;}
@@ -579,15 +580,15 @@ footer{
     14-day free trial · No card needed
   </div>
 
-  <h1>Your store. Your dashboard.<br>Your <em>customers.</em></h1>
+  <h1>Sell like a <em>big business.</em><br>From day one.</h1>
 
   <p class="hero-sub">
-    Get a professional online store, a dashboard to manage everything, and automated tools that handle orders, emails, and reviews — all working for you.
+    Register and your store is live in seconds. Add products, connect Paystack, start selling — orders, emails, and reviews run automatically.
   </p>
 
   <div class="hero-actions">
     <a href="#register" class="btn-primary" id="hero-register">
-      Start your free 14 days
+      Start free for 14 days
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
     <a href="#how" class="btn-ghost">See how it works</a>
@@ -598,16 +599,16 @@ footer{
   <div class="marquee-wrap">
     <div class="marquee" id="marquee">
       <span class="marquee-item"><span class="dot"></span>Automated order confirmation</span>
-      <span class="marquee-item"><span class="dot"></span>Guided customer checkout</span>
+      <span class="marquee-item"><span class="dot"></span>Conversational checkout</span>
       <span class="marquee-item"><span class="dot"></span>M-Pesa &amp; card payments</span>
-      <span class="marquee-item"><span class="dot"></span>Automated review requests</span>
+      <span class="marquee-item"><span class="dot"></span>Auto review requests</span>
       <span class="marquee-item"><span class="dot"></span>Customer database</span>
       <span class="marquee-item"><span class="dot"></span>Shipping notifications</span>
       <span class="marquee-item"><span class="dot"></span>Your store live in seconds</span>
       <span class="marquee-item"><span class="dot"></span>Automated order confirmation</span>
-      <span class="marquee-item"><span class="dot"></span>Guided customer checkout</span>
+      <span class="marquee-item"><span class="dot"></span>Conversational checkout</span>
       <span class="marquee-item"><span class="dot"></span>M-Pesa &amp; card payments</span>
-      <span class="marquee-item"><span class="dot"></span>Automated review requests</span>
+      <span class="marquee-item"><span class="dot"></span>Auto review requests</span>
       <span class="marquee-item"><span class="dot"></span>Customer database</span>
       <span class="marquee-item"><span class="dot"></span>Shipping notifications</span>
       <span class="marquee-item"><span class="dot"></span>Your store live in seconds</span>
@@ -615,29 +616,29 @@ footer{
   </div>
 </section>
 
-<!-- WHAT YOU GET (formerly PAIN) -->
-<section class="gains">
-  <div class="gains-left rv">
-    <div class="eyebrow">What you get</div>
-    <h2>Everything you need to run your business professionally.</h2>
-    <p>No more manual follow-ups, scattered orders, or missed opportunities. Breezy gives you the tools to focus on what matters — growing your business.</p>
+<!-- PAIN -->
+<section class="pain">
+  <div class="pain-left rv">
+    <div class="eyebrow">The problem</div>
+    <h2>Running a shop shouldn't feel like a second job.</h2>
+    <p>Most Kenyan sellers are running real businesses on DMs, manual M-Pesa confirmations, and memory. Breezy replaces all of that — automatically.</p>
   </div>
-  <div class="gains-right rv2">
-    <div class="gain-card">
-      <div class="gain-q"><span class="check">✓</span> Orders handled automatically</div>
-      <div class="gain-a">Customers go through guided checkout. You just get the order and ship.</div>
+  <div class="pain-right rv2">
+    <div class="pain-card">
+      <div class="pain-q"><span class="x">✕</span> Taking orders manually on WhatsApp all day</div>
+      <div class="pain-a">Breezy's checkout bot handles every order — you just ship.</div>
     </div>
-    <div class="gain-card" style="margin-top:8px">
-      <div class="gain-q"><span class="check">✓</span> Payments processed automatically</div>
-      <div class="gain-a">Paystack or M-Pesa links generate and send on every order. No manual follow-ups.</div>
+    <div class="pain-card" style="margin-top:8px">
+      <div class="pain-q"><span class="x">✕</span> Chasing payments and sending M-Pesa tills manually</div>
+      <div class="pain-a">Paystack links generate and send automatically on every order.</div>
     </div>
-    <div class="gain-card" style="margin-top:8px">
-      <div class="gain-q"><span class="check">✓</span> Reviews collected automatically</div>
-      <div class="gain-a">A review request goes out the moment an order completes. Build trust without asking twice.</div>
+    <div class="pain-card" style="margin-top:8px">
+      <div class="pain-q"><span class="x">✕</span> Customers never leave reviews — even when they're happy</div>
+      <div class="pain-a">A review nudge fires the moment an order completes. No chasing.</div>
     </div>
-    <div class="gain-card" style="margin-top:8px">
-      <div class="gain-q"><span class="check">✓</span> Customer database built for you</div>
-      <div class="gain-a">Every buyer is saved automatically — name, phone, order history, review status. All in one place.</div>
+    <div class="pain-card" style="margin-top:8px">
+      <div class="pain-q"><span class="x">✕</span> No record of who your customers are or what they bought</div>
+      <div class="pain-a">Every buyer is saved automatically — name, phone, order history.</div>
     </div>
   </div>
 </section>
@@ -647,7 +648,7 @@ footer{
   <div class="calc-wrap">
     <div class="calc-head rv">
       <div class="eyebrow">See the numbers</div>
-      <h2>See what Breezy does for your business</h2>
+      <h2>What does 14 days actually change?</h2>
     </div>
 
     <div class="calc-controls rv2">
@@ -699,57 +700,57 @@ footer{
 <section class="how" id="how">
   <div class="how-head rv">
     <div class="eyebrow">How it works</div>
-    <h2>Get your store live. Start selling.</h2>
+    <h2>From register to first sale in minutes.</h2>
   </div>
   <div class="steps">
     <div class="step rv" data-n="01">
       <div class="step-icon">⚡</div>
-      <div class="step-t">Sign up — your store is ready</div>
-      <div class="step-d">Enter your store name, email, and what you sell. Your store page, dashboard, and checkout are live immediately. No design skills, no coding.</div>
+      <div class="step-t">Register and go live instantly</div>
+      <div class="step-d">Enter your store name, email, and what you sell. Your store page, dashboard, and checkout bot are live before you finish reading this sentence.</div>
     </div>
     <div class="step rv2" data-n="02">
       <div class="step-icon">📦</div>
-      <div class="step-t">Add products, connect payments</div>
-      <div class="step-d">Upload your products from the dashboard — images, prices, categories. Connect your Paystack or M-Pesa keys once. Payments go directly to you on every sale.</div>
+      <div class="step-t">Add products, connect Paystack</div>
+      <div class="step-d">Upload your products from the dashboard — images, prices, categories. Connect your Paystack key once and payments go directly to you on every sale.</div>
     </div>
     <div class="step rv3" data-n="03">
       <div class="step-icon">🤖</div>
-      <div class="step-t">Share your link. We handle the rest.</div>
-      <div class="step-d">Send customers to your store link. They browse, tap Buy, complete checkout. You get the order. We send confirmation emails, tracking updates, and review requests — automatically.</div>
+      <div class="step-t">Share your link. The rest is automatic.</div>
+      <div class="step-d">Send customers to your store link. They browse, tap Buy, the bot handles checkout, payment, confirmation email, and review request — without you doing anything.</div>
     </div>
   </div>
 </section>
 
-<!-- TEST YOUR STORE (formerly FIRST CUSTOMER MOMENT) -->
+<!-- FIRST CUSTOMER MOMENT -->
 <div class="moment">
   <div class="moment-inner">
     <div class="moment-left rv">
-      <div class="eyebrow">Test before you go live</div>
-      <h2>Experience exactly what your customers will see.</h2>
-      <p>We add you as a test customer the moment you register. Place a test order, send yourself rider details, see the confirmation email, and even receive a review request — all before anyone else shops with you. It's your chance to get everything right.</p>
-      <a href="#register" class="btn-primary" style="width:fit-content;font-size:12px;padding:12px 26px;" id="moment-register">Start your free trial →</a>
+      <div class="eyebrow">When you first log in</div>
+      <h2>Your first customer is already there.</h2>
+      <p>The moment you register, Breezy adds you as your first customer — so you can test the entire experience before a single real buyer arrives.</p>
+      <a href="#register" class="btn-primary" style="width:fit-content;font-size:12px;padding:12px 26px;" id="moment-register">Try it yourself →</a>
     </div>
     <div class="moment-right rv2">
       <div class="moment-steps" style="margin-bottom:16px;">
         <div class="moment-step">
-          <div class="moment-step-i">👀</div>
+          <div class="moment-step-i">📋</div>
           <div>
-            <div class="moment-step-t">See what your customers see</div>
-            <div class="moment-step-d">Your name, email, and phone appear in your customer list — exactly how a real buyer appears after checkout.</div>
+            <div class="moment-step-t">See yourself as a customer</div>
+            <div class="moment-step-d">Your name, email and phone are already in the customer database — exactly how a real buyer appears after checkout.</div>
           </div>
         </div>
         <div class="moment-step">
-          <div class="moment-step-i">🚚</div>
+          <div class="moment-step-i">🚴</div>
           <div>
-            <div class="moment-step-t">Test shipping notifications</div>
-            <div class="moment-step-d">Mark a test order as shipped, add rider details, and watch the tracking email land in your inbox.</div>
+            <div class="moment-step-t">Send yourself rider details</div>
+            <div class="moment-step-d">Hit Ship on your test order, enter any rider name and phone. Watch the shipping notification land in your inbox.</div>
           </div>
         </div>
         <div class="moment-step">
           <div class="moment-step-i">⭐</div>
           <div>
-            <div class="moment-step-t">Experience the review flow</div>
-            <div class="moment-step-d">Complete the order. Within minutes, you'll receive the same review request your customers will get after every purchase.</div>
+            <div class="moment-step-t">Complete the order and wait</div>
+            <div class="moment-step-d">Tap Complete. A review request email arrives shortly after — the same one your customers will receive after every order.</div>
           </div>
         </div>
       </div>
@@ -768,7 +769,7 @@ footer{
               <div class="customer-name" id="mock-name">You</div>
               <div class="customer-meta">Just registered · 1 test order</div>
             </div>
-            <div class="customer-tag you">Test account</div>
+            <div class="customer-tag you">You</div>
           </div>
           <div style="font-size:11px;color:var(--t3);text-align:center;margin-top:12px;letter-spacing:.05em;">
             Your real customers appear here automatically
@@ -783,14 +784,14 @@ footer{
 <section class="pricing" id="pricing">
   <div class="pricing-head rv">
     <div class="eyebrow">Pricing</div>
-    <h2>Start free. Stay because your business grows.</h2>
+    <h2>Start free. Stay because it works.</h2>
     <p>14 days free on any plan. No card needed. Cancel anytime — though most don't.</p>
   </div>
 
   <div class="pricing-grid">
     <div class="price-card rv">
       <div class="price-tier">Starter</div>
-      <div class="price-who">Perfect for getting organized from day one.</div>
+      <div class="price-who">Just starting and want to look professional.</div>
       <div class="price-amount">
         <span class="price-kes">KES</span>
         <span class="price-num">2,500</span>
@@ -800,11 +801,11 @@ footer{
       <div class="price-divider"></div>
       <div class="price-features">
         <div class="price-feat"><div class="feat-dot">✓</div>Your store live in seconds</div>
-        <div class="price-feat"><div class="feat-dot">✓</div>Guided checkout for customers</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Conversational checkout bot</div>
         <div class="price-feat"><div class="feat-dot">✓</div>Automated order emails</div>
-        <div class="price-feat"><div class="feat-dot">✓</div>Automated review requests</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Review request after every order</div>
         <div class="price-feat"><div class="feat-dot">✓</div>Customer database</div>
-        <div class="price-feat"><div class="feat-dot">✓</div>Reviews collected and displayed</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Reviews on your Breezy store</div>
         <div class="price-feat"><div class="feat-dot dim">–</div><span style="color:var(--t3)">Own domain</span></div>
         <div class="price-feat"><div class="feat-dot dim">–</div><span style="color:var(--t3)">Branded emails</span></div>
       </div>
@@ -813,7 +814,7 @@ footer{
 
     <div class="price-card featured rv2">
       <div class="price-tier">Growth</div>
-      <div class="price-who">Your own domain. Your brand. No Breezy branding.</div>
+      <div class="price-who">Ready to build your own brand.</div>
       <div class="price-amount">
         <span class="price-kes">KES</span>
         <span class="price-num">5,000</span>
@@ -824,10 +825,11 @@ footer{
       <div class="price-features">
         <div class="price-feat"><div class="feat-dot">✓</div>Everything in Starter</div>
         <div class="price-feat"><div class="feat-dot">✓</div>Your own domain connected</div>
-        <div class="price-feat"><div class="feat-dot">✓</div>Professional emails from your domain</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>Emails from your own domain</div>
         <div class="price-feat"><div class="feat-dot">✓</div>Reviews route to Google</div>
-        <div class="price-feat"><div class="feat-dot">✓</div>Fully white-labeled</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>No Breezy branding visible</div>
         <div class="price-feat"><div class="feat-dot">✓</div>Priority WhatsApp support</div>
+        <div class="price-feat"><div class="feat-dot">✓</div>14-day Instagram DM trial included</div>
         <div class="price-feat"><div class="feat-dot dim">–</div><span style="color:var(--t3)">Instagram add-on (KES 2,500/mo)</span></div>
       </div>
       <a href="#register" class="price-cta filled" id="growth-cta">Start free →</a>
@@ -835,7 +837,7 @@ footer{
 
     <div class="price-card rv3">
       <div class="price-tier">Pro</div>
-      <div class="price-who">For established sellers. Full automation, Instagram DMs included.</div>
+      <div class="price-who">Already doing volume. Close more everywhere.</div>
       <div class="price-amount">
         <span class="price-kes">KES</span>
         <span class="price-num">10,000</span>
@@ -860,8 +862,8 @@ footer{
 
 <!-- FINAL CTA -->
 <section class="final" id="register">
-  <h2>Ready to <em>take control?</em></h2>
-  <p>Register now. Your store, dashboard, and checkout go live immediately — no waiting, no setup fees.</p>
+  <h2>Your store is <em>seconds away.</em></h2>
+  <p>Register now. Your store page, checkout bot, and dashboard are live before you finish signing up.</p>
   <a href="#" class="btn-primary" id="final-register" style="font-size:14px;padding:17px 38px;">
     Start your free 14 days
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -880,11 +882,11 @@ footer{
 </footer>
 
 <script>
-// ── REGISTRATION URL (update with your actual registration bot link) ─────────
-// Replace this with your actual uChat registration URL
-const REGISTER_URL = 'https://wa.me/254762826978?text=I%20want%20to%20start%20my%2014-day%20free%20trial';
+// ── UCHAT REGISTRATION BOT LINK ──────────────────────────────────────────────
+// This opens the uChat widget for seller registration
+// Replace with your actual registration bot ref URL
+const REGISTER_URL = 'https://www.uchat.com.au/p/web/3mqg0rm2p5hxf5jh/full?ref=wf239377w145577--register';
 
-// All registration buttons open the same URL
 document.querySelectorAll('[id$="register"], [id$="-cta"]').forEach(el => {
   el.addEventListener('click', e => {
     e.preventDefault();

@@ -718,360 +718,6 @@
   </div>
 </footer>
 
-<script>
-const API = 'https://breezy-api-r7jg.onrender.com';
-const UCHAT = 'https://www.uchat.com.au/p/web/3mqg0rm2p5hxf5jh/full?ref=wf239377w145577';
-
-/* THEME */
-const html = document.documentElement;
-const tb   = document.getElementById('theme-btn');
-let theme  = localStorage.getItem('bz-th') || 'dark';
-const setTheme = t => { html.dataset.theme=t; tb.textContent=t==='dark'?'☀':'☾'; localStorage.setItem('bz-th',t); theme=t; };
-setTheme(theme);
-tb.onclick = () => setTheme(theme==='dark'?'light':'dark');
-
-/* STORE ID */
-function storeId() {
-  const p = location.pathname.replace(/^\/+|\/+$/g,'');
-  if (p && !p.includes('.')) return p;
-  return new URLSearchParams(location.search).get('store') || 'demo';
-}
-
-/* BOT LINK */
-function botLink(sid, pid) {
-  const d = pid ? {store_id:sid,product_id:pid} : {store_id:sid};
-  return `${UCHAT}--${btoa(JSON.stringify(d))}`;
-}
-
-/* FORMAT */
-const fmt = n => 'KES ' + Number(n).toLocaleString('en-KE');
-
-const emo = {heels:'👠',shoes:'👟',sneakers:'👟',bags:'👜',clothing:'👗',
-  tops:'👕',bottoms:'👖',electronics:'📱',phones:'📱',beauty:'💄',
-  accessories:'💍',home:'🏠',food:'🍽️',sports:'⚽'};
-const getEmo = c => { if(!c) return '🛍️'; const k=c.toLowerCase(); for(const[a,b] of Object.entries(emo)) if(k.includes(a)) return b; return '🛍️'; };
-
-/* GALLERY NAV */
-function cgNav(uid, dir, e) {
-  e.preventDefault(); e.stopPropagation();
-  const wrap = document.getElementById('cg-' + uid);
-  if (!wrap) return;
-  const imgs = wrap.querySelectorAll('.cg-img');
-  const dots = wrap.querySelectorAll('.cg-dot');
-  let cur = Array.from(imgs).findIndex(i => i.classList.contains('active'));
-  imgs[cur].classList.remove('active');
-  if (dots[cur]) dots[cur].classList.remove('active');
-  cur = (cur + dir + imgs.length) % imgs.length;
-  imgs[cur].classList.add('active');
-  if (dots[cur]) dots[cur].classList.add('active');
-}
-
-/* CARD - buy buttons now open in same tab */
-function card(p, sid) {
-  const buyId   = 'buy-' + (p.product_id || p._id);
-  const qbUrl   = botLink(sid, p.product_id || p._id);
-  const imgs    = [p.image1, p.image2, p.image3, p.image4].filter(Boolean);
-  const cat     = (p.category||'').toLowerCase();
-  const uid     = (p._id || p.product_id || '').toString().replace(/[^a-z0-9]/gi,'');
-
-  let imgHtml;
-  if (imgs.length) {
-    let inner = imgs.map((src,i) =>
-      '<img class="cg-img' + (i===0?' active':'') + '" src="' + src + '" alt="' + p.name.replace(/"/g,'&quot;') + '" loading="lazy">'
-    ).join('');
-    if (imgs.length > 1) {
-      inner += '<button class="cg-arr cg-prev" onclick="cgNav(\'' + uid + '\',-1,event)">&#8249;</button>'
-             + '<button class="cg-arr cg-next" onclick="cgNav(\'' + uid + '\',1,event)">&#8250;</button>'
-             + '<div class="cg-dots">'
-             + imgs.map((_,i) => '<span class="cg-dot' + (i===0?' active':'') + '"></span>').join('')
-             + '</div>';
-    }
-    imgHtml = '<div class="card-gallery" id="cg-' + uid + '">' + inner + '</div>';
-  } else {
-    imgHtml = '<div class="card-img-ph">' + getEmo(p.category) + '</div>';
-  }
-
-  return '<div class="card rv" data-cat="' + cat + '">'
-    + '<div class="card-img" style="position:relative;overflow:hidden;height:195px;background:var(--surface2);">'
-    + imgHtml
-    + (p.category ? '<div class="cat-tag">' + p.category + '</div>' : '')
-    + '</div>'
-    + '<div class="card-body">'
-    + '<div class="card-name">' + p.name + '</div>'
-    + '<div class="card-desc">' + (p.description||'') + '</div>'
-    + '<div class="card-foot">'
-    + '<div>'
-    + '<div class="card-price">' + fmt(p.price) + '</div>'
-    + (p.stock !== undefined ? '<div class="card-stock">' + p.stock + ' in stock</div>' : '')
-    + '</div>'
-    + '<div style="display:flex;gap:7px;flex-shrink:0;">'
-    + '<button class="buy" id="' + buyId + '" onclick="openCheckout(\'' + (p.product_id||p._id) + '\')">Buy now</button>'
-    + '<a href="' + qbUrl + '" class="btn-o" target="_self" style="padding:8px 14px;font-size:11px;border-radius:100px;">Quick buy</a>'
-    + '</div>'
-    + '</div></div></div>';
-}
-
-/* FILTER */
-function buildFilters(prods) {
-  const row  = document.getElementById('filters');
-  const cats = [...new Set(prods.map(p=>p.category).filter(Boolean).map(c=>c.toLowerCase()))];
-  cats.forEach(cat => {
-    const b = document.createElement('button');
-    b.className='filt'; b.dataset.cat=cat;
-    b.textContent = cat[0].toUpperCase()+cat.slice(1);
-    b.onclick = () => filter(cat);
-    row.appendChild(b);
-  });
-  row.querySelector('[data-cat="all"]').onclick = () => filter('all');
-}
-
-function filter(cat) {
-  document.querySelectorAll('.filt').forEach(b=>b.classList.toggle('on',b.dataset.cat===cat));
-  document.querySelectorAll('.card').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none';});
-}
-
-/* STORE */
-async function loadStore(id) {
-  try {
-    const r = await fetch(`${API}/stores/list`);
-    const data = await r.json();
-    const list = data.stores || [];
-    const s = list.find(x=>x.client_id===id);
-    if (!s) return;
-    document.title = `${s.store_name} — Breezy`;
-    document.getElementById('pill-txt').textContent      = `${s.store_name} · Open`;
-    document.getElementById('store-label').textContent  = s.store_name.toUpperCase();
-    document.getElementById('hero-store-name').textContent = s.store_name;
-    document.getElementById('prods-h').textContent      = `Everything at ${s.store_name}`;
-    if (s.store_description) {
-      document.getElementById('hero-store-desc').textContent = s.store_description;
-    }
-    const phone = s.whatsapp || '254762826978';
-    document.getElementById('nav-wa-top').href  = `https://wa.me/${phone}`;
-    document.getElementById('float-wa').href    = `https://wa.me/${phone}`;
-    // Shop now button opens in same tab
-    const shopNowLink = botLink(id);
-    document.getElementById('float-shop').href = shopNowLink;
-    document.getElementById('float-shop').setAttribute('target', '_self');
-    const el = document.getElementById('store-logo');
-    if (s.store_logo) {
-      el.outerHTML = `<img class="store-logo-img" id="store-logo" src="${s.store_logo}" alt="${s.store_name}">`;
-    } else {
-      el.textContent = (s.store_name||'S')[0].toUpperCase();
-      el.className   = 'store-logo-ph';
-    }
-  } catch(e) {
-    document.getElementById('pill-txt').textContent = 'Store';
-  }
-}
-
-/* PRODUCTS */
-async function loadProducts(id) {
-  const g = document.getElementById('grid');
-  try {
-    const res  = await fetch(`${API}/products/list?client_id=${id}`);
-    const data = await res.json();
-    const ps   = data.products || data;
-    const prods = (Array.isArray(ps)?ps:[]).filter(p=>p.active==='YES'||p.active===true);
-    if (!prods.length) {
-      g.innerHTML = '<div class="empty"><h3>Products coming soon</h3><p>This store is setting up. Check back shortly.</p></div>';
-      return;
-    }
-    buildFilters(prods);
-    g.innerHTML = prods.map(p=>card(p,id)).join('');
-    requestAnimationFrame(reveal);
-  } catch(e) {
-    g.innerHTML = '<div class="empty"><h3>Couldn\'t load products</h3><p>Refresh to try again.</p></div>';
-  }
-}
-
-/* REVEAL */
-function reveal() {
-  document.querySelectorAll('.rv:not(.in)').forEach(el=>{
-    if (el.getBoundingClientRect().top < window.innerHeight - 48) el.classList.add('in');
-  });
-}
-window.addEventListener('scroll', reveal, {passive:true});
-
-/* ── CHECKOUT MODAL ── */
-const DEFAULT_ZONES = [
-  {name:'CBD & Westlands',  areas:'CBD, Westlands, Parklands, Ngara',          price:150},
-  {name:'Nairobi West & South', areas:'Langata, Karen, Rongai, Kitengela',     price:250},
-  {name:'Nairobi North',    areas:'Ruaka, Gigiri, Runda, Muthaiga, Kasarani',  price:300},
-  {name:'Nairobi East',     areas:'Eastleigh, Umoja, Donholm, Kayole',         price:250},
-  {name:'Outside Nairobi',  areas:'Kiambu, Thika, Machakos & other towns',     price:400},
-];
-
-let _storeData  = null;
-let _allProds   = [];
-let _activeProd = null;
-let _qty        = 1;
-
-/* Toast */
-const toastEl = document.getElementById('bz-toast');
-let _tTimer;
-function toast(msg, type='') {
-  clearTimeout(_tTimer);
-  toastEl.textContent = msg;
-  toastEl.className = 'toast show ' + type;
-  _tTimer = setTimeout(() => toastEl.className='toast', 3800);
-}
-
-/* Loading */
-const loadOver = document.getElementById('bz-load');
-function setLoad(show, msg='Processing…') {
-  document.getElementById('bz-load-txt').textContent = msg;
-  loadOver.classList.toggle('show', show);
-}
-
-/* Delivery zones */
-function renderDelivery(zones) {
-  const data  = (zones && zones.length) ? zones : DEFAULT_ZONES;
-  const grid  = document.getElementById('dzone-grid');
-  grid.innerHTML = data.map(z =>
-    '<div class="dzone">'
-    + '<div class="dzone-top"><span class="dzone-name">' + z.name + '</span>'
-    + '<span class="dzone-price">KES ' + Number(z.price).toLocaleString() + '</span></div>'
-    + '<div class="dzone-areas">' + z.areas + '</div>'
-    + '</div>'
-  ).join('');
-}
-
-/* Open modal */
-function openCheckout(pid) {
-  const p = _allProds.find(x => (x.product_id||x._id) === pid);
-  if (!p) return;
-  _activeProd = p; _qty = 1;
-
-  const imgs = [p.image1,p.image2,p.image3,p.image4].filter(Boolean);
-  const imgEl = document.getElementById('m-prod-img');
-  if (imgs.length) {
-    imgEl.outerHTML = '<img class="m-img" id="m-prod-img" src="' + imgs[0] + '" alt="' + p.name.replace(/"/g,'&quot;') + '">';
-  } else {
-    imgEl.outerHTML = '<div class="m-img-ph" id="m-prod-img">' + getEmo(p.category) + '</div>';
-  }
-
-  document.getElementById('m-prod-name').textContent  = p.name;
-  document.getElementById('m-prod-price').textContent = fmt(p.price);
-  document.getElementById('m-qty').value = 1;
-  document.getElementById('m-notes').value    = '';
-  document.getElementById('m-name').value     = '';
-  document.getElementById('m-email').value    = '';
-  document.getElementById('m-phone').value    = '';
-  document.getElementById('m-address').value  = '';
-  document.getElementById('m-chat-link').href = botLink(SID, p.product_id||p._id);
-
-  updateTotal();
-  document.getElementById('checkout-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  history.pushState({modal:'checkout'}, '');
-}
-
-function closeCheckout() {
-  document.getElementById('checkout-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-  _activeProd = null;
-}
-
-document.getElementById('m-close').onclick = closeCheckout;
-document.getElementById('checkout-overlay').addEventListener('click', e => {
-  if (e.target === document.getElementById('checkout-overlay')) closeCheckout();
-});
-window.addEventListener('popstate', () => {
-  if (document.getElementById('checkout-overlay').classList.contains('open')) closeCheckout();
-});
-
-/* Quantity */
-document.getElementById('qty-minus').onclick = () => {
-  if (_qty > 1) { _qty--; document.getElementById('m-qty').value = _qty; updateTotal(); }
-};
-document.getElementById('qty-plus').onclick = () => {
-  const max = Number(_activeProd?.stock) || 99;
-  if (_qty < max) { _qty++; document.getElementById('m-qty').value = _qty; updateTotal(); }
-};
-
-function updateTotal() {
-  if (!_activeProd) return;
-  const price = Number(_activeProd.price) || 0;
-  const total = price * _qty;
-  document.getElementById('total-qty-label').textContent  = _qty + ' × ' + _activeProd.name;
-  document.getElementById('total-subtotal').textContent   = fmt(total);
-  document.getElementById('total-amount').textContent     = fmt(total);
-  document.getElementById('btn-pay').textContent          = 'Pay now — ' + fmt(total);
-}
-
-/* Pay */
-document.getElementById('btn-pay').onclick = async () => {
-  if (!_activeProd) return;
-  const name    = document.getElementById('m-name').value.trim();
-  const email   = document.getElementById('m-email').value.trim();
-  const phone   = document.getElementById('m-phone').value.trim();
-  const address = document.getElementById('m-address').value.trim();
-  const notes   = document.getElementById('m-notes').value.trim();
-
-  if (!name)                   { toast('Please enter your name', 'err'); return; }
-  if (!email||!email.includes('@')) { toast('Please enter a valid email', 'err'); return; }
-  if (!phone)                  { toast('Please enter your phone number', 'err'); return; }
-  if (!address)                { toast('Please enter your delivery address', 'err'); return; }
-
-  setLoad(true, 'Initialising payment…');
-
-  try {
-    const res  = await fetch(`${API}/payment/init`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        client_id:      SID,
-        product_id:     _activeProd.product_id || _activeProd._id,
-        product_name:   _activeProd.name,
-        product_price:  _activeProd.price,
-        quantity:       _qty,
-        customer_name:  name,
-        customer_email: email,
-        customer_phone: phone,
-        delivery_address: address,
-        notes:          notes
-      })
-    });
-    const data = await res.json();
-    setLoad(false);
-    if (!res.ok || !data.authorization_url) {
-      toast(data.message || 'Payment failed. Try again.', 'err'); return;
-    }
-    window.location.href = data.authorization_url;
-  } catch(e) {
-    setLoad(false);
-    toast('Network error. Check your connection.', 'err');
-  }
-};
-
-/* Patch loadStore to capture store data + render delivery */
-const _origLoadStore = loadStore;
-async function loadStore(id) {
-  await _origLoadStore(id);
-  try {
-    const r = await fetch(`${API}/stores/profile/${id}`);
-    const d = await r.json();
-    _storeData = d.store || d;
-    renderDelivery(_storeData.delivery_zones || null);
-  } catch(e) { renderDelivery(null); }
-}
-
-/* Patch loadProducts to keep a local copy */
-const _origLoadProducts = loadProducts;
-async function loadProducts(id) {
-  await _origLoadProducts(id);
-  const res  = await fetch(`${API}/products/list?client_id=${id}`);
-  const data = await res.json();
-  const ps   = data.products || data;
-  _allProds  = (Array.isArray(ps)?ps:[]).filter(p=>p.active==='YES'||p.active===true);
-}
-
-/* INIT */
-const SID = storeId();
-Promise.all([loadStore(SID), loadProducts(SID)]).then(()=>setTimeout(reveal,160));
-</script>
-
 <!-- CHECKOUT MODAL -->
 <div class="modal-overlay" id="checkout-overlay">
   <div class="modal" role="dialog" aria-modal="true">
@@ -1157,6 +803,427 @@ Promise.all([loadStore(SID), loadProducts(SID)]).then(()=>setTimeout(reveal,160)
     Shop now
   </a>
 </div>
+
+<script>
+const API = 'https://breezy-api-r7jg.onrender.com';
+const UCHAT = 'https://www.uchat.com.au/p/web/3mqg0rm2p5hxf5jh/full?ref=wf239377w145577';
+
+/* THEME */
+const html = document.documentElement;
+const tb   = document.getElementById('theme-btn');
+let theme  = localStorage.getItem('bz-th') || 'dark';
+const setTheme = t => { html.dataset.theme=t; tb.textContent=t==='dark'?'☀':'☾'; localStorage.setItem('bz-th',t); theme=t; };
+setTheme(theme);
+tb.onclick = () => setTheme(theme==='dark'?'light':'dark');
+
+/* STORE ID */
+function storeId() {
+  const p = location.pathname.replace(/^\/+|\/+$/g,'');
+  if (p && !p.includes('.')) return p;
+  return new URLSearchParams(location.search).get('store') || 'demo';
+}
+
+/* BOT LINK */
+function botLink(sid, pid) {
+  const d = pid ? {store_id:sid,product_id:pid} : {store_id:sid};
+  return `${UCHAT}--${btoa(JSON.stringify(d))}`;
+}
+
+/* FORMAT */
+const fmt = n => 'KES ' + Number(n).toLocaleString('en-KE');
+
+const emo = {heels:'👠',shoes:'👟',sneakers:'👟',bags:'👜',clothing:'👗',
+  tops:'👕',bottoms:'👖',electronics:'📱',phones:'📱',beauty:'💄',
+  accessories:'💍',home:'🏠',food:'🍽️',sports:'⚽'};
+const getEmo = c => { if(!c) return '🛍️'; const k=c.toLowerCase(); for(const[a,b] of Object.entries(emo)) if(k.includes(a)) return b; return '🛍️'; };
+
+/* GALLERY NAV */
+function cgNav(uid, dir, e) {
+  e.preventDefault(); e.stopPropagation();
+  const wrap = document.getElementById('cg-' + uid);
+  if (!wrap) return;
+  const imgs = wrap.querySelectorAll('.cg-img');
+  const dots = wrap.querySelectorAll('.cg-dot');
+  let cur = Array.from(imgs).findIndex(i => i.classList.contains('active'));
+  imgs[cur].classList.remove('active');
+  if (dots[cur]) dots[cur].classList.remove('active');
+  cur = (cur + dir + imgs.length) % imgs.length;
+  imgs[cur].classList.add('active');
+  if (dots[cur]) dots[cur].classList.add('active');
+}
+
+/* CARD - with both Buy now (modal) and Quick buy (UCHAT) */
+function card(p, sid) {
+  const buyId   = 'buy-' + (p.product_id || p._id);
+  const qbUrl   = botLink(sid, p.product_id || p._id);
+  const imgs    = [p.image1, p.image2, p.image3, p.image4].filter(Boolean);
+  const cat     = (p.category||'').toLowerCase();
+  const uid     = (p._id || p.product_id || '').toString().replace(/[^a-z0-9]/gi,'');
+
+  let imgHtml;
+  if (imgs.length) {
+    let inner = imgs.map((src,i) =>
+      '<img class="cg-img' + (i===0?' active':'') + '" src="' + src + '" alt="' + p.name.replace(/"/g,'&quot;') + '" loading="lazy">'
+    ).join('');
+    if (imgs.length > 1) {
+      inner += '<button class="cg-arr cg-prev" onclick="cgNav(\'' + uid + '\',-1,event)">&#8249;</button>'
+             + '<button class="cg-arr cg-next" onclick="cgNav(\'' + uid + '\',1,event)">&#8250;</button>'
+             + '<div class="cg-dots">'
+             + imgs.map((_,i) => '<span class="cg-dot' + (i===0?' active':'') + '"></span>').join('')
+             + '</div>';
+    }
+    imgHtml = '<div class="card-gallery" id="cg-' + uid + '">' + inner + '</div>';
+  } else {
+    imgHtml = '<div class="card-img-ph">' + getEmo(p.category) + '</div>';
+  }
+
+  return '<div class="card rv" data-cat="' + cat + '">'
+    + '<div class="card-img" style="position:relative;overflow:hidden;height:195px;background:var(--surface2);">'
+    + imgHtml
+    + (p.category ? '<div class="cat-tag">' + p.category + '</div>' : '')
+    + '</div>'
+    + '<div class="card-body">'
+    + '<div class="card-name">' + p.name + '</div>'
+    + '<div class="card-desc">' + (p.description||'') + '</div>'
+    + '<div class="card-foot">'
+    + '<div>'
+    + '<div class="card-price">' + fmt(p.price) + '</div>'
+    + (p.stock !== undefined ? '<div class="card-stock">' + p.stock + ' in stock</div>' : '')
+    + '</div>'
+    + '<div style="display:flex;gap:7px;flex-shrink:0;">'
+    + '<button class="buy" id="' + buyId + '" onclick="openCheckout(\'' + (p.product_id||p._id) + '\')">Buy now</button>'
+    + '<a href="' + qbUrl + '" class="btn-o" target="_self" style="padding:8px 14px;font-size:11px;border-radius:100px;">Quick buy</a>'
+    + '</div>'
+    + '</div></div></div>';
+}
+
+/* FILTER */
+function buildFilters(prods) {
+  const row  = document.getElementById('filters');
+  const cats = [...new Set(prods.map(p=>p.category).filter(Boolean).map(c=>c.toLowerCase()))];
+  cats.forEach(cat => {
+    const b = document.createElement('button');
+    b.className='filt'; b.dataset.cat=cat;
+    b.textContent = cat[0].toUpperCase()+cat.slice(1);
+    b.onclick = () => filter(cat);
+    row.appendChild(b);
+  });
+  row.querySelector('[data-cat="all"]').onclick = () => filter('all');
+}
+
+function filter(cat) {
+  document.querySelectorAll('.filt').forEach(b=>b.classList.toggle('on',b.dataset.cat===cat));
+  document.querySelectorAll('.card').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none';});
+}
+
+/* ── CHECKOUT MODAL VARIABLES ── */
+let _allProds   = [];
+let _activeProd = null;
+let _qty        = 1;
+let SID         = null;  // Will be set after store ID is known
+
+const DEFAULT_ZONES = [
+  {name:'CBD & Westlands',  areas:'CBD, Westlands, Parklands, Ngara',          price:150},
+  {name:'Nairobi West & South', areas:'Langata, Karen, Rongai, Kitengela',     price:250},
+  {name:'Nairobi North',    areas:'Ruaka, Gigiri, Runda, Muthaiga, Kasarani',  price:300},
+  {name:'Nairobi East',     areas:'Eastleigh, Umoja, Donholm, Kayole',         price:250},
+  {name:'Outside Nairobi',  areas:'Kiambu, Thika, Machakos & other towns',     price:400},
+];
+
+/* Toast */
+const toastEl = document.getElementById('bz-toast');
+let _tTimer;
+function toast(msg, type='') {
+  if (!toastEl) return;
+  clearTimeout(_tTimer);
+  toastEl.textContent = msg;
+  toastEl.className = 'toast show ' + type;
+  _tTimer = setTimeout(() => toastEl.className='toast', 3800);
+}
+
+/* Loading */
+const loadOver = document.getElementById('bz-load');
+function setLoad(show, msg='Processing…') {
+  if (!loadOver) return;
+  const txtEl = document.getElementById('bz-load-txt');
+  if (txtEl) txtEl.textContent = msg;
+  loadOver.classList.toggle('show', show);
+}
+
+/* Delivery zones */
+function renderDelivery(zones) {
+  const grid = document.getElementById('dzone-grid');
+  if (!grid) return;
+  const data = (zones && zones.length) ? zones : DEFAULT_ZONES;
+  grid.innerHTML = data.map(z =>
+    '<div class="dzone">'
+    + '<div class="dzone-top"><span class="dzone-name">' + escapeHtml(z.name) + '</span>'
+    + '<span class="dzone-price">KES ' + Number(z.price).toLocaleString() + '</span></div>'
+    + '<div class="dzone-areas">' + escapeHtml(z.areas) + '</div>'
+    + '</div>'
+  ).join('');
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>]/g, function(m) {
+    if (m === '&') return '&amp;';
+    if (m === '<') return '&lt;';
+    if (m === '>') return '&gt;';
+    return m;
+  });
+}
+
+/* Open modal */
+function openCheckout(pid) {
+  const p = _allProds.find(x => (x.product_id || x._id) === pid);
+  if (!p) return;
+  _activeProd = p; _qty = 1;
+
+  const imgs = [p.image1, p.image2, p.image3, p.image4].filter(Boolean);
+  const imgContainer = document.getElementById('m-prod-img');
+  if (imgContainer) {
+    if (imgs.length) {
+      imgContainer.outerHTML = '<img class="m-img" id="m-prod-img" src="' + imgs[0] + '" alt="' + p.name.replace(/"/g,'&quot;') + '">';
+    } else {
+      imgContainer.outerHTML = '<div class="m-img-ph" id="m-prod-img">' + getEmo(p.category) + '</div>';
+    }
+  }
+
+  const nameEl = document.getElementById('m-prod-name');
+  const priceEl = document.getElementById('m-prod-price');
+  const qtyEl = document.getElementById('m-qty');
+  const notesEl = document.getElementById('m-notes');
+  const nameInput = document.getElementById('m-name');
+  const emailInput = document.getElementById('m-email');
+  const phoneInput = document.getElementById('m-phone');
+  const addressInput = document.getElementById('m-address');
+  const chatLink = document.getElementById('m-chat-link');
+  
+  if (nameEl) nameEl.textContent = p.name;
+  if (priceEl) priceEl.textContent = fmt(p.price);
+  if (qtyEl) qtyEl.value = 1;
+  if (notesEl) notesEl.value = '';
+  if (nameInput) nameInput.value = '';
+  if (emailInput) emailInput.value = '';
+  if (phoneInput) phoneInput.value = '';
+  if (addressInput) addressInput.value = '';
+  if (chatLink && SID) chatLink.href = botLink(SID, p.product_id || p._id);
+
+  updateTotal();
+  const overlay = document.getElementById('checkout-overlay');
+  if (overlay) {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    history.pushState({modal:'checkout'}, '');
+  }
+}
+
+function closeCheckout() {
+  const overlay = document.getElementById('checkout-overlay');
+  if (overlay) {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  _activeProd = null;
+}
+
+// Set up modal event listeners after DOM is ready
+function initModalListeners() {
+  const closeBtn = document.getElementById('m-close');
+  const overlay = document.getElementById('checkout-overlay');
+  const qtyMinus = document.getElementById('qty-minus');
+  const qtyPlus = document.getElementById('qty-plus');
+  const payBtn = document.getElementById('btn-pay');
+  
+  if (closeBtn) closeBtn.onclick = closeCheckout;
+  if (overlay) {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeCheckout();
+    });
+  }
+  window.addEventListener('popstate', () => {
+    const overlayEl = document.getElementById('checkout-overlay');
+    if (overlayEl && overlayEl.classList.contains('open')) closeCheckout();
+  });
+  
+  if (qtyMinus) {
+    qtyMinus.onclick = () => {
+      if (_qty > 1) { _qty--; const qtyEl = document.getElementById('m-qty'); if (qtyEl) qtyEl.value = _qty; updateTotal(); }
+    };
+  }
+  if (qtyPlus) {
+    qtyPlus.onclick = () => {
+      const max = Number(_activeProd?.stock) || 99;
+      if (_qty < max) { _qty++; const qtyEl = document.getElementById('m-qty'); if (qtyEl) qtyEl.value = _qty; updateTotal(); }
+    };
+  }
+  if (payBtn) payBtn.onclick = handlePayment;
+}
+
+function updateTotal() {
+  if (!_activeProd) return;
+  const price = Number(_activeProd.price) || 0;
+  const total = price * _qty;
+  const qtyLabel = document.getElementById('total-qty-label');
+  const subtotal = document.getElementById('total-subtotal');
+  const totalAmount = document.getElementById('total-amount');
+  const payBtn = document.getElementById('btn-pay');
+  
+  if (qtyLabel) qtyLabel.textContent = _qty + ' × ' + _activeProd.name;
+  if (subtotal) subtotal.textContent = fmt(total);
+  if (totalAmount) totalAmount.textContent = fmt(total);
+  if (payBtn) payBtn.textContent = 'Pay now — ' + fmt(total);
+}
+
+async function handlePayment() {
+  if (!_activeProd || !SID) return;
+  
+  const nameEl = document.getElementById('m-name');
+  const emailEl = document.getElementById('m-email');
+  const phoneEl = document.getElementById('m-phone');
+  const addressEl = document.getElementById('m-address');
+  const notesEl = document.getElementById('m-notes');
+  
+  const name = nameEl ? nameEl.value.trim() : '';
+  const email = emailEl ? emailEl.value.trim() : '';
+  const phone = phoneEl ? phoneEl.value.trim() : '';
+  const address = addressEl ? addressEl.value.trim() : '';
+  const notes = notesEl ? notesEl.value.trim() : '';
+
+  if (!name) { toast('Please enter your name', 'err'); return; }
+  if (!email || !email.includes('@')) { toast('Please enter a valid email', 'err'); return; }
+  if (!phone) { toast('Please enter your phone number', 'err'); return; }
+  if (!address) { toast('Please enter your delivery address', 'err'); return; }
+
+  setLoad(true, 'Initialising payment…');
+
+  try {
+    const res = await fetch(`${API}/payment/init`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        client_id: SID,
+        product_id: _activeProd.product_id || _activeProd._id,
+        product_name: _activeProd.name,
+        product_price: _activeProd.price,
+        quantity: _qty,
+        customer_name: name,
+        customer_email: email,
+        customer_phone: phone,
+        delivery_address: address,
+        notes: notes
+      })
+    });
+    const data = await res.json();
+    setLoad(false);
+    if (!res.ok || !data.authorization_url) {
+      toast(data.message || 'Payment failed. Try again.', 'err');
+      return;
+    }
+    window.location.href = data.authorization_url;
+  } catch (e) {
+    setLoad(false);
+    toast('Network error. Check your connection.', 'err');
+  }
+}
+
+/* STORE - extended with delivery zones */
+async function loadStore(id) {
+  try {
+    const r = await fetch(`${API}/stores/list`);
+    const data = await r.json();
+    const list = data.stores || [];
+    const s = list.find(x => x.client_id === id);
+    if (!s) return;
+    
+    document.title = `${s.store_name} — Breezy`;
+    const pillEl = document.getElementById('pill-txt');
+    if (pillEl) pillEl.textContent = `${s.store_name} · Open`;
+    const storeLabel = document.getElementById('store-label');
+    if (storeLabel) storeLabel.textContent = s.store_name.toUpperCase();
+    const heroName = document.getElementById('hero-store-name');
+    if (heroName) heroName.textContent = s.store_name;
+    const prodsH = document.getElementById('prods-h');
+    if (prodsH) prodsH.textContent = `Everything at ${s.store_name}`;
+    const heroDesc = document.getElementById('hero-store-desc');
+    if (heroDesc && s.store_description) heroDesc.textContent = s.store_description;
+    
+    const phone = s.whatsapp || '254762826978';
+    const navWa = document.getElementById('nav-wa-top');
+    const floatWa = document.getElementById('float-wa');
+    if (navWa) navWa.href = `https://wa.me/${phone}`;
+    if (floatWa) floatWa.href = `https://wa.me/${phone}`;
+    
+    const shopNowLink = botLink(id);
+    const floatShop = document.getElementById('float-shop');
+    if (floatShop) {
+      floatShop.href = shopNowLink;
+      floatShop.setAttribute('target', '_self');
+    }
+    
+    const logoEl = document.getElementById('store-logo');
+    if (logoEl) {
+      if (s.store_logo) {
+        logoEl.outerHTML = `<img class="store-logo-img" id="store-logo" src="${s.store_logo}" alt="${s.store_name}">`;
+      } else {
+        logoEl.textContent = (s.store_name || 'S')[0].toUpperCase();
+        logoEl.className = 'store-logo-ph';
+      }
+    }
+    
+    // Fetch delivery zones from profile endpoint
+    try {
+      const profileRes = await fetch(`${API}/stores/profile/${id}`);
+      const profileData = await profileRes.json();
+      const storeProfile = profileData.store || profileData;
+      renderDelivery(storeProfile.delivery_zones || null);
+    } catch (e) {
+      renderDelivery(null);
+    }
+  } catch(e) {
+    const pillEl = document.getElementById('pill-txt');
+    if (pillEl) pillEl.textContent = 'Store';
+  }
+}
+
+/* PRODUCTS - stores local copy for modal */
+async function loadProducts(id) {
+  const g = document.getElementById('grid');
+  try {
+    const res = await fetch(`${API}/products/list?client_id=${id}`);
+    const data = await res.json();
+    const ps = data.products || data;
+    const prods = (Array.isArray(ps) ? ps : []).filter(p => p.active === 'YES' || p.active === true);
+    _allProds = prods;
+    
+    if (!prods.length) {
+      if (g) g.innerHTML = '<div class="empty"><h3>Products coming soon</h3><p>This store is setting up. Check back shortly.</p></div>';
+      return;
+    }
+    buildFilters(prods);
+    if (g) g.innerHTML = prods.map(p => card(p, id)).join('');
+    requestAnimationFrame(reveal);
+  } catch(e) {
+    if (g) g.innerHTML = '<div class="empty"><h3>Couldn\'t load products</h3><p>Refresh to try again.</p></div>';
+  }
+}
+
+/* REVEAL */
+function reveal() {
+  document.querySelectorAll('.rv:not(.in)').forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 48) el.classList.add('in');
+  });
+}
+window.addEventListener('scroll', reveal, { passive: true });
+
+/* INIT */
+SID = storeId();
+Promise.all([loadStore(SID), loadProducts(SID)]).then(() => {
+  setTimeout(reveal, 160);
+  initModalListeners();
+});
+</script>
 
 </body>
 </html>

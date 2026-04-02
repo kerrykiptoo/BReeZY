@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed — Breezy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--accent:#0ecfaa;--accent-dim:rgba(14,207,170,0.10);--accent-border:rgba(14,207,170,0.28);--font-display:'Cormorant Garamond',serif;--font-body:'DM Sans',sans-serif;}
+  [data-theme="dark"]{--bg:#0a0a0a;--surface:#161616;--surface2:#1c1c1c;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#f2ede8;--text2:#888;--text3:#555;}
+  [data-theme="light"]{--bg:#f4f1ed;--surface:#ffffff;--surface2:#edeae6;--border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.13);--text:#1a1a1a;--text2:#666;--text3:#aaa;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-weight:300;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
+
+  .card{background:var(--surface);border:1px solid var(--border2);border-radius:18px;width:100%;max-width:480px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.4);}
+
+  /* Loading */
+  .loading{padding:52px 24px;text-align:center;}
+  .spin{width:36px;height:36px;border-radius:50%;border:3px solid var(--border2);border-top-color:var(--accent);animation:spin .7s linear infinite;margin:0 auto 16px;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading p{font-size:13px;color:var(--text2);}
+
+  /* Success */
+  .success-banner{background:var(--accent);padding:28px 28px 22px;text-align:center;}
+  .success-icon{width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:22px;}
+  .success-banner h1{font-family:var(--font-display);font-size:24px;font-weight:700;color:#0a0a0a;margin-bottom:4px;}
+  .success-banner p{font-size:13px;color:rgba(0,0,0,0.55);}
+
+  .card-body{padding:24px 28px;}
+
+  .ref-block{background:var(--accent-dim);border:1px solid var(--accent-border);border-radius:10px;padding:13px 16px;margin-bottom:22px;}
+  .ref-label{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text2);margin-bottom:3px;}
+  .ref-val{font-size:15px;font-weight:600;color:var(--accent);letter-spacing:.04em;}
+
+  .section-label{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text2);margin-bottom:10px;}
+  .detail-table{width:100%;margin-bottom:22px;}
+  .detail-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:8px 0;border-bottom:1px solid var(--border);}
+  .detail-row:last-child{border-bottom:none;}
+  .dk{font-size:13px;color:var(--text2);flex-shrink:0;}
+  .dv{font-size:13px;font-weight:500;text-align:right;word-break:break-word;}
+  .dv.accent{color:var(--accent);font-size:15px;font-weight:600;}
+
+  .notice{background:var(--accent-dim);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:13px 15px;font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:20px;}
+  .notice strong{color:var(--text);}
+
+  .btn-back{display:block;width:100%;padding:13px;background:var(--accent);color:#0a0a0a;border:none;border-radius:10px;font-family:var(--font-body);font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;text-align:center;text-decoration:none;transition:opacity .2s;margin-bottom:4px;}
+  .btn-back:hover{opacity:.88;}
+
+  /* Error */
+  .error-banner{background:#c0392b;padding:28px 28px 22px;text-align:center;}
+  .error-banner h1{font-family:var(--font-display);font-size:22px;font-weight:700;color:#fff;margin-bottom:4px;}
+  .error-banner p{font-size:13px;color:rgba(255,255,255,0.7);}
+
+  .breezy-footer{margin-top:18px;font-size:11px;color:var(--text3);text-align:center;letter-spacing:.06em;}
+  .breezy-footer a{color:var(--accent);text-decoration:none;letter-spacing:.15em;font-weight:500;}
+
+  @media(max-width:520px){body{padding:0;justify-content:flex-start;} .card{border-radius:0;min-height:100vh;} }
+</style>
+</head>
+<body>
+
+<div class="card" id="main-card">
+  <div class="loading" id="loading-state">
+    <div class="spin"></div>
+    <p>Confirming your order…</p>
+  </div>
+
+  <div id="success-state" style="display:none">
+    <div class="success-banner">
+      <div class="success-icon">✓</div>
+      <h1>Order confirmed!</h1>
+      <p>Payment received — you'll hear from the seller shortly</p>
+    </div>
+    <div class="card-body">
+      <div class="ref-block">
+        <div class="ref-label">Order reference</div>
+        <div class="ref-val" id="s-ref">—</div>
+      </div>
+
+      <div class="section-label">What you ordered</div>
+      <div class="detail-table">
+        <div class="detail-row"><span class="dk">Product</span><span class="dv" id="s-product">—</span></div>
+        <div class="detail-row"><span class="dk">Quantity</span><span class="dv" id="s-qty">—</span></div>
+        <div class="detail-row" id="s-notes-row" style="display:none"><span class="dk">Notes</span><span class="dv" id="s-notes">—</span></div>
+        <div class="detail-row"><span class="dk">Total paid</span><span class="dv accent" id="s-total">—</span></div>
+      </div>
+
+      <div class="section-label">Delivery to</div>
+      <div class="detail-table">
+        <div class="detail-row"><span class="dk">Name</span><span class="dv" id="s-name">—</span></div>
+        <div class="detail-row"><span class="dk">Phone</span><span class="dv" id="s-phone">—</span></div>
+        <div class="detail-row"><span class="dk">Address</span><span class="dv" id="s-address">—</span></div>
+      </div>
+
+      <div class="notice">
+        <strong>What happens next?</strong> The seller will call you to confirm delivery and arrange dispatch. Delivery fee is paid to the rider on receipt.
+      </div>
+
+      <a href="#" class="btn-back" id="back-btn">← Back to store</a>
+    </div>
+  </div>
+
+  <div id="error-state" style="display:none">
+    <div class="error-banner">
+      <div style="font-size:24px;margin-bottom:10px;">✕</div>
+      <h1>Payment not confirmed</h1>
+      <p id="error-msg">We couldn't verify your order. Please contact the seller.</p>
+    </div>
+    <div class="card-body">
+      <div class="notice">
+        If you completed payment, please save your Paystack reference number and contact the seller directly on WhatsApp.
+      </div>
+      <a href="#" class="btn-back" id="error-back-btn">← Back to store</a>
+    </div>
+  </div>
+</div>
+
+<div class="breezy-footer">Powered by <a href="https://shopbreezy.co.ke">B R E E Z Y</a></div>
+
+<script>
+const API = 'https://breezy-api-r7jg.onrender.com';
+
+/* Apply saved theme */
+const saved = localStorage.getItem('bz-th') || 'dark';
+document.documentElement.setAttribute('data-theme', saved);
+
+const fmt = n => 'KES ' + Number(n).toLocaleString('en-KE');
+
+async function init() {
+  /* Block back navigation to Paystack immediately */
+  history.replaceState(null, '', window.location.href);
+
+  const params    = new URLSearchParams(window.location.search);
+  const reference = params.get('reference') || params.get('trxref');
+  const storeId   = params.get('store') || '';
+
+  /* Set back links */
+  const storeUrl = storeId
+    ? `/landingstore.html?store=${storeId}`
+    : 'javascript:history.back()';
+  document.getElementById('back-btn').href       = storeUrl;
+  document.getElementById('error-back-btn').href = storeUrl;
+
+  if (!reference) { showError('No order reference found.'); return; }
+
+  try {
+    const res  = await fetch(`${API}/orders/single?reference=${encodeURIComponent(reference)}`);
+    const data = await res.json();
+
+    if (!res.ok || !data.order) {
+      showError(data.message || 'Order not found. Please contact the seller.');
+      return;
+    }
+    showSuccess(data.order);
+  } catch(e) {
+    showError('Network error. Please check your connection.');
+  }
+}
+
+function showSuccess(o) {
+  document.getElementById('loading-state').style.display = 'none';
+  document.getElementById('success-state').style.display = 'block';
+  document.title = `Order ${o.order_reference} — Breezy`;
+
+  document.getElementById('s-ref').textContent     = o.order_reference || '—';
+  document.getElementById('s-product').textContent = o.product_name    || '—';
+  document.getElementById('s-qty').textContent     = o.quantity        || 1;
+  document.getElementById('s-total').textContent   = fmt(o.total_amount || 0);
+  document.getElementById('s-name').textContent    = o.customer_name   || '—';
+  document.getElementById('s-phone').textContent   = o.customer_phone  || '—';
+  document.getElementById('s-address').textContent = o.delivery_address|| '—';
+
+  if (o.notes) {
+    document.getElementById('s-notes').textContent  = o.notes;
+    document.getElementById('s-notes-row').style.display = 'flex';
+  }
+}
+
+function showError(msg) {
+  document.getElementById('loading-state').style.display = 'none';
+  document.getElementById('error-state').style.display   = 'block';
+  document.getElementById('error-msg').textContent       = msg;
+}
+
+init();
+</script>
+</body>
+</html>

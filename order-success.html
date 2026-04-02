@@ -145,7 +145,7 @@ async function init() {
   if (!reference) { showError('No order reference found.'); return; }
 
   try {
-    const res  = await fetch(`${API}/orders/single?reference=${encodeURIComponent(reference)}`);
+    const res  = await fetch(`${API}/orders/verify?reference=${encodeURIComponent(reference)}`);
     const data = await res.json();
 
     if (!res.ok || !data.order) {
